@@ -10,8 +10,13 @@ import UIKit
 
 class EntradaTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var lblDescripcion: UILabel!
+    
+    @IBOutlet weak var tvDescripcion: UITextView!
+    @IBOutlet weak var lblFecha: UILabel!
+    @IBOutlet weak var lblHora: UILabel!
     @IBOutlet weak var entradaView: DesignableView!
+    @IBOutlet weak var lblContador: UILabel!
+    var idEvento: String!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,5 +28,14 @@ class EntradaTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+
+    // añadir una nueva ocurrencia
+    @IBAction func addOcurrencia(sender: AnyObject) {
+        let boton = sender as! SpringButton
+        boton.animation = "pop"
+        boton.animate()
+        
+    }
+    
 
 }

@@ -16,6 +16,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Si es la primera vez creamos la base de datos
+        let yaentre = NSUserDefaults.standardUserDefaults().boolForKey("yaentre")
+        if yaentre {
+            println ("no es la primera vez")
+        } else {
+            println ("primera vez")
+            // Creamos la base de datos
+            let filemgr = NSFileManager.defaultManager()
+            let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+            let docsDir = dirPaths[0] as! String
+            
+            let databasePath = docsDir.stringByAppendingPathComponent("YourLastTime.db")
+            println("bbdd en " + databasePath)
+            // Borramos el fichero por si existe (parece como si pese a borrar la app los datos se quedasen)
+            filemgr.removeItemAtPath(databasePath, error: nil)
+            
+            if !filemgr.fileExistsAtPath(databasePath as String) {
+                
+                let contactDB = FMDatabase(path: databasePath as String)
+                
+                if contactDB == nil {
+                    println("Error: \(contactDB.lastErrorMessage())")
+                }
+                
+                if contactDB.open() {
+                    // tabla de eventos
+                    let sql_crear_eventos = "CREATE TABLE IF NOT EXISTS EVENTOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPCION TEXT, FECHA TEXT, HORA TEXT, CONTADOR INTEGER)"
+                    if !contactDB.executeStatements(sql_crear_eventos) {
+                        println("Error: \(contactDB.lastErrorMessage())")
+                    }
+                    // tabla de ocurrencias
+                    let sql_crear_ocurrencias = "CREATE TABLE IF NOT EXISTS OCURRENCIAS (ID INTEGER PRIMARY KEY AUTOINCREMENT, IDEVENTO INTEGER, FECHA TEXT, HORA TEXT, DESCRIPCION TEXT)"
+                    if !contactDB.executeStatements(sql_crear_ocurrencias) {
+                        println("Error: \(contactDB.lastErrorMessage())")
+                    }
+                    contactDB.close()
+                    // nos aseguramos de q no se vuelva a crear
+                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "yaentre")
+                } else {
+                    println("Error: \(contactDB.lastErrorMessage())")
+                }
+            }
+            
+            
+        }
         return true
     }
 

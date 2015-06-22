@@ -1,0 +1,17 @@
+"When was the last time I...?" = "¿Cuando fue la última vez que...?";
+"MM-dd-yyyy" = "dd-MM-yyyy";
+"Cancel" = "Cancelar";
+
+/* Pantalla de nueva ocurrencia */
+"It happened again!" = "¡Ha vuelto a suceder!";
+"Add a new occurrence" = "Añade una nueva ocurrencia";
+"Add an optional description" = "Incluye una descripción opcional";
+
+/* Pantalla de nuevo evento */
+"Create a" = "Crea un";
+"New Event" = "Nuevo Evento";
+"Name of the new event" = "Nombre del nuevo evento";
+
+/* Acciones de celda */
+"Delete" = "Eliminar";
+"History" = "Historial";

@@ -1,0 +1,17 @@
+"When was the last time I...?" = "When was the last time I...?";
+"MM-dd-yyyy" = "MM-dd-yyyy";
+"Cancel" = "Cancel";
+
+/* Pantalla de nueva ocurrencia */
+"It happened again!" = "It happened again!";
+"Add a new occurrence" = "Add a new occurrence";
+"Add an optional description" = "Add an optional description";
+
+/* Pantalla de nuevo evento */
+"Create a" = "Create a";
+"New Event" = "New Event";
+"Name of the new event" = "Name of the new event";
+
+/* Acciones de celda */
+"Delete" = "Delete";
+"History" = "History";
