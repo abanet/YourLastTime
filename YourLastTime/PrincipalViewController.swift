@@ -92,7 +92,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // Opción de estadísticas
         var historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
-            self.performSegueWithIdentifier("verHistorial", sender: self)
+            self.performSegueWithIdentifier("verHistorial", sender: indexPath)
         });
         historialRowAction.backgroundColor =  YourLastTime.colorAccion
         
@@ -127,9 +127,12 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         if(segue.identifier == "verHistorial"){
-            
+            let historicoViewController = segue.destinationViewController as! HistorialVC
+            let index = sender as! NSIndexPath
+            historicoViewController.idEvento = self.eventos[index.row].id
+            }
         }
         
         
-    }
 }
+

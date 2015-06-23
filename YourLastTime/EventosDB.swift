@@ -54,10 +54,10 @@ class EventosDB: NSObject {
         return false
     }
     
-    func addOcurrencia(idEvento: String) {
+    func addOcurrencia(idEvento: String, descripcion: String) {
         let fecha = Fecha()
         if database.open(){
-            let selectSQL = "INSERT INTO OCURRENCIAS (IDEVENTO, FECHA, HORA, DESCRIPCION) VALUES ('\(idEvento)', '\(fecha.fecha)', '\(fecha.hora)', ' ')"
+            let selectSQL = "INSERT INTO OCURRENCIAS (IDEVENTO, FECHA, HORA, DESCRIPCION) VALUES ('\(idEvento)', '\(fecha.fecha)', '\(fecha.hora)', '\(descripcion)')"
             let resultado = database.executeUpdate(selectSQL, withArgumentsInArray: nil)
             if !resultado {
                 println("Error: \(database.lastErrorMessage())")
@@ -97,6 +97,21 @@ class EventosDB: NSObject {
             while resultados?.next() == true {
                 var unEvento: Evento = Evento(id: resultados!.stringForColumn("ID"), descripcion: resultados!.stringForColumn("DESCRIPCION")!, fecha: resultados!.stringForColumn("FECHA"), hora: resultados!.stringForColumn("HORA"), contador: Int(resultados!.intForColumn("CONTADOR")))
                 arrayResultado.append(unEvento)
+            }
+        } else {
+            // problemas al abrir la bbdd
+        }
+        return arrayResultado.reverse() // los más nuevos primero
+    }
+    
+    func arrayOcurrencias(idEvento:String)->[Ocurrencia] {
+        var arrayResultado = [Ocurrencia]()
+        if database.open() {
+            let selectSQL = "SELECT IDEVENTO, FECHA, HORA, DESCRIPCION FROM OCURRENCIAS WHERE IDEVENTO = '\(idEvento)'"
+            let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsInArray: nil)
+            while resultados?.next() == true {
+                var unaOcurrencia: Ocurrencia = Ocurrencia(idEvento: resultados!.stringForColumn("IDEVENTO"), fecha: resultados!.stringForColumn("FECHA"), hora: resultados!.stringForColumn("HORA"), descripcion: resultados!.stringForColumn("DESCRIPCION"))
+                arrayResultado.append(unaOcurrencia)
             }
         } else {
             // problemas al abrir la bbdd

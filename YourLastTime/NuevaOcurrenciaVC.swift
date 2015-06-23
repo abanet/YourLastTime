@@ -53,7 +53,7 @@ class NuevaOcurrenciaVC: UIViewController {
     
     @IBAction func btnOkPulsado(sender: AnyObject) {
         let database = EventosDB()
-        database.addOcurrencia(idEvento)
+        database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text)
     }
     
     @IBAction func btnCancelarPulsado(sender: AnyObject) {
