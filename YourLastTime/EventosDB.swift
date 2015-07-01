@@ -24,9 +24,13 @@ class EventosDB: NSObject {
     }
     
     func addEvento(evento:String){
+        // TODO: Al crear un nuevo evento hay que crear una primera ocurrencia para que no falle el historial. O quitar el botón de historial si no hay ocurrencias...
+        
         let fecha = Fecha()
+        // la descripción no puede llevar comillas simples que lia al sqlite y da error
+        let descripcionSinComillasSimples = evento.stringByReplacingOccurrencesOfString("'", withString: "''", options: .LiteralSearch, range: nil)
         if database.open(){
-            let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR) VALUES ('\(evento)', '\(fecha.fecha)', '\(fecha.hora)', 1)"
+            let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR) VALUES ('\(descripcionSinComillasSimples)', '\(fecha.fecha)', '\(fecha.hora)', 1)"
             println("addEvento: \(insertSQL)")
             let resultado = database.executeUpdate(insertSQL, withArgumentsInArray: nil)
             
@@ -34,6 +38,7 @@ class EventosDB: NSObject {
                 println("Error: \(database.lastErrorMessage())")
             } else {
                 println("Evento añadido")
+                
             }
         } else {
             println("Error abriendo bbdd: \(database.lastErrorMessage())")
@@ -56,8 +61,10 @@ class EventosDB: NSObject {
     
     func addOcurrencia(idEvento: String, descripcion: String) {
         let fecha = Fecha()
+        // la descripción no puede llevar comillas simples que lia al sqlite y da error
+        let descripcionSinComillasSimples = descripcion.stringByReplacingOccurrencesOfString("'", withString: "''", options: .LiteralSearch, range: nil)
         if database.open(){
-            let selectSQL = "INSERT INTO OCURRENCIAS (IDEVENTO, FECHA, HORA, DESCRIPCION) VALUES ('\(idEvento)', '\(fecha.fecha)', '\(fecha.hora)', '\(descripcion)')"
+            let selectSQL = "INSERT INTO OCURRENCIAS (IDEVENTO, FECHA, HORA, DESCRIPCION) VALUES ('\(idEvento)', '\(fecha.fecha)', '\(fecha.hora)', '\(descripcionSinComillasSimples)')"
             let resultado = database.executeUpdate(selectSQL, withArgumentsInArray: nil)
             if !resultado {
                 println("Error: \(database.lastErrorMessage())")
@@ -117,6 +124,44 @@ class EventosDB: NSObject {
             // problemas al abrir la bbdd
         }
         return arrayResultado.reverse() // los más nuevos primero
+    }
+    
+    func tieneOcurrenciasElEvento(idEvento:String)->Bool {
+        return arrayOcurrencias(idEvento).count != 0
+    }
+    
+    func encontrarEvento(idEvento: String)->Evento?{
+        if database.open() {
+            let selectSQL = "SELECT DESCRIPCION, FECHA, HORA, CONTADOR FROM EVENTOS WHERE ID                                               = '\(idEvento)'"
+            let resultado: FMResultSet? = database.executeQuery(selectSQL, withArgumentsInArray: nil)
+            if resultado!.next() {
+                let eventoFinal = Evento(id: idEvento, descripcion: resultado!.stringForColumn("DESCRIPCION"), fecha: resultado!.stringForColumn("FECHA"), hora: resultado!.stringForColumn("HORA"), contador: Int(resultado!.intForColumn("CONTADOR")))
+                return eventoFinal
+            }
+        }
+        return nil
+    }
+    
+    func contarOcurrenciasSemanaMesAnno(idEvento: String) -> (Int, Int, Int) {
+        var resultado = (ultimaSemana: 0, ultimoMes: 0, ultimoAnno: 0)
+        
+        var arrayOcurrencias = self.arrayOcurrencias(idEvento)
+        let fecha = Fecha()
+        if arrayOcurrencias.count != 0 {
+            // Los más nuevos vienen primero
+            for ocurrencia in arrayOcurrencias {
+                if fecha.estaEnUltimaSemana(ocurrencia.fecha) {
+                    resultado.ultimaSemana++
+                }
+                if fecha.estaEnUltimoMes(ocurrencia.fecha){
+                    resultado.ultimoMes++
+                }
+                if fecha.estaEnUltimoAnno(ocurrencia.fecha){
+                    resultado.ultimoAnno++
+                } else {break}
+            }
+        }
+        return resultado
     }
    
 }

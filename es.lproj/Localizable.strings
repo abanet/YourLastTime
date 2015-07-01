@@ -1,10 +1,10 @@
-"When was the last time I...?" = "¿Cuando fue la última vez que...?";
+"When was the last time I...?" = "¿Recuerdas tu última vez?";
 "MM-dd-yyyy" = "dd-MM-yyyy";
 "Cancel" = "Cancelar";
 
 /* Pantalla de nueva ocurrencia */
 "It happened again!" = "¡Ha vuelto a suceder!";
-"Add a new occurrence" = "Añade una nueva ocurrencia";
+"Add a new occurrence" = "Añade una nueva entrada";
 "Add an optional description" = "Incluye una descripción opcional";
 
 /* Pantalla de nuevo evento */
@@ -15,3 +15,20 @@
 /* Acciones de celda */
 "Delete" = "Eliminar";
 "History" = "Historial";
+
+/* Pantalla de historial */
+"Last time was ago: " = "Hace: ";
+"year" = "año";
+"week" = "semana";
+"month" = "mes";
+"day" = "día";
+"years" = "años";
+"weeks" = "semanas";
+"months" = "meses";
+"days" = "días";
+"times" = "veces";
+"time" = "vez";
+"Last week: " = "Last week: ";
+"Last month: " = "Last month: ";
+"Last year: " = "Last year: ";
+

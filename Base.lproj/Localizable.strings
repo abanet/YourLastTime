@@ -15,3 +15,20 @@
 /* Acciones de celda */
 "Delete" = "Delete";
 "History" = "History";
+
+/* Pantalla de historial */
+"Last time was ago: " = "Ago: ";
+"year" = "year";
+"week" = "week";
+"month" = "month";
+"day" = "day";
+"years" = "years";
+"weeks" = "weeks";
+"months" = "months";
+"days" = "days";
+"times" = "times";
+"time" = "time";
+"Last week: " = "Última semana: ";
+"Last month: " = "Último mes: ";
+"Last year: " = "Último año: ";
+

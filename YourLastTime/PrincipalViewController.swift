@@ -29,6 +29,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         lblTitulo.textColor = YourLastTime.colorTextoPrincipal
         tableView.delegate = self
         tableView.dataSource = self
+        // TODO: posibilidad de reordenar filas?
+        //tableView.setEditing(true, animated:true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,8 +50,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! EntradaTableViewCell
+        
+        let fecha = Fecha()
         cell.tvDescripcion.text = eventos[indexPath.row].descripcion
-        cell.lblFecha.text = eventos[indexPath.row].fecha
+        cell.lblFecha.text = fecha.devolverFechaLocalizada(eventos[indexPath.row].fecha)
         cell.lblHora.text = eventos[indexPath.row].hora
         cell.lblContador.text = String(eventos[indexPath.row].contador)
         cell.idEvento = eventos[indexPath.row].id
@@ -90,16 +94,29 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         });
         deleteRowAction.backgroundColor =  YourLastTime.colorAccion
         
-        // Opción de estadísticas
-        var historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
+        
+        // Ver historial
+        // Si no hay ocurrencias no mostramos la acción correspondiente
+        if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
+            var historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
             self.performSegueWithIdentifier("verHistorial", sender: indexPath)
-        });
-        historialRowAction.backgroundColor =  YourLastTime.colorAccion
+            });
+            historialRowAction.backgroundColor =  YourLastTime.colorAccion2
+            return [historialRowAction, deleteRowAction];
+
+        }
         
-        
-        return [deleteRowAction, historialRowAction];
+        return [deleteRowAction];
     }
     
+    // MARK: Edición de las celdas
+//    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+//        return true
+//    }
+//    
+//    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+//        
+//    }
     
     // Ocultamos la barra de estatus
     override func prefersStatusBarHidden() -> Bool {
@@ -133,6 +150,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
         
-        
+    
+
+    
 }
 

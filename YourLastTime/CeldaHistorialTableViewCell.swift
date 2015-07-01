@@ -11,7 +11,9 @@ import UIKit
 class CeldaHistorialTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblFecha: UILabel!
-    @IBOutlet weak var descripcion: UITextView!
+    @IBOutlet weak var descripcion: UILabel!
+    @IBOutlet weak var imgHito: UIImageView!
+    @IBOutlet weak var lblHora: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

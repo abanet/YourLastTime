@@ -41,6 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     println("Error: \(contactDB.lastErrorMessage())")
                 }
                 
+                // TODO: añadir campos posición y archivado en tabla de eventos.
+                // posición: indicará la posición a ocupar en la visualización de la tabla (se usaría en un futuro si se permite reordenación de la tabla)
+                // archivado: indica si se ha archivado o no el evento
                 if contactDB.open() {
                     // tabla de eventos
                     let sql_crear_eventos = "CREATE TABLE IF NOT EXISTS EVENTOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPCION TEXT, FECHA TEXT, HORA TEXT, CONTADOR INTEGER)"

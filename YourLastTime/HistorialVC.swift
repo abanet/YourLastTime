@@ -12,9 +12,11 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var txtNombreEvento: UITextView!
+    @IBOutlet weak var lblHace: UILabel!
     @IBOutlet weak var lblUltimaSemana: UILabel!
     @IBOutlet weak var lblUltimoMes: UILabel!
     @IBOutlet weak var lblUltimoAnno: UILabel!
+    @IBOutlet weak var lblTotal: UILabel!
     @IBOutlet weak var btnCerrar: SpringButton!
     
     
@@ -31,13 +33,39 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         tableView.separatorStyle = .None
         database = EventosDB()
         
+        txtNombreEvento.font = UIFont(name: "AvenirNext-Regular", size: 16.0)
+        txtNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
+        
         // Animación del botón para cerrar
         var timer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: Selector("agitar"), userInfo: nil, repeats: true)
     }
     
     override func viewWillAppear(animated: Bool) {
-        println("Histórico para evento: \(idEvento)")
+        
         ocurrencias = database.arrayOcurrencias(idEvento)
+        
+        
+        // Calculamos los datos estadísticos
+        // Ultima vez hace...
+        let fechaNSDate = Fecha().fechaStringToDate(ocurrencias[0].fecha)
+        let annos = NSDate().yearsFrom(fechaNSDate)
+        let meses = NSDate().monthsFrom(fechaNSDate)
+        let dias  = NSDate().daysFrom(fechaNSDate)
+        
+        let stringAnnos = annos == 1 ? NSLocalizedString("year", comment:"") :NSLocalizedString("years", comment:"")
+        let stringMeses = meses == 1 ? NSLocalizedString("month", comment:"") :NSLocalizedString("months", comment:"")
+        let stringDias  = dias ==  1 ? NSLocalizedString("day", comment:"") :NSLocalizedString("days", comment:"")
+        let hace = NSLocalizedString("Last time was ago: ", comment:"") + String(annos) + " " + stringAnnos + ", " + String(meses) + " " + stringMeses + ", " + String(dias) + stringDias + "."
+        lblHace.text = hace
+        
+        // Ocurrencias en última semana, mes y año
+        let (ocurrenciasSemana, ocurrenciasMes, ocurrenciasAnno) = database.contarOcurrenciasSemanaMesAnno(idEvento)
+        lblUltimaSemana.text = NSLocalizedString("Last week: ", comment: "") + String(ocurrenciasSemana)
+        lblUltimoMes.text = NSLocalizedString("Last month: ", comment: "") + String(ocurrenciasMes)
+        lblUltimoAnno.text = NSLocalizedString("Last year: ", comment: "") + String(ocurrenciasAnno)
+        
+        // Total de ocurrencias
+        lblTotal.text = String(ocurrencias.count)
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,16 +90,25 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("CeldaHistorial") as! CeldaHistorialTableViewCell
-        cell.lblFecha.text = ocurrencias[indexPath.row].fecha
+        let fecha = Fecha()
+        
+        cell.lblFecha.text = fecha.devolverFechaLocalizada(ocurrencias[indexPath.row].fecha)
+        cell.lblHora.text = ocurrencias[indexPath.row].hora
         cell.descripcion.text = ocurrencias[indexPath.row].descripcion
         // No funcionaba utilizar DesignableTextView que sería lo idóneo. 
         // Esperar a ver si más adelante funciona.
-        cell.descripcion.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
+        //cell.descripcion.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
+        
+        // Si la celda a dibujar es la última hay que cambiar el gráfico de hito.
+        if indexPath.row == ocurrencias.count - 1 {
+            cell.imgHito.image = UIImage(named: "hitoFinal")
+        }
+        
         return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 146.0
+        return 70.0
     }
     
     

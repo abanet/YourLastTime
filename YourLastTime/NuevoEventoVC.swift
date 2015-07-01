@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NuevoEventoVC: UIViewController {
+class NuevoEventoVC: UIViewController, UITextFieldDelegate {
 
     
     @IBOutlet weak var lblCabecera1: UILabel!
@@ -33,6 +33,7 @@ class NuevoEventoVC: UIViewController {
         lblCabecera2.textColor = YourLastTime.colorTextoPrincipal
         btnOk.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
         btnCancel.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
+        descripcionEvento.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -66,6 +67,12 @@ class NuevoEventoVC: UIViewController {
     
     @IBAction func btnCancelarPulsado(sender: AnyObject) {
         performSegueWithIdentifier("cerrarNuevoEvento", sender: nil)
+    }
+    
+    // Control de máximo de longitud
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let newLength = count(textField.text.utf16) + count(string.utf16) - range.length
+        return newLength <= Constants.Texto.longitudMaxima // Bool
     }
     
 }
