@@ -8,12 +8,16 @@
 
 import UIKit
 
-class PrincipalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PrincipalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate {
 
     @IBOutlet weak var lblTitulo: SpringLabel!
     @IBOutlet weak var tableView: UITableView!
+
     private var bbdd: EventosDB
     private var eventos: [Evento]
+    private var eventosFiltrados: [Evento] = [Evento]() //Eventos filtrados por el buscador
+    private var buscador = UISearchController()
+    private var filtroAplicado = false
 
    
     required init(coder aDecoder: NSCoder) {
@@ -29,6 +33,26 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         lblTitulo.textColor = YourLastTime.colorTextoPrincipal
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // Creamos una vista como background de la tabla para evitar que quede gris al desplazar la tabla (con buscador no cogía el color de background)
+        let backgroundView = UIView(frame: self.tableView.bounds)
+        backgroundView.backgroundColor = YourLastTime.colorBackground
+        self.tableView.backgroundView = backgroundView
+        
+        // Configuración searchController
+        self.buscador = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            controller.searchBar.searchBarStyle = .Minimal
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            return controller
+        }) ()
+        
+        //self.tableView.contentOffset = CGPointMake(0, self.buscador.searchBar.frame.size.height) //no funciona
+        self.tableView.reloadData()
         // TODO: posibilidad de reordenar filas?
         //tableView.setEditing(true, animated:true)
     }
@@ -46,12 +70,16 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.buscador.active {
+            return self.eventosFiltrados.count
+        } else {
         return eventos.count
+        }
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! EntradaTableViewCell
-        
         let fecha = Fecha()
+        if !filtroAplicado {
         cell.tvDescripcion.text = eventos[indexPath.row].descripcion
         cell.lblFecha.text = fecha.devolverFechaLocalizada(eventos[indexPath.row].fecha)
         cell.lblHora.text = eventos[indexPath.row].hora
@@ -60,6 +88,14 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.entradaView.delay = CGFloat(0.05) * CGFloat(indexPath.row)
         cell.entradaView.animation = "slideRight"
         cell.entradaView.animate()
+            
+        } else {
+            cell.tvDescripcion.text = eventosFiltrados[indexPath.row].descripcion
+            cell.lblFecha.text = fecha.devolverFechaLocalizada(eventosFiltrados[indexPath.row].fecha)
+            cell.lblHora.text = eventosFiltrados[indexPath.row].hora
+            cell.lblContador.text = String(eventosFiltrados[indexPath.row].contador)
+            cell.idEvento = eventosFiltrados[indexPath.row].id
+        }
         return cell
     }
     
@@ -150,8 +186,25 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
         
+    // MARK: Función para filtrar resultados
+    func filtrarContenidoParaTextoBuscado(texto: String){
+        if texto.length != 0 {
+        filtroAplicado = true
+        self.eventosFiltrados = self.eventos.filter({(evento:Evento)->Bool in
+            let stringMatch = evento.descripcion.rangeOfString(texto)
+            return stringMatch != nil
+        })
+        } else {
+            eventosFiltrados = eventos
+            filtroAplicado = false
+        }
+    }
     
-
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        self.filtrarContenidoParaTextoBuscado(searchController.searchBar.text)
+        self.tableView.reloadData()
+    }
     
+   
 }
 

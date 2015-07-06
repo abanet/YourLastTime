@@ -14,12 +14,14 @@ class Evento: NSObject {
     var fecha: String
     var hora: String
     var contador: Int
+    var archivado: Bool
     
-    init(id:String, descripcion:String, fecha:String, hora: String, contador:Int) {
+    init(id:String, descripcion:String, fecha:String, hora: String, contador:Int, archivado: Bool = false) {
         self.id = id
         self.descripcion = descripcion
         self.fecha = fecha
         self.hora = hora
         self.contador = contador
+        self.archivado = archivado
     }
 }

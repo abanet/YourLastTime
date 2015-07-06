@@ -17,7 +17,7 @@
 "History" = "Historial";
 
 /* Pantalla de historial */
-"Last time was ago: " = "Hace: ";
+"Ago: " = "Hace: ";
 "year" = "año";
 "week" = "semana";
 "month" = "mes";

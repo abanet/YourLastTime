@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // archivado: indica si se ha archivado o no el evento
                 if contactDB.open() {
                     // tabla de eventos
-                    let sql_crear_eventos = "CREATE TABLE IF NOT EXISTS EVENTOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPCION TEXT, FECHA TEXT, HORA TEXT, CONTADOR INTEGER)"
+                    let sql_crear_eventos = "CREATE TABLE IF NOT EXISTS EVENTOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPCION TEXT, FECHA TEXT, HORA TEXT, CONTADOR INTEGER, ARCHIVADO INTEGER)"
                     if !contactDB.executeStatements(sql_crear_eventos) {
                         println("Error: \(contactDB.lastErrorMessage())")
                     }

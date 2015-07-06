@@ -19,26 +19,24 @@ public class YourLastTime : NSObject {
     private struct Cache {
         static var colorTextoPrincipal: UIColor = UIColor(red: 0.169, green: 0.251, blue: 0.129, alpha: 1.000)
         static var colorTextoSecundario: UIColor = YourLastTime.colorTextoPrincipal.colorWithBrightness(1)
-        static var colorFechaHistorico: UIColor = YourLastTime.colorTextoPrincipal.colorWithBrightness(0.827)
         static var colorFondoCelda: UIColor = UIColor(red: 0.612, green: 0.745, blue: 0.549, alpha: 1.000)
         static var colorAccion: UIColor = UIColor(red: 0.431, green: 0.545, blue: 0.376, alpha: 1.000)
         static var colorAccion2: UIColor = YourLastTime.colorAccion.colorWithBrightness(0.7)
-        static var colorBackground: UIColor = UIColor(red: 0.875, green: 0.945, blue: 0.843, alpha: 1.000)
     }
 
     //// Colors
 
     public class var colorTextoPrincipal: UIColor { return Cache.colorTextoPrincipal }
     public class var colorTextoSecundario: UIColor { return Cache.colorTextoSecundario }
-    public class var colorFechaHistorico: UIColor { return Cache.colorFechaHistorico }
     public class var colorFondoCelda: UIColor { return Cache.colorFondoCelda }
     public class var colorAccion: UIColor { return Cache.colorAccion }
     public class var colorAccion2: UIColor { return Cache.colorAccion2 }
-    public class var colorBackground: UIColor { return Cache.colorBackground }
 
     //// Drawing Methods
 
     public class func drawCanvas1(#frame: CGRect) {
+        //// Color Declarations
+        let colorFechaHistorico = YourLastTime.colorTextoPrincipal.colorWithBrightness(0.827)
 
         //// Bezier Drawing
         var bezierPath = UIBezierPath()
@@ -46,14 +44,14 @@ public class YourLastTime : NSObject {
         bezierPath.addCurveToPoint(CGPointMake(frame.minX + 10, frame.maxY - 50), controlPoint1: CGPointMake(frame.minX + 10, frame.maxY - 50), controlPoint2: CGPointMake(frame.minX + 10, frame.maxY - 50))
         UIColor.grayColor().setFill()
         bezierPath.fill()
-        YourLastTime.colorFechaHistorico.setStroke()
+        colorFechaHistorico.setStroke()
         bezierPath.lineWidth = 1
         bezierPath.stroke()
 
 
         //// Oval Drawing
         var ovalPath = UIBezierPath(ovalInRect: CGRectMake(frame.minX + 1, frame.minY + floor((frame.height - 18) * 0.50000 + 0.5), 18, 18))
-        YourLastTime.colorFechaHistorico.setStroke()
+        colorFechaHistorico.setStroke()
         ovalPath.lineWidth = 1
         ovalPath.stroke()
 
@@ -64,7 +62,7 @@ public class YourLastTime : NSObject {
         bezier2Path.addCurveToPoint(CGPointMake(frame.minX + 10, frame.minY + 34.31), controlPoint1: CGPointMake(frame.minX + 10, frame.minY + 34.31), controlPoint2: CGPointMake(frame.minX + 10, frame.minY + 34.31))
         UIColor.grayColor().setFill()
         bezier2Path.fill()
-        YourLastTime.colorFechaHistorico.setStroke()
+        colorFechaHistorico.setStroke()
         bezier2Path.lineWidth = 1
         bezier2Path.stroke()
     }

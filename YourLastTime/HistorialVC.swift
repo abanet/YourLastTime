@@ -13,9 +13,13 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var txtNombreEvento: UITextView!
     @IBOutlet weak var lblHace: UILabel!
+    @IBOutlet weak var lblResultadoHace: UILabel!
     @IBOutlet weak var lblUltimaSemana: UILabel!
+    @IBOutlet weak var lblResultadoUltimaSemana: UILabel!
     @IBOutlet weak var lblUltimoMes: UILabel!
+    @IBOutlet weak var lblResultadoUltimoMes: UILabel!
     @IBOutlet weak var lblUltimoAnno: UILabel!
+    @IBOutlet weak var lblResultadoUltimoAnno: UILabel!
     @IBOutlet weak var lblTotal: UILabel!
     @IBOutlet weak var btnCerrar: SpringButton!
     
@@ -33,7 +37,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         tableView.separatorStyle = .None
         database = EventosDB()
         
+        txtNombreEvento.editable = true
         txtNombreEvento.font = UIFont(name: "AvenirNext-Regular", size: 16.0)
+        txtNombreEvento.editable = false
         txtNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
         
         // Animación del botón para cerrar
@@ -55,14 +61,18 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         let stringAnnos = annos == 1 ? NSLocalizedString("year", comment:"") :NSLocalizedString("years", comment:"")
         let stringMeses = meses == 1 ? NSLocalizedString("month", comment:"") :NSLocalizedString("months", comment:"")
         let stringDias  = dias ==  1 ? NSLocalizedString("day", comment:"") :NSLocalizedString("days", comment:"")
-        let hace = NSLocalizedString("Last time was ago: ", comment:"") + String(annos) + " " + stringAnnos + ", " + String(meses) + " " + stringMeses + ", " + String(dias) + stringDias + "."
-        lblHace.text = hace
+        
+        lblHace.text = NSLocalizedString("Ago: ", comment:"")
+        lblResultadoHace.text = String(annos) + " " + stringAnnos + ", " + String(meses) + " " + stringMeses + ", " + String(dias) + " " + stringDias + "."
         
         // Ocurrencias en última semana, mes y año
         let (ocurrenciasSemana, ocurrenciasMes, ocurrenciasAnno) = database.contarOcurrenciasSemanaMesAnno(idEvento)
-        lblUltimaSemana.text = NSLocalizedString("Last week: ", comment: "") + String(ocurrenciasSemana)
-        lblUltimoMes.text = NSLocalizedString("Last month: ", comment: "") + String(ocurrenciasMes)
-        lblUltimoAnno.text = NSLocalizedString("Last year: ", comment: "") + String(ocurrenciasAnno)
+        lblUltimaSemana.text = NSLocalizedString("Last week: ", comment: "")
+        lblResultadoUltimaSemana.text =  String(ocurrenciasSemana)
+        lblUltimoMes.text = NSLocalizedString("Last month: ", comment: "")
+        lblResultadoUltimoMes.text = String(ocurrenciasMes)
+        lblUltimoAnno.text = NSLocalizedString("Last year: ", comment: "")
+        lblResultadoUltimoAnno.text = String(ocurrenciasAnno)
         
         // Total de ocurrencias
         lblTotal.text = String(ocurrencias.count)

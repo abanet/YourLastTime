@@ -99,7 +99,7 @@ class EventosDB: NSObject {
     func arrayEventos()->[Evento] {
         var arrayResultado = [Evento]()
         if database.open() {
-            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CONTADOR FROM EVENTOS"
+            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CONTADOR, ARCHIVADO FROM EVENTOS"
             let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsInArray: nil)
             while resultados?.next() == true {
                 var unEvento: Evento = Evento(id: resultados!.stringForColumn("ID"), descripcion: resultados!.stringForColumn("DESCRIPCION")!, fecha: resultados!.stringForColumn("FECHA"), hora: resultados!.stringForColumn("HORA"), contador: Int(resultados!.intForColumn("CONTADOR")))
@@ -108,7 +108,12 @@ class EventosDB: NSObject {
         } else {
             // problemas al abrir la bbdd
         }
-        return arrayResultado.reverse() // los más nuevos primero
+        arrayResultado.sort({(e1: Evento, e2: Evento) in
+            let fecha1NSDate: NSDate = Fecha().fechaStringToDate(e1.fecha)
+            let fecha2NSDate: NSDate = Fecha().fechaStringToDate(e2.fecha)
+            return fecha1NSDate.isGreaterThanDate(fecha2NSDate)
+        })
+        return  arrayResultado//arrayResultado.reverse() // los más nuevos primero
     }
     
     func arrayOcurrencias(idEvento:String)->[Ocurrencia] {
@@ -163,5 +168,6 @@ class EventosDB: NSObject {
         }
         return resultado
     }
+
    
 }

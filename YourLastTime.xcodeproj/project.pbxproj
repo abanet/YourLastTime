@@ -41,7 +41,7 @@
 		C05DBCFD1B397465002E6E21 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05DBCE01B397464002E6E21 /* TransitionManager.swift */; };
 		C05DBCFE1B397465002E6E21 /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05DBCE11B397464002E6E21 /* TransitionZoom.swift */; };
 		C05DBCFF1B397465002E6E21 /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05DBCE21B397464002E6E21 /* UnwindSegue.swift */; };
-		C0AB36761B3430670054D573 /* YourLastTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36751B3430670054D573 /* YourLastTime.swift */; };
+		C08761111B43FF2C005CCFF2 /* YourLastTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08761101B43FF2C005CCFF2 /* YourLastTime.swift */; };
 		C0AB36781B3432B30054D573 /* HistorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36771B3432B30054D573 /* HistorialVC.swift */; };
 		C0AB367A1B343CF40054D573 /* CeldaHistorialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */; };
 		C0BCADAA1B2986FE00B20009 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0BCADAC1B2986FE00B20009 /* Localizable.strings */; };
@@ -115,7 +115,7 @@
 		C05DBCE01B397464002E6E21 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
 		C05DBCE11B397464002E6E21 /* TransitionZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionZoom.swift; sourceTree = "<group>"; };
 		C05DBCE21B397464002E6E21 /* UnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindSegue.swift; sourceTree = "<group>"; };
-		C0AB36751B3430670054D573 /* YourLastTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YourLastTime.swift; sourceTree = "<group>"; };
+		C08761101B43FF2C005CCFF2 /* YourLastTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YourLastTime.swift; sourceTree = "<group>"; };
 		C0AB36771B3432B30054D573 /* HistorialVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistorialVC.swift; sourceTree = "<group>"; };
 		C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaHistorialTableViewCell.swift; sourceTree = "<group>"; };
 		C0BCADAD1B29871700B20009 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -243,7 +243,7 @@
 				C0FEE5DC1B259B62000B0627 /* fmdb */,
 				C0FEE5B91B259AE9000B0627 /* AppDelegate.swift */,
 				C0F6968F1B3C157F004F3214 /* constantes.swift */,
-				C0AB36751B3430670054D573 /* YourLastTime.swift */,
+				C08761101B43FF2C005CCFF2 /* YourLastTime.swift */,
 				C0FEE5D91B259B41000B0627 /* Main.storyboard */,
 				C0FEE5C21B259AE9000B0627 /* LaunchScreen.xib */,
 				C0FEE5DB1B259B62000B0627 /* EntradaTableViewCell.swift */,
@@ -441,7 +441,6 @@
 				C05DBCEB1B397464002E6E21 /* DesignableTextField.swift in Sources */,
 				C05DBCF91B397465002E6E21 /* SpringLabel.swift in Sources */,
 				C05DBCE81B397464002E6E21 /* DesignableImageView.swift in Sources */,
-				C0AB36761B3430670054D573 /* YourLastTime.swift in Sources */,
 				C05DBCF81B397465002E6E21 /* SpringImageView.swift in Sources */,
 				C0DBB2D41B2839CD0017AF6E /* Ocurrencia.swift in Sources */,
 				C0FEE61B1B259B62000B0627 /* NuevoEventoVC.swift in Sources */,
@@ -476,6 +475,7 @@
 				C05DBCE91B397464002E6E21 /* DesignableLabel.swift in Sources */,
 				C0F696901B3C157F004F3214 /* constantes.swift in Sources */,
 				C05DBCF11B397464002E6E21 /* LoadingView.swift in Sources */,
+				C08761111B43FF2C005CCFF2 /* YourLastTime.swift in Sources */,
 				C0FEE63B1B259B62000B0627 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -609,6 +609,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/YourLastTime",
 				);
 				INFOPLIST_FILE = YourLastTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -625,6 +626,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/YourLastTime",
 				);
 				INFOPLIST_FILE = YourLastTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

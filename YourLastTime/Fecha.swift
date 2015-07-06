@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Fecha: NSObject {
+class Fecha: NSObject, Equatable, Comparable {
     var fecha: String
     var hora: String
     
@@ -66,9 +66,40 @@ class Fecha: NSObject {
         return estaEnUltimosXdias(fecha, dias: 365)
     }
     
-    
-    
     private func intervalo(dias:Int)->NSTimeInterval {
         return NSTimeInterval(dias * 24 * 60 * 60)
+    }
+    
+    
+}
+
+// MARK: Protocolo Equatable
+// Dos fechas son iguales si el día, mes y año son el mismo. Despreciamos la hora.
+func ==(lhs: Fecha, rhs: Fecha) -> Bool {
+    if lhs.fecha == rhs.fecha {
+        return true
+    } else {
+        return false
+    }
+}
+
+// MARK: Protocolo Comparable
+func <(lhs: Fecha, rhs: Fecha) -> Bool {
+    let lhsDate = lhs.fechaStringToDate(lhs.fecha)
+    let rhsDate = rhs.fechaStringToDate(rhs.fecha)
+    if lhsDate.isLessThanDate(rhsDate) {
+        return true
+    } else {
+        return false
+    }
+}
+
+func >(lhs: Fecha, rhs: Fecha) -> Bool {
+    let lhsDate = lhs.fechaStringToDate(lhs.fecha)
+    let rhsDate = rhs.fechaStringToDate(rhs.fecha)
+    if lhsDate.isGreaterThanDate(rhsDate) {
+        return true
+    } else {
+        return false
     }
 }
