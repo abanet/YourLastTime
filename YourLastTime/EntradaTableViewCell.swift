@@ -16,6 +16,8 @@ class EntradaTableViewCell: UITableViewCell {
     @IBOutlet weak var lblHora: UILabel!
     @IBOutlet weak var entradaView: DesignableView!
     @IBOutlet weak var lblContador: UILabel!
+    @IBOutlet weak var imgDespertador: UIImageView!
+    
     var idEvento: String!
     
     override func awakeFromNib() {

@@ -24,13 +24,12 @@ class EventosDB: NSObject {
     }
     
     func addEvento(evento:String){
-        // TODO: Al crear un nuevo evento hay que crear una primera ocurrencia para que no falle el historial. O quitar el botón de historial si no hay ocurrencias...
         
         let fecha = Fecha()
         // la descripción no puede llevar comillas simples que lia al sqlite y da error
         let descripcionSinComillasSimples = evento.stringByReplacingOccurrencesOfString("'", withString: "''", options: .LiteralSearch, range: nil)
         if database.open(){
-            let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR) VALUES ('\(descripcionSinComillasSimples)', '\(fecha.fecha)', '\(fecha.hora)', 1)"
+            let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR, ARCHIVADO, CANTIDAD, PERIODO) VALUES ('\(descripcionSinComillasSimples)', '\(fecha.fecha)', '\(fecha.hora)', 0, 0, 0, 0)"
             println("addEvento: \(insertSQL)")
             let resultado = database.executeUpdate(insertSQL, withArgumentsInArray: nil)
             
@@ -99,18 +98,24 @@ class EventosDB: NSObject {
     func arrayEventos()->[Evento] {
         var arrayResultado = [Evento]()
         if database.open() {
-            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CONTADOR, ARCHIVADO FROM EVENTOS"
+            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO, ARCHIVADO FROM EVENTOS"
             let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsInArray: nil)
             while resultados?.next() == true {
-                var unEvento: Evento = Evento(id: resultados!.stringForColumn("ID"), descripcion: resultados!.stringForColumn("DESCRIPCION")!, fecha: resultados!.stringForColumn("FECHA"), hora: resultados!.stringForColumn("HORA"), contador: Int(resultados!.intForColumn("CONTADOR")))
+                var unEvento: Evento = Evento(id: resultados!.stringForColumn("ID"),
+                                            descripcion: resultados!.stringForColumn("DESCRIPCION")!,
+                                            fecha: resultados!.stringForColumn("FECHA"),
+                                            hora: resultados!.stringForColumn("HORA"),
+                                            contador: Int(resultados!.intForColumn("CONTADOR")),
+                                            cantidad: Int(resultados!.intForColumn("CANTIDAD")),
+                                            periodo: PeriodoTemporal(rawValue:Int(resultados!.intForColumn("PERIODO"))))
                 arrayResultado.append(unEvento)
             }
         } else {
             // problemas al abrir la bbdd
         }
         arrayResultado.sort({(e1: Evento, e2: Evento) in
-            let fecha1NSDate: NSDate = Fecha().fechaStringToDate(e1.fecha)
-            let fecha2NSDate: NSDate = Fecha().fechaStringToDate(e2.fecha)
+            let fecha1NSDate: NSDate = Fecha().fechaCompletaStringToDate(e1.fecha+e1.hora)
+            let fecha2NSDate: NSDate = Fecha().fechaCompletaStringToDate(e2.fecha+e2.hora)
             return fecha1NSDate.isGreaterThanDate(fecha2NSDate)
         })
         return  arrayResultado//arrayResultado.reverse() // los más nuevos primero
@@ -137,10 +142,17 @@ class EventosDB: NSObject {
     
     func encontrarEvento(idEvento: String)->Evento?{
         if database.open() {
-            let selectSQL = "SELECT DESCRIPCION, FECHA, HORA, CONTADOR FROM EVENTOS WHERE ID                                               = '\(idEvento)'"
+            let selectSQL = "SELECT DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO FROM EVENTOS WHERE ID                                               = '\(idEvento)'"
             let resultado: FMResultSet? = database.executeQuery(selectSQL, withArgumentsInArray: nil)
             if resultado!.next() {
-                let eventoFinal = Evento(id: idEvento, descripcion: resultado!.stringForColumn("DESCRIPCION"), fecha: resultado!.stringForColumn("FECHA"), hora: resultado!.stringForColumn("HORA"), contador: Int(resultado!.intForColumn("CONTADOR")))
+                let eventoFinal = Evento(id: idEvento,
+                    descripcion: resultado!.stringForColumn("DESCRIPCION"),
+                    fecha: resultado!.stringForColumn("FECHA"),
+                    hora: resultado!.stringForColumn("HORA"),
+                    contador: Int(resultado!.intForColumn("CONTADOR")),
+                    cantidad: Int(resultado!.intForColumn("CANTIDAD")),
+                    periodo: PeriodoTemporal(rawValue: Int(resultado!.intForColumn("PERIODO")))
+                )
                 return eventoFinal
             }
         }
@@ -169,5 +181,47 @@ class EventosDB: NSObject {
         return resultado
     }
 
+    func arrayAlarmasEventos() -> [Evento] {
+        var arrayResultado = [Evento]()
+        if database.open() {
+            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CANTIDAD, PERIODO FROM EVENTOS WHERE CANTIDAD>0"
+            let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsInArray: nil)
+             while resultados?.next() == true {
+                let eventoConAlarma = Evento(id: resultados!.stringForColumn("ID"),
+                    descripcion: resultados!.stringForColumn("DESCRIPCION"),
+                    fecha: resultados!.stringForColumn("FECHA"),
+                    hora: resultados!.stringForColumn("HORA"),
+                    contador: Int(resultados!.intForColumn("CONTADOR")),
+                    cantidad: Int(resultados!.intForColumn("CANTIDAD")),
+                    periodo: PeriodoTemporal(rawValue: Int(resultados!.intForColumn("PERIODO"))))
+                arrayResultado.append(eventoConAlarma)
+            }
+        }
+        return arrayResultado
+    }
+    
+    
+    func establecerAlarma(idEvento:String, cantidad: Int, periodo: PeriodoTemporal) -> Bool {
+        if database.open(){
+            
+            let updateSQL = "UPDATE EVENTOS SET CANTIDAD = '\(cantidad)', PERIODO = '\(periodo.rawValue)' WHERE ID = '\(idEvento)'"
+            println("updateAlarma: \(updateSQL)")
+            let resultado = database.executeUpdate(updateSQL, withArgumentsInArray: nil)
+            println("resultado de actualizar alarma en eventos: \(resultado)")
+            return resultado
+        }
+        return false
+    }
+    
+    func eliminarAlarma(idEvento:String)->Bool {
+        return establecerAlarma(idEvento,  cantidad: 0,  periodo: PeriodoTemporal.horas)
+    }
+    
+    func tieneAlarma(evento:Evento) -> Bool {
+        if evento.cantidad > 0 {
+            return true
+        }
+        return false
+    }
    
 }

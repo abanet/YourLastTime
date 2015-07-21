@@ -41,6 +41,14 @@ class Fecha: NSObject, Equatable, Comparable {
         return fechaTemp!
     }
     
+    // fecha completa: fecha con  hora incluida.
+    func fechaCompletaStringToDate(fechaCompleta: String) -> NSDate {
+        let formateador = NSDateFormatter()
+        formateador.dateFormat = "MM-dd-yyyyHH:mm"
+        let fechaTemp = formateador.dateFromString(fechaCompleta)
+        return fechaTemp!
+    }
+    
     func estaEnUltimosXdias(fecha:String, dias: Int)->Bool{
         
         let formateador = NSDateFormatter()
@@ -76,7 +84,7 @@ class Fecha: NSObject, Equatable, Comparable {
 // MARK: Protocolo Equatable
 // Dos fechas son iguales si el día, mes y año son el mismo. Despreciamos la hora.
 func ==(lhs: Fecha, rhs: Fecha) -> Bool {
-    if lhs.fecha == rhs.fecha {
+    if (lhs.fecha + lhs.hora) == (rhs.fecha + lhs.hora) {
         return true
     } else {
         return false
@@ -85,8 +93,8 @@ func ==(lhs: Fecha, rhs: Fecha) -> Bool {
 
 // MARK: Protocolo Comparable
 func <(lhs: Fecha, rhs: Fecha) -> Bool {
-    let lhsDate = lhs.fechaStringToDate(lhs.fecha)
-    let rhsDate = rhs.fechaStringToDate(rhs.fecha)
+    let lhsDate = lhs.fechaCompletaStringToDate(lhs.fecha + lhs.hora)
+    let rhsDate = rhs.fechaCompletaStringToDate(rhs.fecha + lhs.hora)
     if lhsDate.isLessThanDate(rhsDate) {
         return true
     } else {
@@ -95,8 +103,8 @@ func <(lhs: Fecha, rhs: Fecha) -> Bool {
 }
 
 func >(lhs: Fecha, rhs: Fecha) -> Bool {
-    let lhsDate = lhs.fechaStringToDate(lhs.fecha)
-    let rhsDate = rhs.fechaStringToDate(rhs.fecha)
+    let lhsDate = lhs.fechaCompletaStringToDate(lhs.fecha + lhs.hora)
+    let rhsDate = rhs.fechaCompletaStringToDate(rhs.fecha + lhs.hora)
     if lhsDate.isGreaterThanDate(rhsDate) {
         return true
     } else {

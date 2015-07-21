@@ -54,6 +54,20 @@ class NuevaOcurrenciaVC: UIViewController {
     @IBAction func btnOkPulsado(sender: AnyObject) {
         let database = EventosDB()
         database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text)
+        
+        // Ha ocurrido una nueva ocurrencia.
+        // Si hay una notificación local puesta hay que quitarla y volver a poner otra.
+        if let evento = database.encontrarEvento(idEvento) {
+            if evento.tieneAlarma() {
+                let notificacion = Notificacion(id: evento.id)
+                let horas = evento.cantidad * evento.periodo.numHoras
+                notificacion.reprogramarFechaNotificacion(horas)
+            }
+        }
+        
+        
+        
+        
     }
     
     @IBAction func btnCancelarPulsado(sender: AnyObject) {

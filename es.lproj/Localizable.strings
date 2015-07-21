@@ -15,6 +15,7 @@
 /* Acciones de celda */
 "Delete" = "Eliminar";
 "History" = "Historial";
+"Alarm" = "Alarma";
 
 /* Pantalla de historial */
 "Ago: " = "Hace: ";
@@ -32,3 +33,8 @@
 "Last month: " = "Last month: ";
 "Last year: " = "Last year: ";
 
+/* Pantalla de creación de alarma */
+"The event doesn't happened!" = "El evento no ocurre desde...";
+"Set Alarm" = "Activar Alarma";
+"Delete Alarm" = "Borrar Alarma";
+"hours" = "horas"; // días y años ya se definió en pantalla de historial

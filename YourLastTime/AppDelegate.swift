@@ -17,6 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        // Registramos notificaciones locales
+        
+        if(UIApplication.instancesRespondToSelector(Selector("registerUserNotificationSettings:")))
+        {
+            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Sound | .Alert | .Badge, categories: nil))
+        }
+        
+        
         // Si es la primera vez creamos la base de datos
         let yaentre = NSUserDefaults.standardUserDefaults().boolForKey("yaentre")
         if yaentre {
@@ -44,9 +52,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // TODO: añadir campos posición y archivado en tabla de eventos.
                 // posición: indicará la posición a ocupar en la visualización de la tabla (se usaría en un futuro si se permite reordenación de la tabla)
                 // archivado: indica si se ha archivado o no el evento
+                // Dias: en caso de ser != 0 establece una alarma para avisar de que hace más de x días que no se ha ocurrido un evento.
                 if contactDB.open() {
                     // tabla de eventos
-                    let sql_crear_eventos = "CREATE TABLE IF NOT EXISTS EVENTOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPCION TEXT, FECHA TEXT, HORA TEXT, CONTADOR INTEGER, ARCHIVADO INTEGER)"
+                    let sql_crear_eventos = "CREATE TABLE IF NOT EXISTS EVENTOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPCION TEXT, FECHA TEXT, HORA TEXT, CONTADOR INTEGER, ARCHIVADO INTEGER, CANTIDAD INTEGER, PERIODO INTEGER)"
                     if !contactDB.executeStatements(sql_crear_eventos) {
                         println("Error: \(contactDB.lastErrorMessage())")
                     }
@@ -91,5 +100,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+        println("notification is here. Open alert window or whatever")
+        let alerta = AlertaVC()
+        window?.addSubview(alerta.view)
+        // Abrir alerta notificando alarma
+        // Desactivar alarma de la base de datos
+        let database = EventosDB()
+        let info: [String: String] = notification.userInfo as! [String: String]
+        if let identificador = info["id"] {
+            database.eliminarAlarma(identificador)
+        }
+        
+        // Must be called when finished
+        completionHandler()
+    }
 }
 

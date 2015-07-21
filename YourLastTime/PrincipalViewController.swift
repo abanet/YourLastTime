@@ -8,7 +8,10 @@
 
 import UIKit
 
-class PrincipalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate {
+
+
+class PrincipalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate
+{
 
     @IBOutlet weak var lblTitulo: SpringLabel!
     @IBOutlet weak var tableView: UITableView!
@@ -19,6 +22,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     private var buscador = UISearchController()
     private var filtroAplicado = false
 
+    private var hayqueBorrarRegistro = false // usado en protocolo alertaVC
+    
    
     required init(coder aDecoder: NSCoder) {
         bbdd = EventosDB()
@@ -46,17 +51,23 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             controller.dimsBackgroundDuringPresentation = false
             controller.searchBar.sizeToFit()
             controller.searchBar.searchBarStyle = .Minimal
-            
+            controller.searchBar.tintColor =  YourLastTime.colorFondoCelda
             self.tableView.tableHeaderView = controller.searchBar
             return controller
         }) ()
         
-        //self.tableView.contentOffset = CGPointMake(0, self.buscador.searchBar.frame.size.height) //no funciona
+        
         self.tableView.reloadData()
         // TODO: posibilidad de reordenar filas?
         //tableView.setEditing(true, animated:true)
     }
 
+    override func viewWillAppear(animated: Bool) {
+        // generamos los eventos ordenados 
+        eventos = bbdd.arrayEventos()
+    
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -88,6 +99,12 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.entradaView.delay = CGFloat(0.05) * CGFloat(indexPath.row)
         cell.entradaView.animation = "slideRight"
         cell.entradaView.animate()
+            if(eventos[indexPath.row].cantidad > 0) {
+                cell.imgDespertador.image = imagenDespertador(eventos[indexPath.row])
+                cell.imgDespertador.hidden = false
+            } else {
+                cell.imgDespertador.hidden = true
+            }
             
         } else {
             cell.tvDescripcion.text = eventosFiltrados[indexPath.row].descripcion
@@ -95,6 +112,12 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.lblHora.text = eventosFiltrados[indexPath.row].hora
             cell.lblContador.text = String(eventosFiltrados[indexPath.row].contador)
             cell.idEvento = eventosFiltrados[indexPath.row].id
+            if(eventosFiltrados[indexPath.row].cantidad > 0) {
+                cell.imgDespertador.image = imagenDespertador(eventos[indexPath.row])
+                cell.imgDespertador.hidden = false
+            } else {
+                cell.imgDespertador.hidden = true
+            }
         }
         return cell
     }
@@ -109,41 +132,65 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
-        // Opción de borrado
-        var deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
-            let idEventoEliminar = self.eventos[indexPath.row].id
-            self.eventos.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-            // Tenemos que eliminar el evento y sus ocurrencias
-            if self.bbdd.eliminarOcurrencias(idEventoEliminar) {
-                println("Eliminadas ocurrencias asociadas a idEvento = '\(idEventoEliminar)'")
-                // se han eliminado las ocurrencias correctamente. Eliminamos el evento asociado
-                if self.bbdd.eliminarEvento(idEventoEliminar){
-                    println("Evento eliminado con id = '\(idEventoEliminar)'")
-                } else {
-                    println("No se puede eliminar Evento con id = '\(idEventoEliminar)'")
-                }
-            } else {
-                println("No se han podido eliminar ocurrencias asociadas con idEvento = '\(idEventoEliminar)'")
-            }
-            
-        });
-        deleteRowAction.backgroundColor =  YourLastTime.colorAccion
-        
-        
+        var arrayAcciones = [AnyObject]()
+
         // Ver historial
         // Si no hay ocurrencias no mostramos la acción correspondiente
         if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
             var historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
             self.performSegueWithIdentifier("verHistorial", sender: indexPath)
             });
-            historialRowAction.backgroundColor =  YourLastTime.colorAccion2
-            return [historialRowAction, deleteRowAction];
-
+            historialRowAction.backgroundColor =  YourLastTime.colorAccion
+            arrayAcciones.append(historialRowAction)
         }
         
-        return [deleteRowAction];
+        // Creación de una alarma
+        // Si no hay ninguna ocurrencia no se pueden mostrar alarmas
+        if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
+            var alarmaRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("Alarm", comment: ""), handler:{action, indexpath in
+                self.performSegueWithIdentifier("crearAlarma", sender: indexPath)
+            });
+            alarmaRowAction.backgroundColor =  YourLastTime.colorAccion2
+            arrayAcciones.append(alarmaRowAction)
+        }
+        
+        // Acción de borrado
+        var deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
+                             var idEventoEliminar = ""
+                if !self.filtroAplicado {
+                    idEventoEliminar = self.eventos[indexPath.row].id
+                    self.eventos.removeAtIndex(indexPath.row)
+                } else {
+                    idEventoEliminar = self.eventosFiltrados[indexPath.row].id
+                    self.eventosFiltrados.removeAtIndex(indexPath.row)
+                    // Hay que eliminar también el evento de la lista eventos para que no aparezca al volver del buscardor
+                    self.eliminarEventoArrayEventos(idEventoEliminar)
+                }
+                
+                
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                
+                // Tenemos que eliminar el evento y sus ocurrencias
+                if self.bbdd.eliminarOcurrencias(idEventoEliminar) {
+                    println("Eliminadas ocurrencias asociadas a idEvento = '\(idEventoEliminar)'")
+                    // se han eliminado las ocurrencias correctamente. Eliminamos el evento asociado
+                    if self.bbdd.eliminarEvento(idEventoEliminar){
+                        println("Evento eliminado con id = '\(idEventoEliminar)'")
+                    } else {
+                        println("No se puede eliminar Evento con id = '\(idEventoEliminar)'")
+                    }
+                } else {
+                    println("No se han podido eliminar ocurrencias asociadas con idEvento = '\(idEventoEliminar)'")
+                }
+            
+            
+        });
+        deleteRowAction.backgroundColor =  YourLastTime.colorAccion3
+        arrayAcciones.append(deleteRowAction)
+        return arrayAcciones
     }
+    
+
     
     // MARK: Edición de las celdas
 //    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -182,9 +229,23 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         if(segue.identifier == "verHistorial"){
             let historicoViewController = segue.destinationViewController as! HistorialVC
             let index = sender as! NSIndexPath
-            historicoViewController.idEvento = self.eventos[index.row].id
+             if !filtroAplicado {
+                historicoViewController.idEvento = self.eventos[index.row].id
+             } else {
+                historicoViewController.idEvento = eventosFiltrados[index.row].id
+            }
+            }
+        
+        if (segue.identifier == "crearAlarma") {
+            let alarmaViewController = segue.destinationViewController as! NuevaAlarmaVC
+            let index = sender as! NSIndexPath
+            if !filtroAplicado {
+                alarmaViewController.idEvento = self.eventos[index.row].id
+            } else {
+                alarmaViewController.idEvento = eventosFiltrados[index.row].id
             }
         }
+    }
         
     // MARK: Función para filtrar resultados
     func filtrarContenidoParaTextoBuscado(texto: String){
@@ -206,5 +267,37 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
    
+   
+    
+    
+    // MARK: Funciones auxiliares
+    func eliminarEventoArrayEventos(idEvento: String) {
+        for (index,evento) in enumerate(eventos) {
+            if evento.id == idEvento {
+                eventos.removeAtIndex(index)
+                break
+            }
+        }
+    }
+    
+    func imagenDespertador(evento: Evento) -> UIImage {
+        // para depurar
+        let intervalo =  evento.intervaloAlarmaEnHoras()
+        let fUltimaOcurrencia = evento.fechaUltimaOcurrencia()
+        
+        let fechaMedia = NSDate(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 30, sinceDate: evento.fechaUltimaOcurrencia())
+        let fechaFinal = NSDate(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 60, sinceDate: evento.fechaUltimaOcurrencia())
+        let ahora = NSDate(timeIntervalSinceNow: 0)
+        
+        var nombreImagen = "despertador"
+        if ahora.isGreaterThanDate(fechaFinal) {
+            nombreImagen = "despertadorRojo"
+        } else if ahora.isGreaterThanDate(fechaMedia) {
+            nombreImagen = "despertadorNaranja"
+        }
+        return UIImage(named: nombreImagen)!
+    }
+   
+    
 }
 
