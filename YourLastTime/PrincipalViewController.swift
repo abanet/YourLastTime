@@ -23,7 +23,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     private var filtroAplicado = false
 
     private var hayqueBorrarRegistro = false // usado en protocolo alertaVC
-    
+    private var buscadorActivado = false   // usado para inhabilitar botones cuando está el buscador activado
    
     required init(coder aDecoder: NSCoder) {
         bbdd = EventosDB()
@@ -47,11 +47,13 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         // Configuración searchController
         self.buscador = ({
             let controller = UISearchController(searchResultsController: nil)
+            controller.delegate = self
             controller.searchResultsUpdater = self
             controller.dimsBackgroundDuringPresentation = false
             controller.searchBar.sizeToFit()
             controller.searchBar.searchBarStyle = .Minimal
             controller.searchBar.tintColor =  YourLastTime.colorFondoCelda
+            
             self.tableView.tableHeaderView = controller.searchBar
             return controller
         }) ()
@@ -62,6 +64,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         //tableView.setEditing(true, animated:true)
     }
 
+    
+    
     override func viewWillAppear(animated: Bool) {
         // generamos los eventos ordenados 
         eventos = bbdd.arrayEventos()
@@ -123,7 +127,11 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+        if !self.buscadorActivado {
+            return true
+        } else {
+            return false
+        }
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -136,6 +144,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
 
         // Ver historial
         // Si no hay ocurrencias no mostramos la acción correspondiente
+        
         if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
             var historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
             self.performSegueWithIdentifier("verHistorial", sender: indexPath)
@@ -214,10 +223,18 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         boton.animate()
     }
     
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if !self.buscadorActivado {
+            return true
+        } else {
+            return false
+        }
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Pasamos el parámetro idEvento para dar el alta al pulsar el ok en la pantalla de nuevaOcurrencia
         // Cogemos la celda adecuada según la posición del botón pulsado.
         // Quizás una buena forma alternativa sea utilizar un protocolo en nuevaOcurrencia que devuelva Ok o Cancel y se actue en consecuencia.
+            
         if(segue.identifier == "nuevaOcurrencia"){
             let nuevaOcurrenciaViewController = segue.destinationViewController as! NuevaOcurrenciaVC
             let buttonPosition: CGPoint = sender!.convertPoint(CGPointZero, toView: self.tableView)
@@ -245,6 +262,18 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
                 alarmaViewController.idEvento = eventosFiltrados[index.row].id
             }
         }
+        
+    }
+    
+    // MARK: Delegado de uisearchcontroller
+    func didPresentSearchController(searchController: UISearchController) {
+        self.buscadorActivado = true
+        println("buscador presentado")
+    }
+    
+    func didDismissSearchController(searchController: UISearchController) {
+        self.buscadorActivado = false
+        println("buscador cancelado")
     }
         
     // MARK: Función para filtrar resultados
