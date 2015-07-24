@@ -11,7 +11,7 @@ import UIKit
 class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var txtNombreEvento: UITextView!
+    @IBOutlet weak var lblNombreEvento: UILabel!
     @IBOutlet weak var lblHace: UILabel!
     @IBOutlet weak var lblResultadoHace: UILabel!
     @IBOutlet weak var lblUltimaSemana: UILabel!
@@ -37,10 +37,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         tableView.separatorStyle = .None
         database = EventosDB()
         
-        txtNombreEvento.editable = true
-        txtNombreEvento.font = UIFont(name: "AvenirNext-Regular", size: 16.0)
-        txtNombreEvento.editable = false
-        txtNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
+        lblNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
         
         // Animación del botón para cerrar
         var timer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: Selector("agitar"), userInfo: nil, repeats: true)

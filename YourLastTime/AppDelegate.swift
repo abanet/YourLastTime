@@ -13,7 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    var categoryID:String {
+        get{
+            return "OK_CATEGORY"
+        }
+    }
+    
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -74,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             
         }
+        registerNotification()
         return true
     }
 
@@ -102,8 +109,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
         println("notification is here. Open alert window or whatever")
-        let alerta = AlertaVC()
-        window?.addSubview(alerta.view)
+        //let alerta = AlertaVC()
+        //window?.addSubview(alerta.view)
+        
+        // Handle notification action *****************************************
+        if notification.category == categoryID {
+            //No hacemos nada. De momento sólo es para ver si muestra la acción.
+        }
         // Abrir alerta notificando alarma
         // Desactivar alarma de la base de datos
         let database = EventosDB()
@@ -115,5 +127,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Must be called when finished
         completionHandler()
     }
+    
+    // Register notification settings
+    func registerNotification() {
+        // 1. Create the actions
+        // reset Action
+        let okAction = UIMutableUserNotificationAction()
+        okAction.identifier = "Ok"
+        okAction.title = "OK"
+        okAction.activationMode = UIUserNotificationActivationMode.Foreground
+        // NOT USED resetAction.authenticationRequired = true
+        okAction.destructive = true
+        
+        
+        // 2. Create the category
+        
+        // Category
+        let counterCategory = UIMutableUserNotificationCategory()
+        counterCategory.identifier = categoryID
+        
+        // A. Set actions for the default context
+        counterCategory.setActions([okAction],
+            forContext: UIUserNotificationActionContext.Default)
+        
+        // B. Set actions for the minimal context
+        counterCategory.setActions([okAction],
+            forContext: UIUserNotificationActionContext.Minimal)
+    }
+
 }
 

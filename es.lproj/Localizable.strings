@@ -27,14 +27,17 @@
 "weeks" = "semanas";
 "months" = "meses";
 "days" = "días";
+"minutes" = "minutos";
+"minute" = "minuto";
 "times" = "veces";
 "time" = "vez";
-"Last week: " = "Last week: ";
-"Last month: " = "Last month: ";
-"Last year: " = "Last year: ";
+"Last week: " = "Última semana: ";
+"Last month: " = "Último mes: ";
+"Last year: " = "Último año: ";
 
 /* Pantalla de creación de alarma */
 "The event doesn't happened!" = "El evento no ocurre desde...";
 "Set Alarm" = "Activar Alarma";
 "Delete Alarm" = "Borrar Alarma";
 "hours" = "horas"; // días y años ya se definió en pantalla de historial
+"hour" = "hora";

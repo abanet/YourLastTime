@@ -33,7 +33,8 @@ class Notificacion: NSObject {
         
         let intervalo = fechaDesdeAhoraHastaCumplirIntervalo.timeIntervalSinceDate(fechaDeAlarma)
         if intervalo > 0 {
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: intervalo)
+            //localNotification.fireDate = NSDate(timeIntervalSinceNow: intervalo)
+            localNotification.fireDate = NSDate(timeIntervalSinceNow: 20)
             localNotification.soundName = UILocalNotificationDefaultSoundName
             UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         } else {
@@ -43,14 +44,15 @@ class Notificacion: NSObject {
     }
     
     func cancelLocalNotification(){
-        var notifyCancel = UILocalNotification()
+       // var notifyCancel = UILocalNotification()
+        //UIApplication.sharedApplication().cancelAllLocalNotifications() // Para limpiar notificaciones haciendo pruebas
         var notifyArray = UIApplication.sharedApplication().scheduledLocalNotifications
-        
+        println(notifyArray)
         for notifyCancel in notifyArray as! [UILocalNotification]{
             let info: [String: String] = notifyCancel.userInfo as! [String: String]
             if info["id"] == self.idNotificacion{
                 UIApplication.sharedApplication().cancelLocalNotification(notifyCancel)
-                break
+                //break comentamos para que se borren todas las alarmas de ese id
             }else{
                 println("No Local Notification Found!")
             }

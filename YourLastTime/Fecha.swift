@@ -50,7 +50,6 @@ class Fecha: NSObject, Equatable, Comparable {
     }
     
     func estaEnUltimosXdias(fecha:String, dias: Int)->Bool{
-        
         let formateador = NSDateFormatter()
         formateador.dateFormat = "MM-dd-yyyy"
         let fechaNSDate = formateador.dateFromString(fecha)

@@ -11,7 +11,9 @@ import UIKit
 class EntradaTableViewCell: UITableViewCell {
 
     
-    @IBOutlet weak var tvDescripcion: UITextView!
+    
+    @IBOutlet weak var lbDescripcion: UILabel!
+    @IBOutlet weak var lblHace: UILabel!
     @IBOutlet weak var lblFecha: UILabel!
     @IBOutlet weak var lblHora: UILabel!
     @IBOutlet weak var entradaView: DesignableView!
@@ -39,5 +41,4 @@ class EntradaTableViewCell: UITableViewCell {
         
     }
     
-
 }

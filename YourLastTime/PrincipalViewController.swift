@@ -95,7 +95,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! EntradaTableViewCell
         let fecha = Fecha()
         if !filtroAplicado {
-        cell.tvDescripcion.text = eventos[indexPath.row].descripcion
+        cell.lbDescripcion.text = eventos[indexPath.row].descripcion
+        cell.lblHace.text = eventos[indexPath.row].cuantoTiempoHaceDesdeLaUltimaVez()
         cell.lblFecha.text = fecha.devolverFechaLocalizada(eventos[indexPath.row].fecha)
         cell.lblHora.text = eventos[indexPath.row].hora
         cell.lblContador.text = String(eventos[indexPath.row].contador)
@@ -111,7 +112,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             
         } else {
-            cell.tvDescripcion.text = eventosFiltrados[indexPath.row].descripcion
+            cell.lbDescripcion.text = eventosFiltrados[indexPath.row].descripcion
+            cell.lblHace.text = eventos[indexPath.row].cuantoTiempoHaceDesdeLaUltimaVez()
             cell.lblFecha.text = fecha.devolverFechaLocalizada(eventosFiltrados[indexPath.row].fecha)
             cell.lblHora.text = eventosFiltrados[indexPath.row].hora
             cell.lblContador.text = String(eventosFiltrados[indexPath.row].contador)
