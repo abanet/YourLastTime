@@ -19,6 +19,7 @@ class EntradaTableViewCell: UITableViewCell {
     @IBOutlet weak var entradaView: DesignableView!
     @IBOutlet weak var lblContador: UILabel!
     @IBOutlet weak var imgDespertador: UIImageView!
+    @IBOutlet weak var lblDetalleAlarma: UILabel!
     
     var idEvento: String!
     

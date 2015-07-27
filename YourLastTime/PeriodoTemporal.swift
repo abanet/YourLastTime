@@ -45,5 +45,21 @@ enum PeriodoTemporal: Int {
         }
     }
     
+    func abreviatura()-> String {
+        var abreviado: String
+        switch self {
+            case annos:
+                abreviado = NSLocalizedString("abreviatura de año", comment: "")
+            case meses:
+                abreviado = NSLocalizedString("abreviatura de mes", comment: "")
+            case dias:
+                abreviado = NSLocalizedString("abreviatura de dia", comment: "")
+            case horas:
+                abreviado = NSLocalizedString("abreviatura de hora", comment: "")
+            default:
+                abreviado = ""
+        }
+        return abreviado
+    }
     
 }

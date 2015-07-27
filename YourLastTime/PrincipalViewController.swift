@@ -107,8 +107,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             if(eventos[indexPath.row].cantidad > 0) {
                 cell.imgDespertador.image = imagenDespertador(eventos[indexPath.row])
                 cell.imgDespertador.hidden = false
+                cell.lblDetalleAlarma.text = eventos[indexPath.row].descripcionAlarma()
             } else {
                 cell.imgDespertador.hidden = true
+                cell.lblDetalleAlarma.text = ""
             }
             
         } else {

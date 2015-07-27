@@ -10,7 +10,8 @@ import Foundation
 
 struct Constants {
     struct Texto {
-        static let longitudMaxima = 80
+        static let longitudMaximaNuevoEvento = 30
+        static let longitudMaximaNuevaOcurrencia = 35
     }
     
 }

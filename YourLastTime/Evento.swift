@@ -81,7 +81,10 @@ class Evento: NSObject {
         return NSLocalizedString("Ago: ", comment:"") + text
     }
     
-    
+    func descripcionAlarma() -> String {
+        return String(self.cantidad) + self.periodo.abreviatura()
+    }
+
     func tieneAlarma() -> Bool {
         if cantidad > 0 {
             return true

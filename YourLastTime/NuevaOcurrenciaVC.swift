@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NuevaOcurrenciaVC: UIViewController {
+class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
 
     var idEvento: String!
     @IBOutlet weak var lblCabecera1: UILabel!
@@ -34,6 +34,9 @@ class NuevaOcurrenciaVC: UIViewController {
         lblCabecera2.textColor = YourLastTime.colorTextoPrincipal
         btnOk.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
         btnCancel.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
+
+        descripcionOcurrencia.delegate = self
+        descripcionOcurrencia.autocapitalizationType = .Sentences
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,6 +76,16 @@ class NuevaOcurrenciaVC: UIViewController {
     @IBAction func btnCancelarPulsado(sender: AnyObject) {
         performSegueWithIdentifier("cerrarNuevaOcurrencia", sender: nil)
     }
+
+
+    // MARK: - UITextDelegate
+    // Control de máximo de longitud
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let newLength = count(textField.text.utf16) + count(string.utf16) - range.length
+        return newLength <= Constants.Texto.longitudMaximaNuevaOcurrencia // Bool
+    }
+
+
     /*
     // MARK: - Navigation
 

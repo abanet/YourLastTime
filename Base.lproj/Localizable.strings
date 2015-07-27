@@ -40,4 +40,9 @@
 "Delete Alarm" = "Delete Alarm";
 "hours" = "hours"; // días y años ya se definió en pantalla de historial
 
+/* Abreviaturas de periodos temporales */
+"abreviatura de año" = "y";
+"abreviatura de mes" = "m";
+"abreviatura de dia" = "d";
+"abreviatura de hora" = "h";
 

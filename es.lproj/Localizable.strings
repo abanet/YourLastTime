@@ -41,3 +41,9 @@
 "Delete Alarm" = "Borrar Alarma";
 "hours" = "horas"; // días y años ya se definió en pantalla de historial
 "hour" = "hora";
+
+/* Abreviaturas de periodos temporales */
+"abreviatura de año" = "a";
+"abreviatura de mes" = "m";
+"abreviatura de dia" = "d";
+"abreviatura de hora" = "h";

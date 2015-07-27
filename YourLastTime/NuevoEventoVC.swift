@@ -34,6 +34,7 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
         btnOk.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
         btnCancel.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
         descripcionEvento.delegate = self
+        descripcionEvento.autocapitalizationType = .Sentences
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -72,7 +73,7 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
     // Control de máximo de longitud
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let newLength = count(textField.text.utf16) + count(string.utf16) - range.length
-        return newLength <= Constants.Texto.longitudMaxima // Bool
+        return newLength <= Constants.Texto.longitudMaximaNuevoEvento // Bool
     }
     
 }
