@@ -14,10 +14,10 @@ class EventosDB: NSObject {
     let database: FMDatabase
     
     override init(){
-        let filemgr = NSFileManager.defaultManager()
+        _ = NSFileManager.defaultManager()
         let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let docsDir = dirPaths[0] as! String
-        databasePath = docsDir.stringByAppendingPathComponent("YourLastTime.db")
+        let docsDir = dirPaths[0] 
+        databasePath = (docsDir as NSString).stringByAppendingPathComponent("YourLastTime.db")
         
         database = FMDatabase(path: databasePath)
         database.logsErrors = true
@@ -30,17 +30,17 @@ class EventosDB: NSObject {
         let descripcionSinComillasSimples = evento.stringByReplacingOccurrencesOfString("'", withString: "''", options: .LiteralSearch, range: nil)
         if database.open(){
             let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR, ARCHIVADO, CANTIDAD, PERIODO) VALUES ('\(descripcionSinComillasSimples)', '\(fecha.fecha)', '\(fecha.hora)', 0, 0, 0, 0)"
-            println("addEvento: \(insertSQL)")
+            print("addEvento: \(insertSQL)")
             let resultado = database.executeUpdate(insertSQL, withArgumentsInArray: nil)
             
             if !resultado {
-                println("Error: \(database.lastErrorMessage())")
+                print("Error: \(database.lastErrorMessage())")
             } else {
-                println("Evento añadido")
+                print("Evento añadido")
                 
             }
         } else {
-            println("Error abriendo bbdd: \(database.lastErrorMessage())")
+            print("Error abriendo bbdd: \(database.lastErrorMessage())")
         }
     }
     
@@ -50,7 +50,7 @@ class EventosDB: NSObject {
             let deleteSQL = "DELETE FROM EVENTOS WHERE ID = '\(idEvento)'"
             let resultado = database.executeUpdate(deleteSQL, withArgumentsInArray: nil)
             if !resultado {
-                println("Error: \(database.lastErrorMessage())")
+                print("Error: \(database.lastErrorMessage())")
             } else {
                 return true
             }
@@ -66,19 +66,19 @@ class EventosDB: NSObject {
             let selectSQL = "INSERT INTO OCURRENCIAS (IDEVENTO, FECHA, HORA, DESCRIPCION) VALUES ('\(idEvento)', '\(fecha.fecha)', '\(fecha.hora)', '\(descripcionSinComillasSimples)')"
             let resultado = database.executeUpdate(selectSQL, withArgumentsInArray: nil)
             if !resultado {
-                println("Error: \(database.lastErrorMessage())")
+                print("Error: \(database.lastErrorMessage())")
             } else {
-                println("Ocurrencia añadida")
+                print("Ocurrencia añadida")
                 // al añadir una ocurrrencia modificamos en la tabla eventos la fecha y hora para que muestre siempre la última vez
                 // Incrementamos en uno el número de ocurrencias en la tabla eventos
                 let updateSQL = "UPDATE EVENTOS SET FECHA = '\(fecha.fecha)', HORA = '\(fecha.hora)', CONTADOR = CONTADOR + 1 WHERE ID = '\(idEvento)'"
-                println(updateSQL)
-                let resultado = database.executeUpdate(updateSQL, withArgumentsInArray: nil)
+                print(updateSQL)
+                _ = database.executeUpdate(updateSQL, withArgumentsInArray: nil)
           
                 
             }
         } else {
-            println("Error abriendo bbdd: \(database.lastErrorMessage())")
+            print("Error abriendo bbdd: \(database.lastErrorMessage())")
         }
     }
     
@@ -87,7 +87,7 @@ class EventosDB: NSObject {
             let deleteSQL = "DELETE FROM OCURRENCIAS WHERE IDEVENTO = '\(idEvento)'"
             let resultado = database.executeUpdate(deleteSQL, withArgumentsInArray: nil)
             if !resultado {
-                println("Error: \(database.lastErrorMessage())")
+                print("Error: \(database.lastErrorMessage())")
             } else {
                 return true
             }
@@ -101,7 +101,7 @@ class EventosDB: NSObject {
             let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO, ARCHIVADO FROM EVENTOS"
             let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsInArray: nil)
             while resultados?.next() == true {
-                var unEvento: Evento = Evento(id: resultados!.stringForColumn("ID"),
+                let unEvento: Evento = Evento(id: resultados!.stringForColumn("ID"),
                                             descripcion: resultados!.stringForColumn("DESCRIPCION")!,
                                             fecha: resultados!.stringForColumn("FECHA"),
                                             hora: resultados!.stringForColumn("HORA"),
@@ -113,7 +113,7 @@ class EventosDB: NSObject {
         } else {
             // problemas al abrir la bbdd
         }
-        arrayResultado.sort({(e1: Evento, e2: Evento) in
+        arrayResultado.sortInPlace({(e1: Evento, e2: Evento) in
             let fecha1NSDate: NSDate = Fecha().fechaCompletaStringToDate(e1.fecha+e1.hora)
             let fecha2NSDate: NSDate = Fecha().fechaCompletaStringToDate(e2.fecha+e2.hora)
             return fecha1NSDate.isGreaterThanDate(fecha2NSDate)
@@ -127,7 +127,7 @@ class EventosDB: NSObject {
             let selectSQL = "SELECT IDEVENTO, FECHA, HORA, DESCRIPCION FROM OCURRENCIAS WHERE IDEVENTO = '\(idEvento)'"
             let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsInArray: nil)
             while resultados?.next() == true {
-                var unaOcurrencia: Ocurrencia = Ocurrencia(idEvento: resultados!.stringForColumn("IDEVENTO"), fecha: resultados!.stringForColumn("FECHA"), hora: resultados!.stringForColumn("HORA"), descripcion: resultados!.stringForColumn("DESCRIPCION"))
+                let unaOcurrencia: Ocurrencia = Ocurrencia(idEvento: resultados!.stringForColumn("IDEVENTO"), fecha: resultados!.stringForColumn("FECHA"), hora: resultados!.stringForColumn("HORA"), descripcion: resultados!.stringForColumn("DESCRIPCION"))
                 arrayResultado.append(unaOcurrencia)
             }
         } else {
@@ -162,7 +162,7 @@ class EventosDB: NSObject {
     func contarOcurrenciasSemanaMesAnno(idEvento: String) -> (Int, Int, Int) {
         var resultado = (ultimaSemana: 0, ultimoMes: 0, ultimoAnno: 0)
         
-        var arrayOcurrencias = self.arrayOcurrencias(idEvento)
+        let arrayOcurrencias = self.arrayOcurrencias(idEvento)
         let fecha = Fecha()
         if arrayOcurrencias.count != 0 {
             // Los más nuevos vienen primero
@@ -205,9 +205,9 @@ class EventosDB: NSObject {
         if database.open(){
             
             let updateSQL = "UPDATE EVENTOS SET CANTIDAD = '\(cantidad)', PERIODO = '\(periodo.rawValue)' WHERE ID = '\(idEvento)'"
-            println("updateAlarma: \(updateSQL)")
+            print("updateAlarma: \(updateSQL)")
             let resultado = database.executeUpdate(updateSQL, withArgumentsInArray: nil)
-            println("resultado de actualizar alarma en eventos: \(resultado)")
+            print("resultado de actualizar alarma en eventos: \(resultado)")
             return resultado
         }
         return false

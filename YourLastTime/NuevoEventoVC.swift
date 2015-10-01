@@ -42,7 +42,7 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
     }
     
     // Para que oculte el teclado al pulsar fuera
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         view.endEditing(true)
     }
     
@@ -53,11 +53,11 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
    
     // Creamos un nuevo evento y volvemos a la página anterior
     @IBAction func pulsarBotonAddEvento(sender: AnyObject) {
-        let boton = sender as! UIButton
+        //let boton = sender as! UIButton
         let descripcion = descripcionEvento.text
-        if !descripcion.isEmpty {
+        if !descripcion!.isEmpty {
             let bbdd = EventosDB()
-            bbdd.addEvento(descripcion)
+            bbdd.addEvento(descripcion!)
             view.endEditing(true) // ocultamos el teclado
         } else {
             // No podemos añadir un evento sin descripción
@@ -72,7 +72,7 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
     
     // Control de máximo de longitud
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let newLength = count(textField.text.utf16) + count(string.utf16) - range.length
+        let newLength = textField.text!.utf16.count + string.utf16.count - range.length
         return newLength <= Constants.Texto.longitudMaximaNuevoEvento // Bool
     }
     

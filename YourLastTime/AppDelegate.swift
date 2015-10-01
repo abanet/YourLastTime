@@ -27,32 +27,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if(UIApplication.instancesRespondToSelector(Selector("registerUserNotificationSettings:")))
         {
-            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Sound | .Alert | .Badge, categories: nil))
+            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Sound, .Alert, .Badge], categories: []))
         }
         
         
         // Si es la primera vez creamos la base de datos
         let yaentre = NSUserDefaults.standardUserDefaults().boolForKey("yaentre")
         if yaentre {
-            println ("no es la primera vez")
+            print ("no es la primera vez")
         } else {
-            println ("primera vez")
+            print ("primera vez")
             // Creamos la base de datos
             let filemgr = NSFileManager.defaultManager()
             let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-            let docsDir = dirPaths[0] as! String
+            let docsDir = dirPaths[0] 
             
-            let databasePath = docsDir.stringByAppendingPathComponent("YourLastTime.db")
-            println("bbdd en " + databasePath)
+            let databasePath = (docsDir as NSString).stringByAppendingPathComponent("YourLastTime.db")
+            print("bbdd en " + databasePath)
             // Borramos el fichero por si existe (parece como si pese a borrar la app los datos se quedasen)
-            filemgr.removeItemAtPath(databasePath, error: nil)
+            do {
+                try filemgr.removeItemAtPath(databasePath)
+            } catch {
+                print("Error eliminando Item")
+            }
             
             if !filemgr.fileExistsAtPath(databasePath as String) {
                 
                 let contactDB = FMDatabase(path: databasePath as String)
                 
                 if contactDB == nil {
-                    println("Error: \(contactDB.lastErrorMessage())")
+                    print("Error: \(contactDB.lastErrorMessage())")
                 }
                 
                 // TODO: añadir campos posición y archivado en tabla de eventos.
@@ -63,18 +67,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     // tabla de eventos
                     let sql_crear_eventos = "CREATE TABLE IF NOT EXISTS EVENTOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPCION TEXT, FECHA TEXT, HORA TEXT, CONTADOR INTEGER, ARCHIVADO INTEGER, CANTIDAD INTEGER, PERIODO INTEGER)"
                     if !contactDB.executeStatements(sql_crear_eventos) {
-                        println("Error: \(contactDB.lastErrorMessage())")
+                        print("Error: \(contactDB.lastErrorMessage())")
                     }
                     // tabla de ocurrencias
                     let sql_crear_ocurrencias = "CREATE TABLE IF NOT EXISTS OCURRENCIAS (ID INTEGER PRIMARY KEY AUTOINCREMENT, IDEVENTO INTEGER, FECHA TEXT, HORA TEXT, DESCRIPCION TEXT)"
                     if !contactDB.executeStatements(sql_crear_ocurrencias) {
-                        println("Error: \(contactDB.lastErrorMessage())")
+                        print("Error: \(contactDB.lastErrorMessage())")
                     }
                     contactDB.close()
                     // nos aseguramos de q no se vuelva a crear
                     NSUserDefaults.standardUserDefaults().setBool(true, forKey: "yaentre")
                 } else {
-                    println("Error: \(contactDB.lastErrorMessage())")
+                    print("Error: \(contactDB.lastErrorMessage())")
                 }
             }
             
@@ -108,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
-        println("notification is here. Open alert window or whatever")
+        print("notification is here. Open alert window or whatever")
         //let alerta = AlertaVC()
         //window?.addSubview(alerta.view)
         

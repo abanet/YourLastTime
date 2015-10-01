@@ -25,7 +25,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     private var hayqueBorrarRegistro = false // usado en protocolo alertaVC
     private var buscadorActivado = false   // usado para inhabilitar botones cuando está el buscador activado
    
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         bbdd = EventosDB()
         eventos = bbdd.arrayEventos()
         super.init(coder: aDecoder)
@@ -131,26 +131,28 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if !self.buscadorActivado {
-            return true
-        } else {
-            return false
-        }
+//        if !self.buscadorActivado {
+//            return true
+//        } else {
+//            return false
+//        }
+        
+        return true
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
        
     }
     
-    
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
-        var arrayAcciones = [AnyObject]()
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        
+        var arrayAcciones = [UITableViewRowAction]()
 
         // Ver historial
         // Si no hay ocurrencias no mostramos la acción correspondiente
         
         if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
-            var historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
+            let historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
             self.performSegueWithIdentifier("verHistorial", sender: indexPath)
             });
             historialRowAction.backgroundColor =  YourLastTime.colorAccion
@@ -160,7 +162,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         // Creación de una alarma
         // Si no hay ninguna ocurrencia no se pueden mostrar alarmas
         if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
-            var alarmaRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("Alarm", comment: ""), handler:{action, indexpath in
+            let alarmaRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("Alarm", comment: ""), handler:{action, indexpath in
                 self.performSegueWithIdentifier("crearAlarma", sender: indexPath)
             });
             alarmaRowAction.backgroundColor =  YourLastTime.colorAccion2
@@ -168,7 +170,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         // Acción de borrado
-        var deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
                              var idEventoEliminar = ""
                 if !self.filtroAplicado {
                     idEventoEliminar = self.eventos[indexPath.row].id
@@ -185,15 +187,15 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 // Tenemos que eliminar el evento y sus ocurrencias
                 if self.bbdd.eliminarOcurrencias(idEventoEliminar) {
-                    println("Eliminadas ocurrencias asociadas a idEvento = '\(idEventoEliminar)'")
+                    print("Eliminadas ocurrencias asociadas a idEvento = '\(idEventoEliminar)'")
                     // se han eliminado las ocurrencias correctamente. Eliminamos el evento asociado
                     if self.bbdd.eliminarEvento(idEventoEliminar){
-                        println("Evento eliminado con id = '\(idEventoEliminar)'")
+                        print("Evento eliminado con id = '\(idEventoEliminar)'")
                     } else {
-                        println("No se puede eliminar Evento con id = '\(idEventoEliminar)'")
+                        print("No se puede eliminar Evento con id = '\(idEventoEliminar)'")
                     }
                 } else {
-                    println("No se han podido eliminar ocurrencias asociadas con idEvento = '\(idEventoEliminar)'")
+                    print("No se han podido eliminar ocurrencias asociadas con idEvento = '\(idEventoEliminar)'")
                 }
             
             
@@ -228,22 +230,32 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
-        if !self.buscadorActivado {
-            return true
-        } else {
-            return false
-        }
+//        if !self.buscadorActivado {
+//            return true
+//        } else {
+//            return false
+//        }
+        return true
     }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Pasamos el parámetro idEvento para dar el alta al pulsar el ok en la pantalla de nuevaOcurrencia
         // Cogemos la celda adecuada según la posición del botón pulsado.
         // Quizás una buena forma alternativa sea utilizar un protocolo en nuevaOcurrencia que devuelva Ok o Cancel y se actue en consecuencia.
-            
+        
+        if self.buscadorActivado {
+                self.buscador.active = false
+        }
+        
         if(segue.identifier == "nuevaOcurrencia"){
             let nuevaOcurrenciaViewController = segue.destinationViewController as! NuevaOcurrenciaVC
             let buttonPosition: CGPoint = sender!.convertPoint(CGPointZero, toView: self.tableView)
             if let indexPathCeldaSeleccionada = self.tableView.indexPathForRowAtPoint(buttonPosition) {
-                nuevaOcurrenciaViewController.idEvento = self.eventos[indexPathCeldaSeleccionada.row].id
+                if !filtroAplicado {
+                    nuevaOcurrenciaViewController.idEvento = self.eventos[indexPathCeldaSeleccionada.row].id
+                } else {
+                    nuevaOcurrenciaViewController.idEvento = self.eventosFiltrados[indexPathCeldaSeleccionada.row].id
+                }
             }
         }
         
@@ -272,12 +284,12 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: Delegado de uisearchcontroller
     func didPresentSearchController(searchController: UISearchController) {
         self.buscadorActivado = true
-        println("buscador presentado")
+        print("buscador presentado")
     }
     
     func didDismissSearchController(searchController: UISearchController) {
         self.buscadorActivado = false
-        println("buscador cancelado")
+        print("buscador cancelado")
     }
         
     // MARK: Función para filtrar resultados
@@ -295,8 +307,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        self.filtrarContenidoParaTextoBuscado(searchController.searchBar.text)
-        self.tableView.reloadData()
+        if searchController.searchBar.text!.length > 0 {
+            self.filtrarContenidoParaTextoBuscado(searchController.searchBar.text!)
+            self.tableView.reloadData()
+        }
     }
     
    
@@ -305,7 +319,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: Funciones auxiliares
     func eliminarEventoArrayEventos(idEvento: String) {
-        for (index,evento) in enumerate(eventos) {
+        for (index,evento) in eventos.enumerate() {
             if evento.id == idEvento {
                 eventos.removeAtIndex(index)
                 break
@@ -315,8 +329,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func imagenDespertador(evento: Evento) -> UIImage {
         // para depurar
-        let intervalo =  evento.intervaloAlarmaEnHoras()
-        let fUltimaOcurrencia = evento.fechaUltimaOcurrencia()
+        _ =  evento.intervaloAlarmaEnHoras()
+        _ = evento.fechaUltimaOcurrencia()
         
         let fechaMedia = NSDate(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 30, sinceDate: evento.fechaUltimaOcurrencia())
         let fechaFinal = NSDate(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 60, sinceDate: evento.fechaUltimaOcurrencia())

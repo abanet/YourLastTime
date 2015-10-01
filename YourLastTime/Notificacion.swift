@@ -24,7 +24,7 @@ class Notificacion: NSObject {
     
     // TODO: la notificación se tiene que disparar desde la última fecha
     func addLocalNotification(horas:Int){
-        var localNotification: UILocalNotification = UILocalNotification()
+        let localNotification: UILocalNotification = UILocalNotification()
         localNotification.alertAction = "Your Last Time Alarm!"
         localNotification.alertBody = self.userInfo["descripcion"]!
         localNotification.userInfo = self.userInfo //Datos sobre el evento
@@ -33,8 +33,8 @@ class Notificacion: NSObject {
         
         let intervalo = fechaDesdeAhoraHastaCumplirIntervalo.timeIntervalSinceDate(fechaDeAlarma)
         if intervalo > 0 {
-            //localNotification.fireDate = NSDate(timeIntervalSinceNow: intervalo)
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 20)
+            localNotification.fireDate = NSDate(timeIntervalSinceNow: intervalo)
+            //localNotification.fireDate = NSDate(timeIntervalSinceNow: 20) // 20 segundos para probar
             localNotification.soundName = UILocalNotificationDefaultSoundName
             UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         } else {
@@ -46,34 +46,35 @@ class Notificacion: NSObject {
     func cancelLocalNotification(){
        // var notifyCancel = UILocalNotification()
         //UIApplication.sharedApplication().cancelAllLocalNotifications() // Para limpiar notificaciones haciendo pruebas
-        var notifyArray = UIApplication.sharedApplication().scheduledLocalNotifications
-        println(notifyArray)
-        for notifyCancel in notifyArray as! [UILocalNotification]{
+        let notifyArray = UIApplication.sharedApplication().scheduledLocalNotifications
+        print(notifyArray)
+        for notifyCancel in notifyArray! {
             let info: [String: String] = notifyCancel.userInfo as! [String: String]
             if info["id"] == self.idNotificacion{
                 UIApplication.sharedApplication().cancelLocalNotification(notifyCancel)
                 //break comentamos para que se borren todas las alarmas de ese id
             }else{
-                println("No Local Notification Found!")
+                print("No Local Notification Found!")
             }
         }
     }
     
     // Cambiar la fecha de notificación para añadir horas desde el momento actual.
     func reprogramarFechaNotificacion(horas:Int) {
-        var notificacion = UILocalNotification()
-        var notificacionArray = UIApplication.sharedApplication().scheduledLocalNotifications
-        for notificacion in notificacionArray as! [UILocalNotification] {
+        let notificacionArray = UIApplication.sharedApplication().scheduledLocalNotifications
+        for notificacion in notificacionArray!  {
             let info: [String:String] = notificacion.userInfo as! [String:String]
             if info["id"] == self.idNotificacion {
                 // Notificación encontrada. Cambiamos su fireDate
                 notificacion.fireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(horas * 60 * 60))
-                println("Reprogramación realizada. Nueva fecha: \(notificacion.fireDate)")
+                print("Reprogramación realizada. Nueva fecha: \(notificacion.fireDate)")
                 break
             }
         }
         
     }
+    
+    
     
     
 }

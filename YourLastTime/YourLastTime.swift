@@ -40,10 +40,10 @@ public class YourLastTime : NSObject {
 
     //// Drawing Methods
 
-    public class func drawCanvas1(#frame: CGRect) {
+    public class func drawCanvas1(frame frame: CGRect) {
 
         //// Bezier Drawing
-        var bezierPath = UIBezierPath()
+        let bezierPath = UIBezierPath()
         bezierPath.moveToPoint(CGPointMake(frame.minX + 10, frame.maxY - 34.31))
         bezierPath.addCurveToPoint(CGPointMake(frame.minX + 10, frame.maxY - 50), controlPoint1: CGPointMake(frame.minX + 10, frame.maxY - 50), controlPoint2: CGPointMake(frame.minX + 10, frame.maxY - 50))
         UIColor.grayColor().setFill()
@@ -54,14 +54,14 @@ public class YourLastTime : NSObject {
 
 
         //// Oval Drawing
-        var ovalPath = UIBezierPath(ovalInRect: CGRectMake(frame.minX + 1, frame.minY + floor((frame.height - 18) * 0.50000 + 0.5), 18, 18))
+        let ovalPath = UIBezierPath(ovalInRect: CGRectMake(frame.minX + 1, frame.minY + floor((frame.height - 18) * 0.50000 + 0.5), 18, 18))
         YourLastTime.colorFechaHistorico.setStroke()
         ovalPath.lineWidth = 1
         ovalPath.stroke()
 
 
         //// Bezier 2 Drawing
-        var bezier2Path = UIBezierPath()
+        let bezier2Path = UIBezierPath()
         bezier2Path.moveToPoint(CGPointMake(frame.minX + 10, frame.minY + 50))
         bezier2Path.addCurveToPoint(CGPointMake(frame.minX + 10, frame.minY + 34.31), controlPoint1: CGPointMake(frame.minX + 10, frame.minY + 34.31), controlPoint2: CGPointMake(frame.minX + 10, frame.minY + 34.31))
         UIColor.grayColor().setFill()

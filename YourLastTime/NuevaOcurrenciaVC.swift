@@ -46,7 +46,7 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     
 
     // Para que oculte el teclado al pulsar fuera
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         view.endEditing(true)
     }
     
@@ -56,7 +56,7 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func btnOkPulsado(sender: AnyObject) {
         let database = EventosDB()
-        database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text)
+        database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text!)
         
         // Ha ocurrido una nueva ocurrencia.
         // Si hay una notificación local puesta hay que quitarla y volver a poner otra.
@@ -81,7 +81,7 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     // MARK: - UITextDelegate
     // Control de máximo de longitud
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let newLength = count(textField.text.utf16) + count(string.utf16) - range.length
+        let newLength = textField.text!.utf16.count + string.utf16.count - range.length
         return newLength <= Constants.Texto.longitudMaximaNuevaOcurrencia // Bool
     }
 

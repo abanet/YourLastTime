@@ -40,7 +40,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         lblNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
         
         // Animación del botón para cerrar
-        var timer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: Selector("agitar"), userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: Selector("agitar"), userInfo: nil, repeats: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -91,12 +91,12 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println("Número de ocurrencias: \(ocurrencias.count)")
+        print("Número de ocurrencias: \(ocurrencias.count)")
         return ocurrencias.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("CeldaHistorial") as! CeldaHistorialTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("CeldaHistorial") as! CeldaHistorialTableViewCell
         let fecha = Fecha()
         
         cell.lblFecha.text = fecha.devolverFechaLocalizada(ocurrencias[indexPath.row].fecha)
@@ -124,6 +124,32 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         btnCerrar.force = 5.0
         btnCerrar.duration = 0.5
         btnCerrar.animate()
+    }
+    
+    // MARK: Función Compartir
+    @IBAction func shareHistorial(sender: UIButton) {
+        let texto = "¡La última vez que \(lblNombreEvento)!"
+        let imagen: UIImage = screenShot()
+        let activityViewController = UIActivityViewController(activityItems: [texto, imagen], applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [
+            UIActivityTypePostToWeibo,
+            UIActivityTypeAssignToContact,
+            UIActivityTypeAddToReadingList,
+            UIActivityTypePostToFlickr,
+            UIActivityTypePostToTencentWeibo]
+        presentViewController(activityViewController, animated: true, completion: nil)
+    }
+    
+    
+    
+    // MARK: Capturar pantalla
+    func screenShot() -> UIImage {
+        UIGraphicsBeginImageContext(CGSizeMake(self.view.frame.size.width, self.view.frame.size.height))
+        UIGraphicsGetCurrentContext()!
+        self.view?.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+        let screenShot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return screenShot
     }
 
 }

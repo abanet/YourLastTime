@@ -47,7 +47,7 @@ class NuevaAlarmaVC: UIViewController {
         factorTemporal = 24 // se corresponde con dias segmentIndex = 1
         
         // Animación de la alarma
-        var timer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: Selector("agitar"), userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: Selector("agitar"), userInfo: nil, repeats: true)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -153,7 +153,7 @@ class NuevaAlarmaVC: UIViewController {
     
     func actualizarIntervaloHoras(){
         self.intervaloHoras = Int(stepper.value) * factorTemporal
-        println("Valor del stepper: \(stepper.value); factorTemporal: \(factorTemporal)")
+        print("Valor del stepper: \(stepper.value); factorTemporal: \(factorTemporal)")
     }
     
     func agitar() {

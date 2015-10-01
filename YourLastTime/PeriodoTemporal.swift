@@ -23,8 +23,6 @@ enum PeriodoTemporal: Int {
                 num = 24
             case horas:
                 num = 1
-            default:
-                num = 1
             }
             return num
         }

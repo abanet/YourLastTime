@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Fecha: NSObject, Equatable, Comparable {
+class Fecha: NSObject, Comparable {
     var fecha: String
     var hora: String
     
@@ -24,7 +24,7 @@ class Fecha: NSObject, Equatable, Comparable {
     }
     
     func devolverFechaLocalizada(fecha: String)-> String?{
-        var formateador = NSDateFormatter()
+        let formateador = NSDateFormatter()
         // se guardó en formato MM-dd-yyyy
         formateador.dateFormat = "MM-dd-yyyy"
         let date = formateador.dateFromString(fecha)
