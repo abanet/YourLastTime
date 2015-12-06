@@ -22,6 +22,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @IBOutlet weak var lblResultadoUltimoAnno: UILabel!
     @IBOutlet weak var lblTotal: UILabel!
     @IBOutlet weak var btnCerrar: SpringButton!
+    @IBOutlet var btnShare: UIButton!
     
     
     var idEvento: String!
@@ -128,7 +129,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     // MARK: Función Compartir
     @IBAction func shareHistorial(sender: UIButton) {
-        let texto = "¡La última vez que \(lblNombreEvento)!"
+        btnShare.alpha = 0
+        
+        let texto = "¡La última vez que \(lblNombreEvento.text!)!"
         let imagen: UIImage = screenShot()
         let activityViewController = UIActivityViewController(activityItems: [texto, imagen], applicationActivities: nil)
         activityViewController.excludedActivityTypes = [
@@ -138,17 +141,20 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             UIActivityTypePostToFlickr,
             UIActivityTypePostToTencentWeibo]
         presentViewController(activityViewController, animated: true, completion: nil)
-    }
+            }
     
     
     
     // MARK: Capturar pantalla
     func screenShot() -> UIImage {
+        
         UIGraphicsBeginImageContext(CGSizeMake(self.view.frame.size.width, self.view.frame.size.height))
         UIGraphicsGetCurrentContext()!
-        self.view?.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+        self.view?.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: false)
         let screenShot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        
+        
         return screenShot
     }
 
