@@ -59,7 +59,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         }) ()
         
         
-        self.tableView.reloadData()
+        //abm 04-01-2016 self.tableView.reloadData() lo ponemos en viewWillAppear
         // TODO: posibilidad de reordenar filas?
         //tableView.setEditing(true, animated:true)
     }
@@ -69,7 +69,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewWillAppear(animated: Bool) {
         // generamos los eventos ordenados 
         eventos = bbdd.arrayEventos()
-    
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -289,6 +289,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func didDismissSearchController(searchController: UISearchController) {
         self.buscadorActivado = false
+        filtroAplicado = false
+        self.tableView.reloadData()
         print("buscador cancelado")
     }
         

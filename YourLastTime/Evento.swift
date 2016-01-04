@@ -72,7 +72,7 @@ class Evento: NSObject {
                         if minutos != 0 {
                             text =  String(minutos) + " " + stringMinutos //+ "."
                         } else {
-                            text = "- - -"
+                            return NSLocalizedString("¡Acaba de ocurrir!", comment: "")
                         }
                     }
                 }
