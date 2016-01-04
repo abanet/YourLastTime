@@ -19,6 +19,7 @@
 
 /* Pantalla de historial */
 "Ago: " = "Ago: ";
+"Hace+tiempo" = "%@ ago.";
 "year" = "year";
 "week" = "week";
 "month" = "month";

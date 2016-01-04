@@ -13,7 +13,6 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lblNombreEvento: UILabel!
     @IBOutlet weak var lblHace: UILabel!
-    @IBOutlet weak var lblResultadoHace: UILabel!
     @IBOutlet weak var lblUltimaSemana: UILabel!
     @IBOutlet weak var lblResultadoUltimaSemana: UILabel!
     @IBOutlet weak var lblUltimoMes: UILabel!
@@ -50,19 +49,10 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
         
         // Calculamos los datos estadísticos
-        // Ultima vez hace...
-        let fechaNSDate = Fecha().fechaStringToDate(ocurrencias[0].fecha)
-        let annos = NSDate().yearsFrom(fechaNSDate)
-        let meses = NSDate().monthsFrom(fechaNSDate)
-        let dias  = NSDate().daysFrom(fechaNSDate)
-        
-        let stringAnnos = annos == 1 ? NSLocalizedString("year", comment:"") :NSLocalizedString("years", comment:"")
-        let stringMeses = meses == 1 ? NSLocalizedString("month", comment:"") :NSLocalizedString("months", comment:"")
-        let stringDias  = dias ==  1 ? NSLocalizedString("day", comment:"") :NSLocalizedString("days", comment:"")
-        
-        lblHace.text = NSLocalizedString("Ago: ", comment:"")
-        lblResultadoHace.text = String(annos) + " " + stringAnnos + ", " + String(meses) + " " + stringMeses + ", " + String(dias) + " " + stringDias + "."
-        
+      
+        // Última vez hace...
+        lblHace.text = database.encontrarEvento(idEvento)!.cuantoTiempoHaceDesdeLaUltimaVez()
+      
         // Ocurrencias en última semana, mes y año
         let (ocurrenciasSemana, ocurrenciasMes, ocurrenciasAnno) = database.contarOcurrenciasSemanaMesAnno(idEvento)
         lblUltimaSemana.text = NSLocalizedString("Last week: ", comment: "")

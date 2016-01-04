@@ -56,21 +56,21 @@ class Evento: NSObject {
         let stringDias  = dias ==  1 ? NSLocalizedString("day", comment:"") :NSLocalizedString("days", comment:"")
         let stringHoras  = horas ==  1 ? NSLocalizedString("hour", comment:"") :NSLocalizedString("hours", comment:"")
         let stringMinutos  = minutos ==  1 ? NSLocalizedString("minute", comment:"") :NSLocalizedString("minutes", comment:"")
-        var text = NSLocalizedString("Ago: ", comment:"")
+        var text = "" //NSLocalizedString("Ago: ", comment:"")
         if annos != 0 {
-            text = String(annos) + " " + stringAnnos + ", " + String(meses) + " " + stringMeses + ", " + String(dias) + " " + stringDias + "."
+            text = String(annos) + " " + stringAnnos + ", " + String(meses) + " " + stringMeses + ", " + String(dias) + " " + stringDias //+ "."
         } else {
             if meses != 0 {
-                text =  String(meses) + " " + stringMeses + ", " + String(dias) + " " + stringDias + ", " + String(horas) + " " + stringHoras + "."
+                text =  String(meses) + " " + stringMeses + ", " + String(dias) + " " + stringDias + ", " + String(horas) + " " + stringHoras //+ "."
             } else {
                 if dias != 0 {
-                    text =  String(dias) + " " + stringDias + ", " + String(horas) + " " + stringHoras + ", " + String(minutos) + " " + stringMinutos + "."
+                    text =  String(dias) + " " + stringDias + ", " + String(horas) + " " + stringHoras + ", " + String(minutos) + " " + stringMinutos //+ "."
                 } else {
                     if horas != 0 {
-                        text =  String(horas) + " " + stringHoras + ", " + String(minutos) + " " + stringMinutos + "."
+                        text =  String(horas) + " " + stringHoras + ", " + String(minutos) + " " + stringMinutos //+ "."
                     } else {
                         if minutos != 0 {
-                            text =  String(minutos) + " " + stringMinutos + "."
+                            text =  String(minutos) + " " + stringMinutos //+ "."
                         } else {
                             text = "- - -"
                         }
@@ -78,7 +78,10 @@ class Evento: NSObject {
                 }
             }
         }
-        return NSLocalizedString("Ago: ", comment:"") + text
+      
+      
+        //return NSLocalizedString("Ago: ", comment:"") + text
+        return String.localizedStringWithFormat(NSLocalizedString("Hace+tiempo", comment: ""), text)
     }
     
     func descripcionAlarma() -> String {
