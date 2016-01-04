@@ -299,7 +299,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         if texto.length != 0 {
         filtroAplicado = true
         self.eventosFiltrados = self.eventos.filter({(evento:Evento)->Bool in
-            let stringMatch = evento.descripcion.rangeOfString(texto)
+            let stringMatch = evento.descripcion.rangeOfString(texto, options: .CaseInsensitiveSearch)
             return stringMatch != nil
         })
         } else {
