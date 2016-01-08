@@ -34,16 +34,21 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
+      
+        // Título
         lblTitulo.text = NSLocalizedString("When was the last time I...?", comment:"cabecera de la pantalla principal")
         lblTitulo.textColor = YourLastTime.colorTextoPrincipal
+      
         tableView.delegate = self
         tableView.dataSource = self
         
         // Creamos una vista como background de la tabla para evitar que quede gris al desplazar la tabla (con buscador no cogía el color de background)
         let backgroundView = UIView(frame: self.tableView.bounds)
-        backgroundView.backgroundColor = YourLastTime.colorBackground
+        backgroundView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        //YourLastTime.colorBackground
         self.tableView.backgroundView = backgroundView
-        
+        //self.tableView.bounces = false
+      
         // Configuración searchController
         self.buscador = ({
             let controller = UISearchController(searchResultsController: nil)
@@ -51,8 +56,9 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             controller.searchResultsUpdater = self
             controller.dimsBackgroundDuringPresentation = false
             controller.searchBar.sizeToFit()
-            controller.searchBar.searchBarStyle = .Minimal
-            controller.searchBar.tintColor =  YourLastTime.colorFondoCelda
+            controller.searchBar.searchBarStyle = .Minimal//.Minimal
+            controller.searchBar.tintColor = YourLastTime.colorFondoCelda
+            controller.searchBar.backgroundColor = YourLastTime.colorBackground
             
             self.tableView.tableHeaderView = controller.searchBar
             return controller
@@ -67,6 +73,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     override func viewWillAppear(animated: Bool) {
+        // Ocultamos el buscador
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
         // generamos los eventos ordenados 
         eventos = bbdd.arrayEventos()
         self.tableView.reloadData()
@@ -127,6 +135,9 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.imgDespertador.hidden = true
             }
         }
+        // Fondo de la celda transparente para mostrar la vista background de la tabla (foto de fondo)
+        cell.backgroundColor = UIColor.clearColor();
+      
         return cell
     }
     
@@ -346,7 +357,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         return UIImage(named: nombreImagen)!
     }
-   
+  
+  
     
 }
 
