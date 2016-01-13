@@ -15,11 +15,19 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
 
     @IBOutlet weak var lblTitulo: SpringLabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var buscadorView: UIView!
+  @IBOutlet weak var btnLupa: SpringButton!
+  
+  
+  @IBOutlet weak var constraintTopBuscadorView: NSLayoutConstraint!
+ 
+
 
     private var bbdd: EventosDB
     private var eventos: [Evento]
     private var eventosFiltrados: [Evento] = [Evento]() //Eventos filtrados por el buscador
     private var buscador = UISearchController()
+    private var buscadorOculto = true
     private var filtroAplicado = false
 
     private var hayqueBorrarRegistro = false // usado en protocolo alertaVC
@@ -44,7 +52,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // Creamos una vista como background de la tabla para evitar que quede gris al desplazar la tabla (con buscador no cogía el color de background)
         let backgroundView = UIView(frame: self.tableView.bounds)
-        backgroundView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        backgroundView.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundRelojes")!)
         //YourLastTime.colorBackground
         self.tableView.backgroundView = backgroundView
         //self.tableView.bounces = false
@@ -60,7 +68,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             controller.searchBar.tintColor = YourLastTime.colorFondoCelda
             controller.searchBar.backgroundColor = YourLastTime.colorBackground
             
-            self.tableView.tableHeaderView = controller.searchBar
+            //self.tableView.tableHeaderView = controller.searchBar
+            self.buscadorView.addSubview(controller.searchBar)
+            //self.buscadorView.hidden = true
+            self.buscadorView.alpha = 0
             return controller
         }) ()
         
@@ -79,6 +90,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         eventos = bbdd.arrayEventos()
         self.tableView.reloadData()
     }
+  
+  override func viewDidAppear(animated: Bool) {
+    updateConstraints()
+  }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -296,6 +311,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     func didPresentSearchController(searchController: UISearchController) {
         self.buscadorActivado = true
         print("buscador presentado")
+        // se está escribiendo en el buscador, no se puede ocultar
+        self.btnLupa.enabled = false
     }
     
     func didDismissSearchController(searchController: UISearchController) {
@@ -303,6 +320,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         filtroAplicado = false
         self.tableView.reloadData()
         print("buscador cancelado")
+        // volvemos a activar la lupa
+        self.btnLupa.enabled = true
     }
         
     // MARK: Función para filtrar resultados
@@ -327,8 +346,35 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
    
-   
+  // MARK: Botón para mostrar/ocultar buscador
+  @IBAction func pulsarLupa(sender: UIButton) {
+    self.buscadorOculto = !self.buscadorOculto
+    //self.buscadorView.hidden = !self.buscadorView.hidden
     
+    updateConstraints()
+  
+    let boton = sender as! SpringButton
+    boton.animation = "pop"
+    boton.animate()
+  }
+  
+  
+  // actualización de la constraint de la table view
+  func updateConstraints(){
+    UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut , animations: {
+      
+      if self.buscadorOculto {
+        self.constraintTopBuscadorView.constant = -CGRectGetHeight(self.buscadorView.frame)
+        self.buscadorView.alpha = 0
+      } else {
+        self.constraintTopBuscadorView.constant = 0
+        self.buscadorView.alpha = 1.0
+      }
+      
+      self.view.layoutIfNeeded()
+      }, completion: nil)
+    
+  }
     
     // MARK: Funciones auxiliares
     func eliminarEventoArrayEventos(idEvento: String) {
