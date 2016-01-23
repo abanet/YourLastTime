@@ -108,7 +108,7 @@ class NuevaAlarmaVC: UIViewController {
    
     @IBAction func borrarAlarma(sender: AnyObject) {
         let bbdd = EventosDB()
-        bbdd.establecerAlarma(self.idEvento, cantidad: 0, periodo: PeriodoTemporal.dias)
+        bbdd.eliminarAlarma(self.idEvento)
         performSegueWithIdentifier("cerrarAlarma", sender: nil)
         
         // Hay que borrar la notificación de esta alarma

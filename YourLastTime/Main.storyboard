@@ -408,7 +408,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="btnLupa" destination="vXE-H0-OHE" id="uBT-qR-ft8"/>
                         <outlet property="buscadorView" destination="bUY-eJ-rd5" id="8U7-8s-IOn"/>
@@ -974,16 +974,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fNT-jB-CRM">
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fNT-jB-CRM">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="cgO-FC-w3s">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cap-SA-kp0" customClass="TPKeyboardAvoidingScrollView">
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cap-SA-kp0" customClass="TPKeyboardAvoidingScrollView">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cpm-9t-P3j" customClass="DesignableView" customModule="YourLastTime" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cpm-9t-P3j" customClass="DesignableView" customModule="YourLastTime" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="144" width="280" height="280"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add an optional description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TtQ-Ay-HW9">
@@ -1349,16 +1349,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TXX-Ix-wrF">
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TXX-Ix-wrF">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="c0I-nU-fRZ">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KIi-68-fN2" customClass="TPKeyboardAvoidingScrollView">
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KIi-68-fN2" customClass="TPKeyboardAvoidingScrollView">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P2W-y5-DaR" customClass="DesignableView" customModule="YourLastTime" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P2W-y5-DaR" customClass="DesignableView" customModule="YourLastTime" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="144" width="280" height="280"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Event" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ue-pg-SSu">
@@ -1505,6 +1505,6 @@
         <image name="imgGrafica" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VBY-wT-W1f"/>
+        <segue reference="Xme-Cj-1kT"/>
     </inferredMetricsTieBreakers>
 </document>

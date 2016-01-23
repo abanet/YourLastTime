@@ -16,7 +16,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var lblTitulo: SpringLabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buscadorView: UIView!
-  @IBOutlet weak var btnLupa: SpringButton!
+    @IBOutlet weak var btnLupa: SpringButton!
   
   
   @IBOutlet weak var constraintTopBuscadorView: NSLayoutConstraint!
@@ -52,7 +52,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // Creamos una vista como background de la tabla para evitar que quede gris al desplazar la tabla (con buscador no cogía el color de background)
         let backgroundView = UIView(frame: self.tableView.bounds)
-        backgroundView.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundRelojes")!)
+        backgroundView.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundRelojes2")!)
         //YourLastTime.colorBackground
         self.tableView.backgroundView = backgroundView
         //self.tableView.bounces = false
@@ -231,7 +231,9 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         return arrayAcciones
     }
     
-
+  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    print("celda pulsada")
+  }
     
     // MARK: Edición de las celdas
 //    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -244,7 +246,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // Ocultamos la barra de estatus
     override func prefersStatusBarHidden() -> Bool {
-        return true;
+        return false
     }
     
    
