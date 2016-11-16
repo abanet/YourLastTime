@@ -15,13 +15,13 @@ enum PeriodoTemporal: Int {
         get {
             var num = 1
             switch self {
-            case annos:
+            case .annos:
                 num = 365 * 24
-            case meses:
+            case .meses:
                 num = 30 * 24
-            case dias:
+            case .dias:
                 num = 24
-            case horas:
+            case .horas:
                 num = 1
             }
             return num
@@ -46,16 +46,14 @@ enum PeriodoTemporal: Int {
     func abreviatura()-> String {
         var abreviado: String
         switch self {
-            case annos:
+            case .annos:
                 abreviado = NSLocalizedString("abreviatura de año", comment: "")
-            case meses:
+            case .meses:
                 abreviado = NSLocalizedString("abreviatura de mes", comment: "")
-            case dias:
+            case .dias:
                 abreviado = NSLocalizedString("abreviatura de dia", comment: "")
-            case horas:
+            case .horas:
                 abreviado = NSLocalizedString("abreviatura de hora", comment: "")
-            default:
-                abreviado = ""
         }
         return abreviado
     }

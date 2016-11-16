@@ -20,65 +20,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         // Registramos notificaciones locales
         
-        if(UIApplication.instancesRespondToSelector(Selector("registerUserNotificationSettings:")))
+        if(UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))))
         {
-            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Sound, .Alert, .Badge], categories: []))
+            application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: []))
         }
         
         
         // Si es la primera vez creamos la base de datos
-        let yaentre = NSUserDefaults.standardUserDefaults().boolForKey("yaentre")
+        let yaentre = UserDefaults.standard.bool(forKey: "yaentre")
         if yaentre {
             print ("no es la primera vez")
         } else {
             print ("primera vez")
             // Creamos la base de datos
-            let filemgr = NSFileManager.defaultManager()
-            let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+            let filemgr = FileManager.default
+            let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
             let docsDir = dirPaths[0] 
             
-            let databasePath = (docsDir as NSString).stringByAppendingPathComponent("YourLastTime.db")
+            let databasePath = (docsDir as NSString).appendingPathComponent("YourLastTime.db")
             print("bbdd en " + databasePath)
             // Borramos el fichero por si existe (parece como si pese a borrar la app los datos se quedasen)
             do {
-                try filemgr.removeItemAtPath(databasePath)
+                try filemgr.removeItem(atPath: databasePath)
             } catch {
                 print("Error eliminando Item")
             }
             
-            if !filemgr.fileExistsAtPath(databasePath as String) {
+            if !filemgr.fileExists(atPath: databasePath as String) {
                 
                 let contactDB = FMDatabase(path: databasePath as String)
                 
                 if contactDB == nil {
-                    print("Error: \(contactDB.lastErrorMessage())")
+                    print("Error: \(contactDB?.lastErrorMessage())")
                 }
                 
                 // TODO: añadir campos posición y archivado en tabla de eventos.
                 // posición: indicará la posición a ocupar en la visualización de la tabla (se usaría en un futuro si se permite reordenación de la tabla)
                 // archivado: indica si se ha archivado o no el evento
                 // Dias: en caso de ser != 0 establece una alarma para avisar de que hace más de x días que no se ha ocurrido un evento.
-                if contactDB.open() {
+                if (contactDB?.open())! {
                     // tabla de eventos
                     let sql_crear_eventos = "CREATE TABLE IF NOT EXISTS EVENTOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPCION TEXT, FECHA TEXT, HORA TEXT, CONTADOR INTEGER, ARCHIVADO INTEGER, CANTIDAD INTEGER, PERIODO INTEGER)"
-                    if !contactDB.executeStatements(sql_crear_eventos) {
-                        print("Error: \(contactDB.lastErrorMessage())")
+                    if !(contactDB?.executeStatements(sql_crear_eventos))! {
+                        print("Error: \(contactDB?.lastErrorMessage())")
                     }
                     // tabla de ocurrencias
                     let sql_crear_ocurrencias = "CREATE TABLE IF NOT EXISTS OCURRENCIAS (ID INTEGER PRIMARY KEY AUTOINCREMENT, IDEVENTO INTEGER, FECHA TEXT, HORA TEXT, DESCRIPCION TEXT)"
-                    if !contactDB.executeStatements(sql_crear_ocurrencias) {
-                        print("Error: \(contactDB.lastErrorMessage())")
+                    if !(contactDB?.executeStatements(sql_crear_ocurrencias))! {
+                        print("Error: \(contactDB?.lastErrorMessage())")
                     }
-                    contactDB.close()
+                    contactDB?.close()
                     // nos aseguramos de q no se vuelva a crear
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "yaentre")
+                    UserDefaults.standard.set(true, forKey: "yaentre")
                 } else {
-                    print("Error: \(contactDB.lastErrorMessage())")
+                    print("Error: \(contactDB?.lastErrorMessage())")
                 }
             }
             
@@ -88,30 +88,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
 
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
         print("notification is here. Open alert window or whatever")
         //let alerta = AlertaVC()
         //window?.addSubview(alerta.view)
@@ -139,9 +139,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let okAction = UIMutableUserNotificationAction()
         okAction.identifier = "Ok"
         okAction.title = "OK"
-        okAction.activationMode = UIUserNotificationActivationMode.Foreground
+        okAction.activationMode = UIUserNotificationActivationMode.foreground
         // NOT USED resetAction.authenticationRequired = true
-        okAction.destructive = true
+        okAction.isDestructive = true
         
         
         // 2. Create the category
@@ -152,11 +152,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // A. Set actions for the default context
         counterCategory.setActions([okAction],
-            forContext: UIUserNotificationActionContext.Default)
+            for: UIUserNotificationActionContext.default)
         
         // B. Set actions for the minimal context
         counterCategory.setActions([okAction],
-            forContext: UIUserNotificationActionContext.Minimal)
+            for: UIUserNotificationActionContext.minimal)
     }
 
 }

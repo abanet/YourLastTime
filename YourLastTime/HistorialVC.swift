@@ -34,16 +34,16 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         database = EventosDB()
         
         lblNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
         
         // Animación del botón para cerrar
-        _ = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: Selector("agitar"), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(HistorialVC.agitar), userInfo: nil, repeats: true)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         ocurrencias = database.arrayOcurrencias(idEvento)
         
@@ -72,22 +72,22 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
     
     // Ocultamos la barra de estatus
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true;
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("Número de ocurrencias: \(ocurrencias.count)")
         return ocurrencias.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CeldaHistorial") as! CeldaHistorialTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaHistorial") as! CeldaHistorialTableViewCell
         let fecha = Fecha()
         
         cell.lblFecha.text = fecha.devolverFechaLocalizada(ocurrencias[indexPath.row].fecha)
@@ -105,7 +105,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70.0
     }
     
@@ -118,19 +118,19 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
     
     // MARK: Función Compartir
-    @IBAction func shareHistorial(sender: UIButton) {
+    @IBAction func shareHistorial(_ sender: UIButton) {
         btnShare.alpha = 0
         
         let texto = "¡La última vez que \(lblNombreEvento.text!)!"
         let imagen: UIImage = screenShot()
         let activityViewController = UIActivityViewController(activityItems: [texto, imagen], applicationActivities: nil)
         activityViewController.excludedActivityTypes = [
-            UIActivityTypePostToWeibo,
-            UIActivityTypeAssignToContact,
-            UIActivityTypeAddToReadingList,
-            UIActivityTypePostToFlickr,
-            UIActivityTypePostToTencentWeibo]
-        presentViewController(activityViewController, animated: true, completion: nil)
+            UIActivityType.postToWeibo,
+            UIActivityType.assignToContact,
+            UIActivityType.addToReadingList,
+            UIActivityType.postToFlickr,
+            UIActivityType.postToTencentWeibo]
+        present(activityViewController, animated: true, completion: nil)
             }
     
     
@@ -138,14 +138,14 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     // MARK: Capturar pantalla
     func screenShot() -> UIImage {
         
-        UIGraphicsBeginImageContext(CGSizeMake(self.view.frame.size.width, self.view.frame.size.height))
+        UIGraphicsBeginImageContext(CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height))
         UIGraphicsGetCurrentContext()!
-        self.view?.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: false)
+        self.view?.drawHierarchy(in: self.view.frame, afterScreenUpdates: false)
         let screenShot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         
-        return screenShot
+        return screenShot!
     }
 
 }

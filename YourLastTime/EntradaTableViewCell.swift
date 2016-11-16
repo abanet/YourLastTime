@@ -29,14 +29,14 @@ class EntradaTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
 
     // añadir una nueva ocurrencia
-    @IBAction func addOcurrencia(sender: AnyObject) {
+    @IBAction func addOcurrencia(_ sender: AnyObject) {
         let boton = sender as! SpringButton
         boton.animation = "pop"
         boton.animate()

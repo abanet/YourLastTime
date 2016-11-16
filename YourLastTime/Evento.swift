@@ -29,19 +29,19 @@ class Evento: NSObject {
         self.periodo = periodo
     }
     
-    func fechaUltimaOcurrencia()->NSDate {
+    func fechaUltimaOcurrencia()->Date {
         return Fecha().fechaCompletaStringToDate(self.fecha + self.hora)
     }
     
-    func intervaloAlarmaEnHoras()->NSTimeInterval {
+    func intervaloAlarmaEnHoras()->TimeInterval {
         let horas = periodo.numHoras
-        return NSTimeInterval(cantidad * horas)
+        return TimeInterval(cantidad * horas)
     }
     
     // Devuelve un string descriptivo de cuanto tiempo ha pasado desde la fecha y hora del evento
     func cuantoTiempoHaceDesdeLaUltimaVez()->String {
         let fechaEvento = Fecha().fechaCompletaStringToDate(self.fecha + self.hora)
-        let intervalo = NSDate(timeIntervalSinceNow: 0).timeIntervalSinceDate(fechaEvento)
+        let intervalo = Date(timeIntervalSinceNow: 0).timeIntervalSince(fechaEvento)
         
         let ti = NSInteger(intervalo)
         let minutos = (ti / 60) % 60

@@ -26,17 +26,17 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         lblCabecera1.text = NSLocalizedString("It happened again!", comment:"")
         lblCabecera2.text = NSLocalizedString("Add a new occurrence", comment:"")
         descripcionOcurrencia.placeholder = NSLocalizedString("Add an optional description", comment:"")
-        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), forState: .Normal)
-        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), forState: .Selected)
+        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: UIControlState())
+        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: .selected)
 
         
         lblCabecera1.textColor = YourLastTime.colorTextoPrincipal
         lblCabecera2.textColor = YourLastTime.colorTextoPrincipal
-        btnOk.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
-        btnCancel.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
+        btnOk.setTitleColor(YourLastTime.colorFondoCelda, for: UIControlState())
+        btnCancel.setTitleColor(YourLastTime.colorFondoCelda, for: UIControlState())
 
         descripcionOcurrencia.delegate = self
-        descripcionOcurrencia.autocapitalizationType = .Sentences
+        descripcionOcurrencia.autocapitalizationType = .sentences
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,15 +46,15 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     
 
     // Para que oculte el teclado al pulsar fuera
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true;
     }
     
-    @IBAction func btnOkPulsado(sender: AnyObject) {
+    @IBAction func btnOkPulsado(_ sender: AnyObject) {
         let database = EventosDB()
         database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text!)
         
@@ -73,14 +73,14 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    @IBAction func btnCancelarPulsado(sender: AnyObject) {
-        performSegueWithIdentifier("cerrarNuevaOcurrencia", sender: nil)
+    @IBAction func btnCancelarPulsado(_ sender: AnyObject) {
+        performSegue(withIdentifier: "cerrarNuevaOcurrencia", sender: nil)
     }
 
 
     // MARK: - UITextDelegate
     // Control de máximo de longitud
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let newLength = textField.text!.utf16.count + string.utf16.count - range.length
         return newLength <= Constants.Texto.longitudMaximaNuevaOcurrencia // Bool
     }

@@ -12,11 +12,11 @@
 
 import UIKit
 
-public class YourLastTime : NSObject {
+open class YourLastTime : NSObject {
 
     //// Cache
 
-    private struct Cache {
+    fileprivate struct Cache {
         static var colorTextoPrincipal: UIColor = UIColor(red: 0.169, green: 0.251, blue: 0.129, alpha: 1.000)
         static var colorTextoSecundario: UIColor = YourLastTime.colorTextoPrincipal.colorWithBrightness(1)
         static var colorFechaHistorico: UIColor = YourLastTime.colorTextoPrincipal.colorWithBrightness(0.827)
@@ -29,24 +29,24 @@ public class YourLastTime : NSObject {
 
     //// Colors
 
-    public class var colorTextoPrincipal: UIColor { return Cache.colorTextoPrincipal }
-    public class var colorTextoSecundario: UIColor { return Cache.colorTextoSecundario }
-    public class var colorFechaHistorico: UIColor { return Cache.colorFechaHistorico }
-    public class var colorFondoCelda: UIColor { return Cache.colorFondoCelda }
-    public class var colorAccion: UIColor { return Cache.colorAccion }
-    public class var colorAccion2: UIColor { return Cache.colorAccion2 }
-    public class var colorAccion3: UIColor { return Cache.colorAccion3 }
-    public class var colorBackground: UIColor { return Cache.colorBackground }
+    open class var colorTextoPrincipal: UIColor { return Cache.colorTextoPrincipal }
+    open class var colorTextoSecundario: UIColor { return Cache.colorTextoSecundario }
+    open class var colorFechaHistorico: UIColor { return Cache.colorFechaHistorico }
+    open class var colorFondoCelda: UIColor { return Cache.colorFondoCelda }
+    open class var colorAccion: UIColor { return Cache.colorAccion }
+    open class var colorAccion2: UIColor { return Cache.colorAccion2 }
+    open class var colorAccion3: UIColor { return Cache.colorAccion3 }
+    open class var colorBackground: UIColor { return Cache.colorBackground }
 
     //// Drawing Methods
 
-    public class func drawCanvas1(frame frame: CGRect) {
+    open class func drawCanvas1(frame: CGRect) {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
-        bezierPath.moveToPoint(CGPointMake(frame.minX + 10, frame.maxY - 34.31))
-        bezierPath.addCurveToPoint(CGPointMake(frame.minX + 10, frame.maxY - 50), controlPoint1: CGPointMake(frame.minX + 10, frame.maxY - 50), controlPoint2: CGPointMake(frame.minX + 10, frame.maxY - 50))
-        UIColor.grayColor().setFill()
+        bezierPath.move(to: CGPoint(x: frame.minX + 10, y: frame.maxY - 34.31))
+        bezierPath.addCurve(to: CGPoint(x: frame.minX + 10, y: frame.maxY - 50), controlPoint1: CGPoint(x: frame.minX + 10, y: frame.maxY - 50), controlPoint2: CGPoint(x: frame.minX + 10, y: frame.maxY - 50))
+        UIColor.gray.setFill()
         bezierPath.fill()
         YourLastTime.colorFechaHistorico.setStroke()
         bezierPath.lineWidth = 1
@@ -54,7 +54,7 @@ public class YourLastTime : NSObject {
 
 
         //// Oval Drawing
-        let ovalPath = UIBezierPath(ovalInRect: CGRectMake(frame.minX + 1, frame.minY + floor((frame.height - 18) * 0.50000 + 0.5), 18, 18))
+        let ovalPath = UIBezierPath(ovalIn: CGRect(x: frame.minX + 1, y: frame.minY + floor((frame.height - 18) * 0.50000 + 0.5), width: 18, height: 18))
         YourLastTime.colorFechaHistorico.setStroke()
         ovalPath.lineWidth = 1
         ovalPath.stroke()
@@ -62,9 +62,9 @@ public class YourLastTime : NSObject {
 
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
-        bezier2Path.moveToPoint(CGPointMake(frame.minX + 10, frame.minY + 50))
-        bezier2Path.addCurveToPoint(CGPointMake(frame.minX + 10, frame.minY + 34.31), controlPoint1: CGPointMake(frame.minX + 10, frame.minY + 34.31), controlPoint2: CGPointMake(frame.minX + 10, frame.minY + 34.31))
-        UIColor.grayColor().setFill()
+        bezier2Path.move(to: CGPoint(x: frame.minX + 10, y: frame.minY + 50))
+        bezier2Path.addCurve(to: CGPoint(x: frame.minX + 10, y: frame.minY + 34.31), controlPoint1: CGPoint(x: frame.minX + 10, y: frame.minY + 34.31), controlPoint2: CGPoint(x: frame.minX + 10, y: frame.minY + 34.31))
+        UIColor.gray.setFill()
         bezier2Path.fill()
         YourLastTime.colorFechaHistorico.setStroke()
         bezier2Path.lineWidth = 1
@@ -76,32 +76,32 @@ public class YourLastTime : NSObject {
 
 
 extension UIColor {
-    func colorWithHue(newHue: CGFloat) -> UIColor {
+    func colorWithHue(_ newHue: CGFloat) -> UIColor {
         var saturation: CGFloat = 1.0, brightness: CGFloat = 1.0, alpha: CGFloat = 1.0
         self.getHue(nil, saturation: &saturation, brightness: &brightness, alpha: &alpha)
         return UIColor(hue: newHue, saturation: saturation, brightness: brightness, alpha: alpha)
     }
-    func colorWithSaturation(newSaturation: CGFloat) -> UIColor {
+    func colorWithSaturation(_ newSaturation: CGFloat) -> UIColor {
         var hue: CGFloat = 1.0, brightness: CGFloat = 1.0, alpha: CGFloat = 1.0
         self.getHue(&hue, saturation: nil, brightness: &brightness, alpha: &alpha)
         return UIColor(hue: hue, saturation: newSaturation, brightness: brightness, alpha: alpha)
     }
-    func colorWithBrightness(newBrightness: CGFloat) -> UIColor {
+    func colorWithBrightness(_ newBrightness: CGFloat) -> UIColor {
         var hue: CGFloat = 1.0, saturation: CGFloat = 1.0, alpha: CGFloat = 1.0
         self.getHue(&hue, saturation: &saturation, brightness: nil, alpha: &alpha)
         return UIColor(hue: hue, saturation: saturation, brightness: newBrightness, alpha: alpha)
     }
-    func colorWithAlpha(newAlpha: CGFloat) -> UIColor {
+    func colorWithAlpha(_ newAlpha: CGFloat) -> UIColor {
         var hue: CGFloat = 1.0, saturation: CGFloat = 1.0, brightness: CGFloat = 1.0
         self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: nil)
         return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: newAlpha)
     }
-    func colorWithHighlight(highlight: CGFloat) -> UIColor {
+    func colorWithHighlight(_ highlight: CGFloat) -> UIColor {
         var red: CGFloat = 1.0, green: CGFloat = 1.0, blue: CGFloat = 1.0, alpha: CGFloat = 1.0
         self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return UIColor(red: red * (1-highlight) + highlight, green: green * (1-highlight) + highlight, blue: blue * (1-highlight) + highlight, alpha: alpha * (1-highlight) + highlight)
     }
-    func colorWithShadow(shadow: CGFloat) -> UIColor {
+    func colorWithShadow(_ shadow: CGFloat) -> UIColor {
         var red: CGFloat = 1.0, green: CGFloat = 1.0, blue: CGFloat = 1.0, alpha: CGFloat = 1.0
         self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return UIColor(red: red * (1-shadow), green: green * (1-shadow), blue: blue * (1-shadow), alpha: alpha * (1-shadow) + shadow)
@@ -109,9 +109,9 @@ extension UIColor {
 }
 
 @objc protocol StyleKitSettableImage {
-    func setImage(image: UIImage!)
+    func setImage(_ image: UIImage!)
 }
 
 @objc protocol StyleKitSettableSelectedImage {
-    func setSelectedImage(image: UIImage!)
+    func setSelectedImage(_ image: UIImage!)
 }

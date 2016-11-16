@@ -23,15 +23,15 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
  
 
 
-    private var bbdd: EventosDB
-    private var eventos: [Evento]
-    private var eventosFiltrados: [Evento] = [Evento]() //Eventos filtrados por el buscador
-    private var buscador = UISearchController()
-    private var buscadorOculto = true
-    private var filtroAplicado = false
+    fileprivate var bbdd: EventosDB
+    fileprivate var eventos: [Evento]
+    fileprivate var eventosFiltrados: [Evento] = [Evento]() //Eventos filtrados por el buscador
+    fileprivate var buscador = UISearchController()
+    fileprivate var buscadorOculto = true
+    fileprivate var filtroAplicado = false
 
-    private var hayqueBorrarRegistro = false // usado en protocolo alertaVC
-    private var buscadorActivado = false   // usado para inhabilitar botones cuando está el buscador activado
+    fileprivate var hayqueBorrarRegistro = false // usado en protocolo alertaVC
+    fileprivate var buscadorActivado = false   // usado para inhabilitar botones cuando está el buscador activado
    
     required init?(coder aDecoder: NSCoder) {
         bbdd = EventosDB()
@@ -64,10 +64,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             controller.searchResultsUpdater = self
             controller.dimsBackgroundDuringPresentation = false
             controller.searchBar.sizeToFit()
-            controller.searchBar.searchBarStyle = .Minimal//.Minimal
+            controller.searchBar.searchBarStyle = .minimal//.Minimal
             controller.searchBar.tintColor = YourLastTime.colorFondoCelda
             controller.searchBar.backgroundColor = YourLastTime.colorBackground
-            
+
             //self.tableView.tableHeaderView = controller.searchBar
             self.buscadorView.addSubview(controller.searchBar)
             //self.buscadorView.hidden = true
@@ -83,15 +83,19 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
 
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // Ocultamos el buscador
-        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
-        // generamos los eventos ordenados 
+        // 16/11/2016: Añadimos el siguiente if ya que al ejecutar sin celdas el scrollToRow daba error.
+        if self.tableView.numberOfRows(inSection: 0) > 0 {
+            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: false)
+        }
+        
+        // generamos los eventos ordenados
         eventos = bbdd.arrayEventos()
         self.tableView.reloadData()
     }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     updateConstraints()
   }
     
@@ -103,19 +107,19 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
 
     //MARK: UITableViewDataSource Protocol
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.buscador.active {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.buscador.isActive {
             return self.eventosFiltrados.count
         } else {
         return eventos.count
         }
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! EntradaTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! EntradaTableViewCell
         let fecha = Fecha()
         if !filtroAplicado {
         cell.lbDescripcion.text = eventos[indexPath.row].descripcion
@@ -129,10 +133,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.entradaView.animate()
             if(eventos[indexPath.row].cantidad > 0) {
                 cell.imgDespertador.image = imagenDespertador(eventos[indexPath.row])
-                cell.imgDespertador.hidden = false
+                cell.imgDespertador.isHidden = false
                 cell.lblDetalleAlarma.text = eventos[indexPath.row].descripcionAlarma()
             } else {
-                cell.imgDespertador.hidden = true
+                cell.imgDespertador.isHidden = true
                 cell.lblDetalleAlarma.text = ""
             }
             
@@ -145,18 +149,18 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.idEvento = eventosFiltrados[indexPath.row].id
             if(eventosFiltrados[indexPath.row].cantidad > 0) {
                 cell.imgDespertador.image = imagenDespertador(eventos[indexPath.row])
-                cell.imgDespertador.hidden = false
+                cell.imgDespertador.isHidden = false
             } else {
-                cell.imgDespertador.hidden = true
+                cell.imgDespertador.isHidden = true
             }
         }
         // Fondo de la celda transparente para mostrar la vista background de la tabla (foto de fondo)
-        cell.backgroundColor = UIColor.clearColor();
+        cell.backgroundColor = UIColor.clear;
       
         return cell
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 //        if !self.buscadorActivado {
 //            return true
 //        } else {
@@ -166,11 +170,11 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
        
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         var arrayAcciones = [UITableViewRowAction]()
 
@@ -178,8 +182,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         // Si no hay ocurrencias no mostramos la acción correspondiente
         
         if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
-            let historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
-            self.performSegueWithIdentifier("verHistorial", sender: indexPath)
+            let historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
+            self.performSegue(withIdentifier: "verHistorial", sender: indexPath)
             });
             historialRowAction.backgroundColor =  YourLastTime.colorAccion
             arrayAcciones.append(historialRowAction)
@@ -188,28 +192,28 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         // Creación de una alarma
         // Si no hay ninguna ocurrencia no se pueden mostrar alarmas
         if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
-            let alarmaRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("Alarm", comment: ""), handler:{action, indexpath in
-                self.performSegueWithIdentifier("crearAlarma", sender: indexPath)
+            let alarmaRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: NSLocalizedString("Alarm", comment: ""), handler:{action, indexpath in
+                self.performSegue(withIdentifier: "crearAlarma", sender: indexPath)
             });
             alarmaRowAction.backgroundColor =  YourLastTime.colorAccion2
             arrayAcciones.append(alarmaRowAction)
         }
         
         // Acción de borrado
-        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
                              var idEventoEliminar = ""
                 if !self.filtroAplicado {
                     idEventoEliminar = self.eventos[indexPath.row].id
-                    self.eventos.removeAtIndex(indexPath.row)
+                    self.eventos.remove(at: indexPath.row)
                 } else {
                     idEventoEliminar = self.eventosFiltrados[indexPath.row].id
-                    self.eventosFiltrados.removeAtIndex(indexPath.row)
+                    self.eventosFiltrados.remove(at: indexPath.row)
                     // Hay que eliminar también el evento de la lista eventos para que no aparezca al volver del buscardor
                     self.eliminarEventoArrayEventos(idEventoEliminar)
                 }
                 
                 
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                 
                 // Tenemos que eliminar el evento y sus ocurrencias
                 if self.bbdd.eliminarOcurrencias(idEventoEliminar) {
@@ -231,7 +235,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         return arrayAcciones
     }
     
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     print("celda pulsada")
   }
     
@@ -245,19 +249,19 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
 //    }
     
     // Ocultamos la barra de estatus
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return false
     }
     
    
     
-    @IBAction func touchDown(sender: AnyObject) {
+    @IBAction func touchDown(_ sender: AnyObject) {
         let boton = sender as! SpringButton
         boton.animation = "pop"
         boton.animate()
     }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
 //        if !self.buscadorActivado {
 //            return true
 //        } else {
@@ -266,19 +270,19 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         return true
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Pasamos el parámetro idEvento para dar el alta al pulsar el ok en la pantalla de nuevaOcurrencia
         // Cogemos la celda adecuada según la posición del botón pulsado.
         // Quizás una buena forma alternativa sea utilizar un protocolo en nuevaOcurrencia que devuelva Ok o Cancel y se actue en consecuencia.
         
         if self.buscadorActivado {
-                self.buscador.active = false
+                self.buscador.isActive = false
         }
         
         if(segue.identifier == "nuevaOcurrencia"){
-            let nuevaOcurrenciaViewController = segue.destinationViewController as! NuevaOcurrenciaVC
-            let buttonPosition: CGPoint = sender!.convertPoint(CGPointZero, toView: self.tableView)
-            if let indexPathCeldaSeleccionada = self.tableView.indexPathForRowAtPoint(buttonPosition) {
+            let nuevaOcurrenciaViewController = segue.destination as! NuevaOcurrenciaVC
+            let buttonPosition: CGPoint = (sender! as AnyObject).convert(CGPoint.zero, to: self.tableView)
+            if let indexPathCeldaSeleccionada = self.tableView.indexPathForRow(at: buttonPosition) {
                 if !filtroAplicado {
                     nuevaOcurrenciaViewController.idEvento = self.eventos[indexPathCeldaSeleccionada.row].id
                 } else {
@@ -288,8 +292,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         if(segue.identifier == "verHistorial"){
-            let historicoViewController = segue.destinationViewController as! HistorialVC
-            let index = sender as! NSIndexPath
+            let historicoViewController = segue.destination as! HistorialVC
+            let index = sender as! IndexPath
              if !filtroAplicado {
                 historicoViewController.idEvento = self.eventos[index.row].id
              } else {
@@ -298,8 +302,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         
         if (segue.identifier == "crearAlarma") {
-            let alarmaViewController = segue.destinationViewController as! NuevaAlarmaVC
-            let index = sender as! NSIndexPath
+            let alarmaViewController = segue.destination as! NuevaAlarmaVC
+            let index = sender as! IndexPath
             if !filtroAplicado {
                 alarmaViewController.idEvento = self.eventos[index.row].id
             } else {
@@ -310,28 +314,28 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     // MARK: Delegado de uisearchcontroller
-    func didPresentSearchController(searchController: UISearchController) {
+    func didPresentSearchController(_ searchController: UISearchController) {
         self.buscadorActivado = true
         print("buscador presentado")
         // se está escribiendo en el buscador, no se puede ocultar
-        self.btnLupa.enabled = false
+        self.btnLupa.isEnabled = false
     }
     
-    func didDismissSearchController(searchController: UISearchController) {
+    func didDismissSearchController(_ searchController: UISearchController) {
         self.buscadorActivado = false
         filtroAplicado = false
         self.tableView.reloadData()
         print("buscador cancelado")
         // volvemos a activar la lupa
-        self.btnLupa.enabled = true
+        self.btnLupa.isEnabled = true
     }
         
     // MARK: Función para filtrar resultados
-    func filtrarContenidoParaTextoBuscado(texto: String){
+    func filtrarContenidoParaTextoBuscado(_ texto: String){
         if texto.length != 0 {
         filtroAplicado = true
         self.eventosFiltrados = self.eventos.filter({(evento:Evento)->Bool in
-            let stringMatch = evento.descripcion.rangeOfString(texto, options: .CaseInsensitiveSearch)
+            let stringMatch = evento.descripcion.range(of: texto, options: .caseInsensitive)
             return stringMatch != nil
         })
         } else {
@@ -340,7 +344,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         if searchController.searchBar.text!.length > 0 {
             self.filtrarContenidoParaTextoBuscado(searchController.searchBar.text!)
             self.tableView.reloadData()
@@ -349,7 +353,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     
    
   // MARK: Botón para mostrar/ocultar buscador
-  @IBAction func pulsarLupa(sender: UIButton) {
+  @IBAction func pulsarLupa(_ sender: UIButton) {
     self.buscadorOculto = !self.buscadorOculto
     //self.buscadorView.hidden = !self.buscadorView.hidden
     
@@ -363,10 +367,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
   
   // actualización de la constraint de la table view
   func updateConstraints(){
-    UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut , animations: {
+    UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut , animations: {
       
       if self.buscadorOculto {
-        self.constraintTopBuscadorView.constant = -CGRectGetHeight(self.buscadorView.frame)
+        self.constraintTopBuscadorView.constant = -self.buscadorView.frame.height
         self.buscadorView.alpha = 0
       } else {
         self.constraintTopBuscadorView.constant = 0
@@ -379,23 +383,23 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
   }
     
     // MARK: Funciones auxiliares
-    func eliminarEventoArrayEventos(idEvento: String) {
-        for (index,evento) in eventos.enumerate() {
+    func eliminarEventoArrayEventos(_ idEvento: String) {
+        for (index,evento) in eventos.enumerated() {
             if evento.id == idEvento {
-                eventos.removeAtIndex(index)
+                eventos.remove(at: index)
                 break
             }
         }
     }
     
-    func imagenDespertador(evento: Evento) -> UIImage {
+    func imagenDespertador(_ evento: Evento) -> UIImage {
         // para depurar
         _ =  evento.intervaloAlarmaEnHoras()
         _ = evento.fechaUltimaOcurrencia()
         
-        let fechaMedia = NSDate(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 30, sinceDate: evento.fechaUltimaOcurrencia())
-        let fechaFinal = NSDate(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 60, sinceDate: evento.fechaUltimaOcurrencia())
-        let ahora = NSDate(timeIntervalSinceNow: 0)
+        let fechaMedia = Date(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 30, since: evento.fechaUltimaOcurrencia())
+        let fechaFinal = Date(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 60, since: evento.fechaUltimaOcurrencia())
+        let ahora = Date(timeIntervalSinceNow: 0)
         
         var nombreImagen = "despertador"
         if ahora.isGreaterThanDate(fechaFinal) {

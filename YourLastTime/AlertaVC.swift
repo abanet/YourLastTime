@@ -29,9 +29,9 @@ class AlertaVC: UIViewController {
     }
     
 
-    @IBAction func btnPulsado(sender: AnyObject) {
+    @IBAction func btnPulsado(_ sender: AnyObject) {
         
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
      
     }
     

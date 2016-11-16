@@ -13,68 +13,68 @@ class Fecha: NSObject, Comparable {
     var hora: String
     
     override init(){
-        let date = NSDate()
-        let formateador = NSDateFormatter()
+        let date = Date()
+        let formateador = DateFormatter()
         // El formateador de fecha lo mantenemos siempre a MM-dd-yyy para guardarlo en el mismo formato en la bbdd
         formateador.dateFormat = "MM-dd-yyyy" //NSLocalizedString("MM-dd-yyyy", comment: "Formato de fecha")
-        fecha = formateador.stringFromDate(date)
+        fecha = formateador.string(from: date)
         formateador.dateFormat = "HH:mm"
-        hora = formateador.stringFromDate(date)
+        hora = formateador.string(from: date)
         super.init()
     }
     
-    func devolverFechaLocalizada(fecha: String)-> String?{
-        let formateador = NSDateFormatter()
+    func devolverFechaLocalizada(_ fecha: String)-> String?{
+        let formateador = DateFormatter()
         // se guardó en formato MM-dd-yyyy
         formateador.dateFormat = "MM-dd-yyyy"
-        let date = formateador.dateFromString(fecha)
+        let date = formateador.date(from: fecha)
         // formato en el que mostraremos la fecha
         formateador.dateFormat = NSLocalizedString("MM-dd-yyyy", comment: "Formato de fecha")
-        return formateador.stringFromDate(date!)
+        return formateador.string(from: date!)
     }
     
-    func fechaStringToDate(fecha: String)->NSDate{
+    func fechaStringToDate(_ fecha: String)->Date{
         // IMPORTANTE: Se supone que el formato en que se pasa la fecha es el original en el que está grabada.
-        let formateador = NSDateFormatter()
+        let formateador = DateFormatter()
         formateador.dateFormat = "MM-dd-yyyy"
-        let fechaTemp = formateador.dateFromString(fecha)
+        let fechaTemp = formateador.date(from: fecha)
         return fechaTemp!
     }
     
     // fecha completa: fecha con  hora incluida.
-    func fechaCompletaStringToDate(fechaCompleta: String) -> NSDate {
-        let formateador = NSDateFormatter()
+    func fechaCompletaStringToDate(_ fechaCompleta: String) -> Date {
+        let formateador = DateFormatter()
         formateador.dateFormat = "MM-dd-yyyyHH:mm"
-        let fechaTemp = formateador.dateFromString(fechaCompleta)
+        let fechaTemp = formateador.date(from: fechaCompleta)
         return fechaTemp!
     }
     
-    func estaEnUltimosXdias(fecha:String, dias: Int)->Bool{
-        let formateador = NSDateFormatter()
+    func estaEnUltimosXdias(_ fecha:String, dias: Int)->Bool{
+        let formateador = DateFormatter()
         formateador.dateFormat = "MM-dd-yyyy"
-        let fechaNSDate = formateador.dateFromString(fecha)
-        let intervaloXdias: NSTimeInterval = intervalo(dias)
-        let fechaHaceXdias = NSDate(timeInterval: -intervaloXdias, sinceDate: self.fechaStringToDate(self.fecha))
+        let fechaNSDate = formateador.date(from: fecha)
+        let intervaloXdias: TimeInterval = intervalo(dias)
+        let fechaHaceXdias = Date(timeInterval: -intervaloXdias, since: self.fechaStringToDate(self.fecha))
         if fechaHaceXdias.isLessThanDate(fechaNSDate!){
             return true
         }
         return false
     }
     
-    func estaEnUltimaSemana(fecha:String)->Bool {
+    func estaEnUltimaSemana(_ fecha:String)->Bool {
         return estaEnUltimosXdias(fecha, dias: 7)
     }
     
-    func estaEnUltimoMes(fecha:String)->Bool {
+    func estaEnUltimoMes(_ fecha:String)->Bool {
         return estaEnUltimosXdias(fecha, dias: 30)
     }
     
-    func estaEnUltimoAnno(fecha:String)->Bool {
+    func estaEnUltimoAnno(_ fecha:String)->Bool {
         return estaEnUltimosXdias(fecha, dias: 365)
     }
     
-    private func intervalo(dias:Int)->NSTimeInterval {
-        return NSTimeInterval(dias * 24 * 60 * 60)
+    fileprivate func intervalo(_ dias:Int)->TimeInterval {
+        return TimeInterval(dias * 24 * 60 * 60)
     }
     
     

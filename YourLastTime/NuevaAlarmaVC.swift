@@ -19,8 +19,8 @@ class NuevaAlarmaVC: UIViewController {
     @IBOutlet weak var fraseDescriptiva: UILabel!
     @IBOutlet weak var btnBorrarAlarma: UIButton!
     
-    private var intervaloHoras: Int = 0
-    private var factorTemporal: Int = 0
+    fileprivate var intervaloHoras: Int = 0
+    fileprivate var factorTemporal: Int = 0
     
     
     override func viewDidLoad() {
@@ -33,24 +33,24 @@ class NuevaAlarmaVC: UIViewController {
         btnCancelar.tintColor = YourLastTime.colorFondoCelda
         btnBorrarAlarma.tintColor = YourLastTime.colorFondoCelda
         
-        btnSetAlarm.setTitle(NSLocalizedString("Set Alarm",comment: ""), forState: .Normal)  
-        btnCancelar.setTitle(NSLocalizedString("Cancel",comment: ""), forState: .Normal)
-        btnBorrarAlarma.setTitle(NSLocalizedString("Delete Alarm",comment: ""), forState: .Normal)
+        btnSetAlarm.setTitle(NSLocalizedString("Set Alarm",comment: ""), for: UIControlState())  
+        btnCancelar.setTitle(NSLocalizedString("Cancel",comment: ""), for: UIControlState())
+        btnBorrarAlarma.setTitle(NSLocalizedString("Delete Alarm",comment: ""), for: UIControlState())
         
         fraseDescriptiva.text = NSLocalizedString("The event doesn't happened!",comment: "")
         selectorTemporal.removeAllSegments()
-        selectorTemporal.insertSegmentWithTitle(NSLocalizedString("years",comment: ""), atIndex: 0, animated: false)
-        selectorTemporal.insertSegmentWithTitle(NSLocalizedString("months",comment: ""), atIndex: 1, animated: false)
-        selectorTemporal.insertSegmentWithTitle(NSLocalizedString("days",comment: ""), atIndex: 2, animated: false)
-        selectorTemporal.insertSegmentWithTitle(NSLocalizedString("hours",comment: ""), atIndex: 3, animated: false)
+        selectorTemporal.insertSegment(withTitle: NSLocalizedString("years",comment: ""), at: 0, animated: false)
+        selectorTemporal.insertSegment(withTitle: NSLocalizedString("months",comment: ""), at: 1, animated: false)
+        selectorTemporal.insertSegment(withTitle: NSLocalizedString("days",comment: ""), at: 2, animated: false)
+        selectorTemporal.insertSegment(withTitle: NSLocalizedString("hours",comment: ""), at: 3, animated: false)
         selectorTemporal.selectedSegmentIndex = 2
         factorTemporal = 24 // se corresponde con dias segmentIndex = 1
         
         // Animación de la alarma
-        _ = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: Selector("agitar"), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(NuevaAlarmaVC.agitar), userInfo: nil, repeats: true)
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         intervaloHoras = Int(stepper.value) * factorTemporal
         
         // Si existe una alarma ya creada para el evento en curso hay que actualizar la pantalla.
@@ -84,11 +84,11 @@ class NuevaAlarmaVC: UIViewController {
     }
     
 
-    @IBAction func setAlarm(sender: AnyObject) {
+    @IBAction func setAlarm(_ sender: AnyObject) {
         let bbdd = EventosDB()
         let elPeriodo = PeriodoTemporal(rawValue: selectorTemporal.selectedSegmentIndex + 1)
         bbdd.establecerAlarma(self.idEvento, cantidad: Int(stepper.value), periodo: elPeriodo)
-        performSegueWithIdentifier("cerrarAlarma", sender: nil)
+        performSegue(withIdentifier: "cerrarAlarma", sender: nil)
         
         // programamos una notificación local
         // TODO: si funciona esto no habría que almacenar las horas en la bbdd ya que al saltar la alarma vamos a quitarla del sistema...
@@ -106,30 +106,30 @@ class NuevaAlarmaVC: UIViewController {
         
     }
    
-    @IBAction func borrarAlarma(sender: AnyObject) {
+    @IBAction func borrarAlarma(_ sender: AnyObject) {
         let bbdd = EventosDB()
         bbdd.eliminarAlarma(self.idEvento)
-        performSegueWithIdentifier("cerrarAlarma", sender: nil)
+        performSegue(withIdentifier: "cerrarAlarma", sender: nil)
         
         // Hay que borrar la notificación de esta alarma
         let notificacionLocal = Notificacion(id:self.idEvento)
         notificacionLocal.cancelLocalNotification()
     }
     
-    @IBAction func cancelarAlarma(sender: AnyObject) {
-        performSegueWithIdentifier("cerrarAlarma", sender: nil)
+    @IBAction func cancelarAlarma(_ sender: AnyObject) {
+        performSegue(withIdentifier: "cerrarAlarma", sender: nil)
 
     }
     
     
-    @IBAction func stepperPulsado(sender: AnyObject) {
+    @IBAction func stepperPulsado(_ sender: AnyObject) {
         // Intervalo posible: 1-365
         let step = sender as! UIStepper
         lblNumero.text = String(format:"%03d", Int(step.value))
         self.actualizarIntervaloHoras()
     }
 
-    @IBAction func definirIntervaloTiempo(sender: AnyObject) {
+    @IBAction func definirIntervaloTiempo(_ sender: AnyObject) {
         let segmento = sender as! UISegmentedControl
         
         switch (segmento.selectedSegmentIndex) {

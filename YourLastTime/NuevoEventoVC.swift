@@ -26,33 +26,33 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
         lblCabecera1.text = NSLocalizedString("Create a", comment:"")
         lblCabecera2.text = NSLocalizedString("New Event", comment:"")
         descripcionEvento.placeholder = NSLocalizedString("Name of the new event", comment:"")
-        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), forState: .Normal)
-        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), forState: .Selected)
+        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: UIControlState())
+        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: .selected)
         
         lblCabecera1.textColor = YourLastTime.colorTextoPrincipal
         lblCabecera2.textColor = YourLastTime.colorTextoPrincipal
-        btnOk.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
-        btnCancel.setTitleColor(YourLastTime.colorFondoCelda, forState: .Normal)
+        btnOk.setTitleColor(YourLastTime.colorFondoCelda, for: UIControlState())
+        btnCancel.setTitleColor(YourLastTime.colorFondoCelda, for: UIControlState())
         descripcionEvento.delegate = self
-        descripcionEvento.autocapitalizationType = .Sentences
+        descripcionEvento.autocapitalizationType = .sentences
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         // descripcionEvento.becomeFirstResponder()
     }
     
     // Para que oculte el teclado al pulsar fuera
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true;
     }
     
    
     // Creamos un nuevo evento y volvemos a la página anterior
-    @IBAction func pulsarBotonAddEvento(sender: AnyObject) {
+    @IBAction func pulsarBotonAddEvento(_ sender: AnyObject) {
         //let boton = sender as! UIButton
         let descripcion = descripcionEvento.text
         if !descripcion!.isEmpty {
@@ -63,15 +63,15 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
             // No podemos añadir un evento sin descripción
             view.endEditing(true)
         }
-        self.performSegueWithIdentifier("cerrarNuevoEvento", sender: self)
+        self.performSegue(withIdentifier: "cerrarNuevoEvento", sender: self)
     }
     
-    @IBAction func btnCancelarPulsado(sender: AnyObject) {
-        performSegueWithIdentifier("cerrarNuevoEvento", sender: nil)
+    @IBAction func btnCancelarPulsado(_ sender: AnyObject) {
+        performSegue(withIdentifier: "cerrarNuevoEvento", sender: nil)
     }
     
     // Control de máximo de longitud
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let newLength = textField.text!.utf16.count + string.utf16.count - range.length
         return newLength <= Constants.Texto.longitudMaximaNuevoEvento // Bool
     }
