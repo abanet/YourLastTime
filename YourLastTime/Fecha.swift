@@ -77,6 +77,21 @@ class Fecha: NSObject, Comparable {
         return TimeInterval(dias * 24 * 60 * 60)
     }
     
+    // Convertir intervalo a dias, horas, minutos segundos para sacar por pantalla.
+    func stringFromTimeInterval(interval: TimeInterval) -> String {
+        let interval = Int(abs(interval))
+        let seconds = interval % 60
+        let minutes = (interval / 60) % 60
+        let hours = (interval / 3600) % 24
+        let days = (interval / 3600 / 24)
+        
+        // Dos posibles tipos de string: dia:horas:minutos si hay dias; horas:minutos:segundos si no hay días.
+        if days > 0 {
+           return String(format: "%02dd, %02dh:%02dm.", days, hours, minutes)
+        } else {
+            return String(format: "%02dh:%02dm:%02ds.",hours, minutes, seconds)
+        }
+    }
     
 }
 

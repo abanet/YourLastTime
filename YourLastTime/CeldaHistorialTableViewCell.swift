@@ -14,6 +14,7 @@ class CeldaHistorialTableViewCell: UITableViewCell {
     @IBOutlet weak var descripcion: UILabel!
     @IBOutlet weak var imgHito: UIImageView!
     @IBOutlet weak var lblHora: UILabel!
+    @IBOutlet weak var lblHace: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

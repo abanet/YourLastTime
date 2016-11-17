@@ -97,6 +97,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         // Esperar a ver si más adelante funciona.
         //cell.descripcion.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
         
+        // Calculo de la diferencia entre dos ocurrencias
+        cell.lblHace.text = self.informarIntervalodeDiferencia(fila: indexPath.row, ocurrencia: ocurrencias[indexPath.row])
+        
         // Si la celda a dibujar es la última hay que cambiar el gráfico de hito.
         if indexPath.row == ocurrencias.count - 1 {
             cell.imgHito.image = UIImage(named: "hitoFinal")
@@ -148,4 +151,17 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         return screenShot!
     }
 
+    func informarIntervalodeDiferencia(fila: Int, ocurrencia: Ocurrencia)->String{
+        if fila > 0 {
+            // Restamos de la ocurrencia actual la ocurrencia anterior
+            let fechaActualString = ocurrencia.formatoMMddYYYYHHmm()
+            let fechaActualDate = Fecha().fechaCompletaStringToDate(fechaActualString)
+            let fechaAnteriorString = ocurrencias[fila-1].formatoMMddYYYYHHmm()
+            let fechaAnteriorDate = Fecha().fechaCompletaStringToDate(fechaAnteriorString)
+            let intervalo = fechaActualDate.timeIntervalSince(fechaAnteriorDate) // número de segundos de diferencia
+            print("Restando \(fechaActualString) de \(fechaAnteriorString). Intervalo: \(intervalo.description)")
+            return Fecha().stringFromTimeInterval(interval: intervalo)
+        }
+        return String(" ")
+    }
 }
