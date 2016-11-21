@@ -35,4 +35,15 @@ class Ocurrencia: NSObject {
         return "\(fecha)\(hora)"
     }
     
+    class func mediaOcurrencias(ocurrencia1: Ocurrencia, ocurrencia2: Ocurrencia, numOcurrencias: Int)-> String {
+        let fechaOcurrencia1String = ocurrencia1.formatoMMddYYYYHHmm()
+        let fechaOcurrencia1Date = Fecha().fechaCompletaStringToDate(fechaOcurrencia1String)
+        let fechaOcurrencia2String = ocurrencia2.formatoMMddYYYYHHmm()
+        let fechaOcurrencia2Date = Fecha().fechaCompletaStringToDate(fechaOcurrencia2String)
+        let intervalo = fechaOcurrencia2Date.timeIntervalSince(fechaOcurrencia1Date) // número de segundos de diferencia
+        let media = intervalo / Double(numOcurrencias - 1)
+    
+        return Fecha().stringFromTimeInterval(interval: media)
+    }
+    
 }

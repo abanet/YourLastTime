@@ -20,6 +20,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @IBOutlet weak var lblUltimoAnno: UILabel!
     @IBOutlet weak var lblResultadoUltimoAnno: UILabel!
     @IBOutlet weak var lblTotal: UILabel!
+    @IBOutlet weak var lblMedia: UILabel!
+    
+    
     @IBOutlet weak var btnCerrar: SpringButton!
     @IBOutlet var btnShare: UIButton!
     
@@ -64,6 +67,13 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
         // Total de ocurrencias
         lblTotal.text = String(ocurrencias.count)
+        
+        // Media de las ocurrencias. Sólo si hay más de 1 ocurrencia.
+        if ocurrencias.count > 1 {
+            lblMedia.text = Ocurrencia.mediaOcurrencias(ocurrencia1: ocurrencias[0], ocurrencia2: ocurrencias[ocurrencias.count - 1], numOcurrencias: ocurrencias.count)
+        } else {
+            lblMedia.text = "N/A"
+        }
     }
 
     override func didReceiveMemoryWarning() {

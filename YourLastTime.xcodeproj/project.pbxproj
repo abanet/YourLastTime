@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C0008CF51B2702A80028F850 /* Evento.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0008CF41B2702A80028F850 /* Evento.swift */; };
 		C0008CF71B27100D0028F850 /* Fecha.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0008CF61B27100D0028F850 /* Fecha.swift */; };
+		C01855F91DE3114600EE347B /* GATracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01855F81DE3114600EE347B /* GATracker.swift */; };
 		C03DA6C31B4BEC930053E1B5 /* YourLastTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03DA6C21B4BEC930053E1B5 /* YourLastTime.swift */; };
 		C041D7561B3D51CF004E2FCB /* ABMDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C041D7551B3D51CF004E2FCB /* ABMDate.swift */; };
 		C04C1F751B25ACAC00CF79E4 /* yourLastTime.sql in Resources */ = {isa = PBXBuildFile; fileRef = C04C1F741B25ACAC00CF79E4 /* yourLastTime.sql */; };
@@ -86,6 +87,7 @@
 /* Begin PBXFileReference section */
 		C0008CF41B2702A80028F850 /* Evento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evento.swift; sourceTree = "<group>"; };
 		C0008CF61B27100D0028F850 /* Fecha.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fecha.swift; sourceTree = "<group>"; };
+		C01855F81DE3114600EE347B /* GATracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATracker.swift; sourceTree = "<group>"; };
 		C032E7E11B32C8D70077A47A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C03DA6C21B4BEC930053E1B5 /* YourLastTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YourLastTime.swift; sourceTree = "<group>"; };
 		C041D7551B3D51CF004E2FCB /* ABMDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABMDate.swift; sourceTree = "<group>"; };
@@ -106,7 +108,7 @@
 		C0F6968F1B3C157F004F3214 /* constantes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constantes.swift; sourceTree = "<group>"; };
 		C0FEE5B41B259AE9000B0627 /* YourLastTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourLastTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0FEE5B81B259AE9000B0627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C0FEE5B91B259AE9000B0627 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C0FEE5B91B259AE9000B0627 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = YourLastTime/AppDelegate.swift; sourceTree = "<group>"; };
 		C0FEE5C31B259AE9000B0627 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C0FEE5C91B259AE9000B0627 /* YourLastTimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YourLastTimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0FEE5CE1B259AE9000B0627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -187,9 +189,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C01855FA1DE3114B00EE347B /* YourLastTime */ = {
+			isa = PBXGroup;
+			children = (
+				C01855F81DE3114600EE347B /* GATracker.swift */,
+			);
+			name = YourLastTime;
+			sourceTree = "<group>";
+		};
 		C0FEE5AB1B259AE9000B0627 = {
 			isa = PBXGroup;
 			children = (
+				C0FEE5B91B259AE9000B0627 /* AppDelegate.swift */,
+				C01855FA1DE3114B00EE347B /* YourLastTime */,
 				D383B8ED1BB3470C001C75EC /* Spring */,
 				C0FEE6411B25A650000B0627 /* libsqlite3.dylib */,
 				C0FEE6401B25A56B000B0627 /* YourLastTime-Bridging-Header.h */,
@@ -214,7 +226,6 @@
 				C0C168311B38067B00387F3F /* Media.xcassets */,
 				C0FEE60C1B259B62000B0627 /* TPKeyboardAvoiding */,
 				C0FEE5DC1B259B62000B0627 /* fmdb */,
-				C0FEE5B91B259AE9000B0627 /* AppDelegate.swift */,
 				C03DA6C21B4BEC930053E1B5 /* YourLastTime.swift */,
 				C0F6968F1B3C157F004F3214 /* constantes.swift */,
 				C0FEE5D91B259B41000B0627 /* Main.storyboard */,
@@ -487,6 +498,7 @@
 				C0FEE6171B259B62000B0627 /* FMDatabaseAdditions.m in Sources */,
 				C0008CF51B2702A80028F850 /* Evento.swift in Sources */,
 				D383B9271BB3470C001C75EC /* TransitionZoom.swift in Sources */,
+				C01855F91DE3114600EE347B /* GATracker.swift in Sources */,
 				D383B90C1BB3470C001C75EC /* AsyncButton.swift in Sources */,
 				D383B90E1BB3470C001C75EC /* AutoTextView.swift in Sources */,
 				C0008CF71B27100D0028F850 /* Fecha.swift in Sources */,

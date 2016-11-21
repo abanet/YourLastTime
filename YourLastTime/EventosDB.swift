@@ -37,7 +37,7 @@ class EventosDB: NSObject {
                 print("Error: \(database.lastErrorMessage())")
             } else {
                 print("Evento añadido")
-                
+                GATracker.sharedInstance.event(category: "Eventos", action: "Nuevo evento", label:"\(descripcionSinComillasSimples)", customParameters: nil)
             }
         } else {
             print("Error abriendo bbdd: \(database.lastErrorMessage())")
@@ -45,13 +45,16 @@ class EventosDB: NSObject {
     }
     
     // Devuelve true si el evento se ha podido eliminar
-    func eliminarEvento(_ idEvento:String)->Bool {
+    func eliminarEvento(_ idEvento:String, descripcion: String?)->Bool {
         if database.open(){
             let deleteSQL = "DELETE FROM EVENTOS WHERE ID = '\(idEvento)'"
             let resultado = database.executeUpdate(deleteSQL, withArgumentsIn: nil)
             if !resultado {
                 print("Error: \(database.lastErrorMessage())")
             } else {
+                if let descripcionEvento = descripcion {
+                GATracker.sharedInstance.event(category: "Eventos", action: "Borrar evento", label:"\(descripcionEvento)", customParameters: nil)
+                }
                 return true
             }
         }
@@ -74,8 +77,7 @@ class EventosDB: NSObject {
                 let updateSQL = "UPDATE EVENTOS SET FECHA = '\(fecha.fecha)', HORA = '\(fecha.hora)', CONTADOR = CONTADOR + 1 WHERE ID = '\(idEvento)'"
                 print(updateSQL)
                 _ = database.executeUpdate(updateSQL, withArgumentsIn: nil)
-          
-                
+                GATracker.sharedInstance.event(category: "Ocurrencia", action: "Nueva ocurrencia", label:"\(descripcionSinComillasSimples)", customParameters: nil)    
             }
         } else {
             print("Error abriendo bbdd: \(database.lastErrorMessage())")
