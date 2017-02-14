@@ -36,6 +36,7 @@
 "Last month: " = "Último mes: ";
 "Last year: " = "Último año: ";
 "¡Acaba de ocurrir!" = "¡Acaba de ocurrir!";
+"Average: " = "Media: ";
 
 /* Pantalla de creación de alarma */
 "The event doesn't happened!" = "El evento no ocurre desde...";

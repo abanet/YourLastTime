@@ -14,7 +14,7 @@
 
 /* Acciones de celda */
 "Delete" = "Delete";
-"History" = "History";
+"History" = "Log";
 "Alarm" = "Alarm";
 
 /* Pantalla de historial */
@@ -36,6 +36,7 @@
 "Last month: " = "Last month: ";
 "Last year: " = "Last year: ";
 "¡Acaba de ocurrir!" = "Just right now!";
+"Average: " = "Average: ";
 
 /* Pantalla de creación de alarma */
 "The event doesn't happened!" = "It doesn't happened since...";

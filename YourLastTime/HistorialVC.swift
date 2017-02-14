@@ -20,6 +20,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @IBOutlet weak var lblUltimoAnno: UILabel!
     @IBOutlet weak var lblResultadoUltimoAnno: UILabel!
     @IBOutlet weak var lblTotal: UILabel!
+    @IBOutlet weak var lblEtiquetaMedia: UILabel!
     @IBOutlet weak var lblMedia: UILabel!
     
     
@@ -64,6 +65,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         lblResultadoUltimoMes.text = String(ocurrenciasMes)
         lblUltimoAnno.text = NSLocalizedString("Last year: ", comment: "")
         lblResultadoUltimoAnno.text = String(ocurrenciasAnno)
+        lblEtiquetaMedia.text = NSLocalizedString("Average: ", comment: "")
         
         // Total de ocurrencias
         lblTotal.text = String(ocurrencias.count)

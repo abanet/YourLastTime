@@ -52,9 +52,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // Creamos una vista como background de la tabla para evitar que quede gris al desplazar la tabla (con buscador no cogía el color de background)
         let backgroundView = UIView(frame: self.tableView.bounds)
-        backgroundView.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundRelojes2")!)
+        backgroundView.backgroundColor = UIColor(patternImage: UIImage(named: "background2")!)
         //YourLastTime.colorBackground
         self.tableView.backgroundView = backgroundView
+        self.tableView.backgroundView?.alpha = 0.5
         //self.tableView.bounces = false
       
         // Configuración searchController

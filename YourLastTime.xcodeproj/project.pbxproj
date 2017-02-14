@@ -14,6 +14,7 @@
 		C041D7561B3D51CF004E2FCB /* ABMDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C041D7551B3D51CF004E2FCB /* ABMDate.swift */; };
 		C04C1F751B25ACAC00CF79E4 /* yourLastTime.sql in Resources */ = {isa = PBXBuildFile; fileRef = C04C1F741B25ACAC00CF79E4 /* yourLastTime.sql */; };
 		C04C1F7B1B25AE2E00CF79E4 /* EventosDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */; };
+		C07E3A281E535FF400CE95EB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */; };
 		C09506191B4D3D3500961F8B /* NuevaAlarmaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */; };
 		C0AB36781B3432B30054D573 /* HistorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36771B3432B30054D573 /* HistorialVC.swift */; };
 		C0AB367A1B343CF40054D573 /* CeldaHistorialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */; };
@@ -27,7 +28,6 @@
 		C0DBB2D41B2839CD0017AF6E /* Ocurrencia.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DBB2D31B2839CD0017AF6E /* Ocurrencia.swift */; };
 		C0F696901B3C157F004F3214 /* constantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6968F1B3C157F004F3214 /* constantes.swift */; };
 		C0FEE5BA1B259AE9000B0627 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FEE5B91B259AE9000B0627 /* AppDelegate.swift */; };
-		C0FEE5C41B259AE9000B0627 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0FEE5C21B259AE9000B0627 /* LaunchScreen.xib */; };
 		C0FEE5D01B259AE9000B0627 /* YourLastTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FEE5CF1B259AE9000B0627 /* YourLastTimeTests.swift */; };
 		C0FEE5DA1B259B41000B0627 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0FEE5D91B259B41000B0627 /* Main.storyboard */; };
 		C0FEE6151B259B62000B0627 /* EntradaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FEE5DB1B259B62000B0627 /* EntradaTableViewCell.swift */; };
@@ -88,11 +88,11 @@
 		C0008CF41B2702A80028F850 /* Evento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evento.swift; sourceTree = "<group>"; };
 		C0008CF61B27100D0028F850 /* Fecha.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fecha.swift; sourceTree = "<group>"; };
 		C01855F81DE3114600EE347B /* GATracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATracker.swift; sourceTree = "<group>"; };
-		C032E7E11B32C8D70077A47A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C03DA6C21B4BEC930053E1B5 /* YourLastTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YourLastTime.swift; sourceTree = "<group>"; };
 		C041D7551B3D51CF004E2FCB /* ABMDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABMDate.swift; sourceTree = "<group>"; };
 		C04C1F741B25ACAC00CF79E4 /* yourLastTime.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yourLastTime.sql; sourceTree = "<group>"; };
 		C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventosDB.swift; sourceTree = "<group>"; };
+		C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuevaAlarmaVC.swift; sourceTree = "<group>"; };
 		C0AB36771B3432B30054D573 /* HistorialVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistorialVC.swift; sourceTree = "<group>"; };
 		C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaHistorialTableViewCell.swift; sourceTree = "<group>"; };
@@ -109,7 +109,6 @@
 		C0FEE5B41B259AE9000B0627 /* YourLastTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourLastTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0FEE5B81B259AE9000B0627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0FEE5B91B259AE9000B0627 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = YourLastTime/AppDelegate.swift; sourceTree = "<group>"; };
-		C0FEE5C31B259AE9000B0627 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C0FEE5C91B259AE9000B0627 /* YourLastTimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YourLastTimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0FEE5CE1B259AE9000B0627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0FEE5CF1B259AE9000B0627 /* YourLastTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourLastTimeTests.swift; sourceTree = "<group>"; };
@@ -200,6 +199,7 @@
 		C0FEE5AB1B259AE9000B0627 = {
 			isa = PBXGroup;
 			children = (
+				C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */,
 				C0FEE5B91B259AE9000B0627 /* AppDelegate.swift */,
 				C01855FA1DE3114B00EE347B /* YourLastTime */,
 				D383B8ED1BB3470C001C75EC /* Spring */,
@@ -229,7 +229,6 @@
 				C03DA6C21B4BEC930053E1B5 /* YourLastTime.swift */,
 				C0F6968F1B3C157F004F3214 /* constantes.swift */,
 				C0FEE5D91B259B41000B0627 /* Main.storyboard */,
-				C0FEE5C21B259AE9000B0627 /* LaunchScreen.xib */,
 				C0FEE5DB1B259B62000B0627 /* EntradaTableViewCell.swift */,
 				C0FEE5E91B259B62000B0627 /* NuevoEventoVC.swift */,
 				C0C09BFC1B301C68004AC072 /* NuevaOcurrenciaVC.swift */,
@@ -434,10 +433,10 @@
 			files = (
 				C0FEE5DA1B259B41000B0627 /* Main.storyboard in Resources */,
 				D383B91B1BB3470C001C75EC /* LoadingView.xib in Resources */,
+				C07E3A281E535FF400CE95EB /* Launch Screen.storyboard in Resources */,
 				C0C168321B38067B00387F3F /* Media.xcassets in Resources */,
 				C04C1F751B25ACAC00CF79E4 /* yourLastTime.sql in Resources */,
 				C0BCADAA1B2986FE00B20009 /* Localizable.strings in Resources */,
-				C0FEE5C41B259AE9000B0627 /* LaunchScreen.xib in Resources */,
 				C0B39B991B53D4A200E3D680 /* AlertaVC.xib in Resources */,
 				D383B9181BB3470C001C75EC /* Info.plist in Resources */,
 			);
@@ -544,15 +543,6 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		C0FEE5C21B259AE9000B0627 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C0FEE5C31B259AE9000B0627 /* Base */,
-				C032E7E11B32C8D70077A47A /* es */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -560,6 +550,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -609,6 +600,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
