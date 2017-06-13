@@ -1,0 +1,52 @@
+"When was the last time I...?" = "When was the last time I...?";
+"MM-dd-yyyy" = "MM-dd-yyyy";
+"Cancel" = "Cancel";
+
+/* Pantalla de nueva ocurrencia */
+"It happened again!" = "It happened again!";
+"Add a new occurrence" = "Add a new occurrence";
+"Add an optional description" = "Add an optional description";
+
+/* Pantalla de nuevo evento */
+"Create a" = "Create a";
+"New Event" = "New Event";
+"Name of the new event" = "Name of the new event";
+
+/* Acciones de celda */
+"Delete" = "Delete";
+"History" = "Log";
+"Alarm" = "Alarm";
+
+/* Pantalla de historial */
+"Ago: " = "Ago: ";
+"Hace+tiempo" = "%@ ago.";
+"year" = "year";
+"week" = "week";
+"month" = "month";
+"day" = "day";
+"years" = "years";
+"weeks" = "weeks";
+"months" = "months";
+"days" = "days";
+"minutes" = "minutes";
+"minute" = "minute";
+"times" = "times";
+"time" = "time";
+"Last week: " = "Last week: ";
+"Last month: " = "Last month: ";
+"Last year: " = "Last year: ";
+"¡Acaba de ocurrir!" = "Just right now!";
+"Average: " = "Average: ";
+
+/* Pantalla de creación de alarma */
+"The event doesn't happened!" = "It doesn't happened since...";
+"Set Alarm" = "Set Alarm";
+"Delete Alarm" = "Delete Alarm";
+"hours" = "hours"; // días y años ya se definió en pantalla de historial
+
+/* Abreviaturas de periodos temporales */
+"abreviatura de año" = "y";
+"abreviatura de mes" = "m";
+"abreviatura de dia" = "d";
+"abreviatura de hora" = "h";
+
