@@ -126,7 +126,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
     
     
-    func agitar() {
+    @objc func agitar() {
         btnCerrar.animation = "swing"
         btnCerrar.force = 5.0
         btnCerrar.duration = 0.5
@@ -138,14 +138,14 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         //btnShare.alpha = 0
         
         let texto = "¡La última vez que \(lblNombreEvento.text!)!"
-        let imagen = UIImageJPEGRepresentation(screenShot(), 1.0)!
+        let imagen = screenShot().jpegData(compressionQuality: 1.0)!
         let activityViewController = UIActivityViewController(activityItems: [imagen], applicationActivities: nil)
         activityViewController.excludedActivityTypes = [
-            UIActivityType.postToWeibo,
-            UIActivityType.assignToContact,
-            UIActivityType.addToReadingList,
-            UIActivityType.postToFlickr,
-            UIActivityType.postToTencentWeibo]
+            UIActivity.ActivityType.postToWeibo,
+            UIActivity.ActivityType.assignToContact,
+            UIActivity.ActivityType.addToReadingList,
+            UIActivity.ActivityType.postToFlickr,
+            UIActivity.ActivityType.postToTencentWeibo]
         present(activityViewController, animated: true, completion: nil)
             }
     

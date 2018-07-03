@@ -26,7 +26,7 @@ import UIKit
     
     @IBInspectable public var placeholderColor: UIColor = UIColor.clear {
         didSet {
-            attributedPlaceholder = NSAttributedString(string: placeholder!, attributes: [NSForegroundColorAttributeName: placeholderColor])
+            attributedPlaceholder = NSAttributedString(string: placeholder!, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): placeholderColor]))
             layoutSubviews()
             
         }
@@ -36,10 +36,10 @@ import UIKit
         didSet {
             let padding = UIView(frame: CGRect(x: 0, y: 0, width: sidePadding, height: sidePadding))
             
-            leftViewMode = UITextFieldViewMode.always
+            leftViewMode = UITextField.ViewMode.always
             leftView = padding
             
-            rightViewMode = UITextFieldViewMode.always
+            rightViewMode = UITextField.ViewMode.always
             rightView = padding
         }
     }
@@ -48,7 +48,7 @@ import UIKit
         didSet {
             let padding = UIView(frame: CGRect(x: 0, y: 0, width: leftPadding, height: 0))
             
-            leftViewMode = UITextFieldViewMode.always
+            leftViewMode = UITextField.ViewMode.always
             leftView = padding
         }
     }
@@ -57,7 +57,7 @@ import UIKit
         didSet {
             let padding = UIView(frame: CGRect(x: 0, y: 0, width: rightPadding, height: 0))
             
-            rightViewMode = UITextFieldViewMode.always
+            rightViewMode = UITextField.ViewMode.always
             rightView = padding
         }
     }
@@ -89,11 +89,27 @@ import UIKit
             paragraphStyle.lineSpacing = lineHeight
             
             let attributedString = NSMutableAttributedString(string: text!)
-            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
-            attributedString.addAttribute(NSFontAttributeName, value: font!, range: NSRange(location: 0, length: attributedString.length))
+            attributedString.addAttribute(convertToNSAttributedStringKey(convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle)), value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+            attributedString.addAttribute(convertToNSAttributedStringKey(convertFromNSAttributedStringKey(NSAttributedString.Key.font)), value: font!, range: NSRange(location: 0, length: attributedString.length))
             
             self.attributedText = attributedString
         }
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSAttributedStringKey(_ input: String) -> NSAttributedString.Key {
+	return NSAttributedString.Key(rawValue: input)
 }

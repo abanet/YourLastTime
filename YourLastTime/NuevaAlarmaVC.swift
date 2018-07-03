@@ -33,9 +33,9 @@ class NuevaAlarmaVC: UIViewController {
         btnCancelar.tintColor = YourLastTime.colorFondoCelda
         btnBorrarAlarma.tintColor = YourLastTime.colorFondoCelda
         
-        btnSetAlarm.setTitle(NSLocalizedString("Set Alarm",comment: ""), for: UIControlState())  
-        btnCancelar.setTitle(NSLocalizedString("Cancel",comment: ""), for: UIControlState())
-        btnBorrarAlarma.setTitle(NSLocalizedString("Delete Alarm",comment: ""), for: UIControlState())
+        btnSetAlarm.setTitle(NSLocalizedString("Set Alarm",comment: ""), for: UIControl.State())  
+        btnCancelar.setTitle(NSLocalizedString("Cancel",comment: ""), for: UIControl.State())
+        btnBorrarAlarma.setTitle(NSLocalizedString("Delete Alarm",comment: ""), for: UIControl.State())
         
         fraseDescriptiva.text = NSLocalizedString("The event doesn't happened!",comment: "")
         selectorTemporal.removeAllSegments()
@@ -156,7 +156,7 @@ class NuevaAlarmaVC: UIViewController {
         print("Valor del stepper: \(stepper.value); factorTemporal: \(factorTemporal)")
     }
     
-    func agitar() {
+    @objc func agitar() {
         despertador.animation = "swing"
         despertador.force = 5.0
         despertador.duration = 0.5

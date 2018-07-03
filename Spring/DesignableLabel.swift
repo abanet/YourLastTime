@@ -33,11 +33,21 @@ import UIKit
             paragraphStyle.lineSpacing = lineHeight
             
             let attributedString = NSMutableAttributedString(string: text!)
-            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-            attributedString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, attributedString.length))
+            attributedString.addAttribute(convertToNSAttributedStringKey(convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle)), value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+            attributedString.addAttribute(convertToNSAttributedStringKey(convertFromNSAttributedStringKey(NSAttributedString.Key.font)), value: font!, range: NSMakeRange(0, attributedString.length))
             
             self.attributedText = attributedString
         }
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSAttributedStringKey(_ input: String) -> NSAttributedString.Key {
+	return NSAttributedString.Key(rawValue: input)
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }
