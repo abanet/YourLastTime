@@ -48,7 +48,7 @@ class Evento: NSObject {
         let horas = (ti / 3600) % 24
         let dias  = (ti / (3600 * 24)) % 30
         let meses = (ti / (3600 * 24 * 30)) % 12
-        let annos = (ti / (3600 * 24 * 365))
+        let annos = (ti / (3600 * 24 * 30 * 12))
         
         
         let stringAnnos = annos == 1 ? NSLocalizedString("year", comment:"") :NSLocalizedString("years", comment:"")

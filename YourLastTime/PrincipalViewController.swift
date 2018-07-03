@@ -124,6 +124,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         let fecha = Fecha()
         if !filtroAplicado {
         cell.lbDescripcion.text = eventos[indexPath.row].descripcion
+      print(cell.lbDescripcion.text)
         cell.lblHace.text = eventos[indexPath.row].cuantoTiempoHaceDesdeLaUltimaVez()
         cell.lblFecha.text = fecha.devolverFechaLocalizada(eventos[indexPath.row].fecha)
         cell.lblHora.text = eventos[indexPath.row].hora
