@@ -138,14 +138,16 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         //btnShare.alpha = 0
         
         let texto = "¡La última vez que \(lblNombreEvento.text!)!"
-        let imagen = screenShot().jpegData(compressionQuality: 1.0)!
+        let imagenCaptura = screenShot()
+        let imagen = UIImageJPEGRepresentation(imagenCaptura, 1.0)!
+        //let imagen = imagenCaptura.jpegData(compressionQuality: 1.0)!
         let activityViewController = UIActivityViewController(activityItems: [imagen], applicationActivities: nil)
         activityViewController.excludedActivityTypes = [
-            UIActivity.ActivityType.postToWeibo,
-            UIActivity.ActivityType.assignToContact,
-            UIActivity.ActivityType.addToReadingList,
-            UIActivity.ActivityType.postToFlickr,
-            UIActivity.ActivityType.postToTencentWeibo]
+            UIActivityType.postToWeibo,
+            UIActivityType.assignToContact,
+            UIActivityType.addToReadingList,
+            UIActivityType.postToFlickr,
+            UIActivityType.postToTencentWeibo]
         present(activityViewController, animated: true, completion: nil)
             }
     

@@ -88,7 +88,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         // Ocultamos el buscador
         // 16/11/2016: Añadimos el siguiente if ya que al ejecutar sin celdas el scrollToRow daba error.
         if self.tableView.numberOfRows(inSection: 0) > 0 {
-            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: false)
+            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: false)
         }
         
         // generamos los eventos ordenados
@@ -171,10 +171,9 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         
         return true
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-       
-    }
+  
+  
+  
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
@@ -184,7 +183,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         // Si no hay ocurrencias no mostramos la acción correspondiente
         
         if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
-            let historialRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
+            let historialRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
             self.performSegue(withIdentifier: "verHistorial", sender: indexPath)
             });
             historialRowAction.backgroundColor =  YourLastTime.colorAccion
@@ -194,7 +193,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         // Creación de una alarma
         // Si no hay ninguna ocurrencia no se pueden mostrar alarmas
         if bbdd.tieneOcurrenciasElEvento(self.eventos[indexPath.row].id) {
-            let alarmaRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: NSLocalizedString("Alarm", comment: ""), handler:{action, indexpath in
+            let alarmaRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: NSLocalizedString("Alarm", comment: ""), handler:{action, indexpath in
                 self.performSegue(withIdentifier: "crearAlarma", sender: indexPath)
             });
             alarmaRowAction.backgroundColor =  YourLastTime.colorAccion2
@@ -202,7 +201,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         // Acción de borrado
-        let deleteRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
                              var idEventoEliminar = ""
             
             var descripcionEvento: String?
@@ -219,7 +218,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 
                 
-                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                 
                 // Tenemos que eliminar el evento y sus ocurrencias
                 if self.bbdd.eliminarOcurrencias(idEventoEliminar) {
@@ -378,7 +377,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
   
   // actualización de la constraint de la table view
   func updateConstraints(){
-    UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut , animations: {
+    UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut , animations: {
       
       if self.buscadorOculto {
         self.constraintTopBuscadorView.constant = -self.buscadorView.frame.height

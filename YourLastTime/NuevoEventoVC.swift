@@ -26,13 +26,13 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
         lblCabecera1.text = NSLocalizedString("Create a", comment:"")
         lblCabecera2.text = NSLocalizedString("New Event", comment:"")
         descripcionEvento.placeholder = NSLocalizedString("Name of the new event", comment:"")
-        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: UIControl.State())
-        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: UIControl.State.selected)
+        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: .normal)
+        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: .normal)
         
         lblCabecera1.textColor = YourLastTime.colorTextoPrincipal
         lblCabecera2.textColor = YourLastTime.colorTextoPrincipal
-        btnOk.setTitleColor(YourLastTime.colorFondoCelda, for: UIControl.State())
-        btnCancel.setTitleColor(YourLastTime.colorFondoCelda, for: UIControl.State())
+        btnOk.setTitleColor(YourLastTime.colorFondoCelda, for: .normal)
+        btnCancel.setTitleColor(YourLastTime.colorFondoCelda, for: .normal)
         descripcionEvento.delegate = self
         descripcionEvento.autocapitalizationType = .sentences
     }

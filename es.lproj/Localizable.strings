@@ -50,3 +50,6 @@
 "abreviatura de mes" = "m";
 "abreviatura de dia" = "d";
 "abreviatura de hora" = "h";
+
+/* Notificaciones */
+"Your Last Time Alarm!" = "¡Alarma de Última Vez!";

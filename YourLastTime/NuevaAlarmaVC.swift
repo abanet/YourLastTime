@@ -33,9 +33,9 @@ class NuevaAlarmaVC: UIViewController {
         btnCancelar.tintColor = YourLastTime.colorFondoCelda
         btnBorrarAlarma.tintColor = YourLastTime.colorFondoCelda
         
-        btnSetAlarm.setTitle(NSLocalizedString("Set Alarm",comment: ""), for: UIControl.State())  
-        btnCancelar.setTitle(NSLocalizedString("Cancel",comment: ""), for: UIControl.State())
-        btnBorrarAlarma.setTitle(NSLocalizedString("Delete Alarm",comment: ""), for: UIControl.State())
+        btnSetAlarm.setTitle(NSLocalizedString("Set Alarm",comment: ""), for: .normal)
+        btnCancelar.setTitle(NSLocalizedString("Cancel",comment: ""), for: .normal)
+        btnBorrarAlarma.setTitle(NSLocalizedString("Delete Alarm",comment: ""), for: .normal)
         
         fraseDescriptiva.text = NSLocalizedString("The event doesn't happened!",comment: "")
         selectorTemporal.removeAllSegments()

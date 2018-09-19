@@ -26,14 +26,14 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         lblCabecera1.text = NSLocalizedString("It happened again!", comment:"")
         lblCabecera2.text = NSLocalizedString("Add a new occurrence", comment:"")
         descripcionOcurrencia.placeholder = NSLocalizedString("Add an optional description", comment:"")
-        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: UIControl.State())
-        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: UIControl.State.selected)
+        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: .normal)
+        btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: .selected)
 
         
         lblCabecera1.textColor = YourLastTime.colorTextoPrincipal
         lblCabecera2.textColor = YourLastTime.colorTextoPrincipal
-        btnOk.setTitleColor(YourLastTime.colorFondoCelda, for: UIControl.State())
-        btnCancel.setTitleColor(YourLastTime.colorFondoCelda, for: UIControl.State())
+        btnOk.setTitleColor(YourLastTime.colorFondoCelda, for: .normal)
+        btnCancel.setTitleColor(YourLastTime.colorFondoCelda, for: .normal)
 
         descripcionOcurrencia.delegate = self
         descripcionOcurrencia.autocapitalizationType = .sentences

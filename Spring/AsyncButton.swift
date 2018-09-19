@@ -28,7 +28,7 @@ public class AsyncButton: UIButton {
     private var placeholderImage = [UInt:UIImage]()
     
     
-    public func setImageURL(url: NSURL?, placeholderImage placeholder:UIImage?, forState state:UIControl.State) {
+    public func setImageURL(url: NSURL?, placeholderImage placeholder:UIImage?, forState state:UIControlState) {
         
         imageURL[state.rawValue] = url
         placeholderImage[state.rawValue] = placeholder

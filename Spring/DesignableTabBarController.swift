@@ -27,20 +27,20 @@ import UIKit
     @IBInspectable var normalTint: UIColor = UIColor.clear {
         didSet {
             UITabBar.appearance().tintColor = normalTint
-            UITabBarItem.appearance().setTitleTextAttributes(convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): normalTint]), for: UIControl.State())
+            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: normalTint], for: UIControlState())
         }
     }
     
     @IBInspectable var selectedTint: UIColor = UIColor.clear {
         didSet {
             UITabBar.appearance().tintColor = selectedTint
-            UITabBarItem.appearance().setTitleTextAttributes(convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): selectedTint]), for:UIControl.State.selected)
+            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: selectedTint], for:UIControlState.selected)
         }
     }
     
     @IBInspectable var fontName: String = "" {
         didSet {
-            UITabBarItem.appearance().setTitleTextAttributes(convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): normalTint, convertFromNSAttributedStringKey(NSAttributedString.Key.font): UIFont(name: fontName, size: 11)!]), for: UIControl.State())
+            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: normalTint, NSAttributedStringKey.font: UIFont(name: fontName, size: 11)!], for: UIControlState())
         }
     }
     
@@ -48,7 +48,7 @@ import UIKit
         didSet {
             if let image = firstSelectedImage {
                 var tabBarItems = self.tabBar.items as [UITabBarItem]!
-                tabBarItems?[0].selectedImage = image.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+                tabBarItems?[0].selectedImage = image.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             }
         }
     }
@@ -57,7 +57,7 @@ import UIKit
         didSet {
             if let image = secondSelectedImage {
                 var tabBarItems = self.tabBar.items as [UITabBarItem]!
-                tabBarItems?[1].selectedImage = image.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+                tabBarItems?[1].selectedImage = image.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             }
         }
     }
@@ -66,7 +66,7 @@ import UIKit
         didSet {
             if let image = thirdSelectedImage {
                 var tabBarItems = self.tabBar.items as [UITabBarItem]!
-                tabBarItems?[2].selectedImage = image.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+                tabBarItems?[2].selectedImage = image.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             }
         }
     }
@@ -75,7 +75,7 @@ import UIKit
         didSet {
             if let image = fourthSelectedImage {
                 var tabBarItems = self.tabBar.items as [UITabBarItem]!
-                tabBarItems?[3].selectedImage = image.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+                tabBarItems?[3].selectedImage = image.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             }
         }
     }
@@ -84,7 +84,7 @@ import UIKit
         didSet {
             if let image = fifthSelectedImage {
                 var tabBarItems = self.tabBar.items as [UITabBarItem]!
-                tabBarItems?[4].selectedImage = image.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+                tabBarItems?[4].selectedImage = image.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             }
         }
     }
@@ -94,7 +94,7 @@ import UIKit
         
         for item in self.tabBar.items as [UITabBarItem]! {
             if let image = item.image {
-                item.image = image.imageWithColor(tintColor: self.normalTint).withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+                item.image = image.imageWithColor(tintColor: self.normalTint).withRenderingMode(UIImageRenderingMode.alwaysOriginal)
             }
         }
     }
@@ -119,15 +119,4 @@ extension UIImage {
         
         return newImage
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-	return input.rawValue
 }
