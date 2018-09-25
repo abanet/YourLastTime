@@ -39,7 +39,10 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+        
         tableView.separatorStyle = .none
+      
+      
         database = EventosDB()
         
         lblNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
@@ -114,16 +117,14 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         cell.lblHace.text = self.informarIntervalodeDiferencia(fila: indexPath.row, ocurrencia: ocurrencias[indexPath.row])
         
         // Si la celda a dibujar es la última hay que cambiar el gráfico de hito.
-        if indexPath.row == ocurrencias.count - 1 {
-            cell.imgHito.image = UIImage(named: "hitoFinal")
-        }
+//        if indexPath.row == ocurrencias.count - 1 {
+//            cell.imgHito.image = UIImage(named: "hitoFinal")
+//        }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70.0
-    }
+  
     
     
     @objc func agitar() {
@@ -139,15 +140,15 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
         let texto = "¡La última vez que \(lblNombreEvento.text!)!"
         let imagenCaptura = screenShot()
-        let imagen = UIImageJPEGRepresentation(imagenCaptura, 1.0)!
-        //let imagen = imagenCaptura.jpegData(compressionQuality: 1.0)!
+        //let imagen = UIImageJPEGRepresentation(imagenCaptura, 1.0)!
+        let imagen = imagenCaptura.jpegData(compressionQuality: 1.0)!
         let activityViewController = UIActivityViewController(activityItems: [imagen], applicationActivities: nil)
         activityViewController.excludedActivityTypes = [
-            UIActivityType.postToWeibo,
-            UIActivityType.assignToContact,
-            UIActivityType.addToReadingList,
-            UIActivityType.postToFlickr,
-            UIActivityType.postToTencentWeibo]
+          UIActivity.ActivityType.postToWeibo,
+            .assignToContact,
+            .addToReadingList,
+            .postToFlickr,
+            .postToTencentWeibo]
         present(activityViewController, animated: true, completion: nil)
             }
     
@@ -182,4 +183,20 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         }
         return String(" ")
     }
+}
+
+extension String {
+  func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+    let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+    let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+    
+    return ceil(boundingBox.height)
+  }
+  
+  func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
+    let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+    let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+    
+    return ceil(boundingBox.width)
+  }
 }

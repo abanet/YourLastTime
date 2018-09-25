@@ -15,9 +15,15 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblCabecera2: UILabel!
     @IBOutlet weak var btnOk: UIButton!
     @IBOutlet weak var btnCancel: UIButton!
-    @IBOutlet weak var descripcionOcurrencia: UITextField!
-    
-    override func viewDidLoad() {
+    @IBOutlet weak var textViewDescripcionOcurrencia: UITextView! {
+    didSet {
+      textViewDescripcionOcurrencia.text = NSLocalizedString("Add an optional description", comment:"")
+      textViewDescripcionOcurrencia.textColor = UIColor.lightGray
+      textViewDescripcionOcurrencia.delegate = self
+    }
+  }
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
 
         
@@ -25,7 +31,6 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         
         lblCabecera1.text = NSLocalizedString("It happened again!", comment:"")
         lblCabecera2.text = NSLocalizedString("Add a new occurrence", comment:"")
-        descripcionOcurrencia.placeholder = NSLocalizedString("Add an optional description", comment:"")
         btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: .normal)
         btnCancel.setTitle(NSLocalizedString("Cancel", comment:""), for: .selected)
 
@@ -35,8 +40,7 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         btnOk.setTitleColor(YourLastTime.colorFondoCelda, for: .normal)
         btnCancel.setTitleColor(YourLastTime.colorFondoCelda, for: .normal)
 
-        descripcionOcurrencia.delegate = self
-        descripcionOcurrencia.autocapitalizationType = .sentences
+        textViewDescripcionOcurrencia.layer.cornerRadius = 10.0
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,8 +60,10 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func btnOkPulsado(_ sender: AnyObject) {
         let database = EventosDB()
-        database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text!)
-        
+        //database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text!)
+        database.addOcurrencia(idEvento, descripcion: textViewDescripcionOcurrencia.text.removeMoreThanOneEndOfLines())
+    
+      
         // Ha ocurrido una nueva ocurrencia.
         // Si hay una notificación local puesta hay que quitarla y volver a poner otra.
         if let evento = database.encontrarEvento(idEvento) {
@@ -85,15 +91,31 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         return newLength <= Constants.Texto.longitudMaximaNuevaOcurrencia // Bool
     }
 
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+// Control del uitextview
+extension NuevaOcurrenciaVC: UITextViewDelegate {
+  
+  func textViewDidBeginEditing(_ textView: UITextView) {
+    if textView.textColor == UIColor.lightGray {
+      textView.text = nil
+      textView.textColor = UIColor.black
     }
-    */
+  }
+  
+  func textViewDidEndEditing(_ textView: UITextView) {
+    if textView.text.isEmpty {
+      textView.text = NSLocalizedString("Add an optional description", comment:"")
+      textView.textColor = UIColor.lightGray
+    }
+  }
+  
+}
 
+extension String {
+  func removeMoreThanOneEndOfLines () -> String {
+    var linesArray: [String] = []
+    self.enumerateLines { line, _ in linesArray.append(line) }
+    return linesArray.filter{!$0.isEmpty}.joined(separator: "\n")
+  }
 }

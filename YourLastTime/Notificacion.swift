@@ -31,7 +31,7 @@ class Notificacion: NSObject {
       content.title = NSString.localizedUserNotificationString(forKey:
         "Your Last Time Alarm!", arguments: nil)
       content.body = self.userInfo["descripcion"]!
-      content.sound = UNNotificationSound.default()
+      content.sound = UNNotificationSound.default
       
       // Deliver the notification in five seconds.
       //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(horas * 60 * 60), repeats: false)
