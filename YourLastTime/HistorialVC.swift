@@ -171,11 +171,11 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
 
     func informarIntervalodeDiferencia(fila: Int, ocurrencia: Ocurrencia)->String{
-        if fila > 0 {
+        if fila != ocurrencias.count - 1  { // todo menos la última fila
             // Restamos de la ocurrencia actual la ocurrencia anterior
             let fechaActualString = ocurrencia.formatoMMddYYYYHHmm()
             let fechaActualDate = Fecha().fechaCompletaStringToDate(fechaActualString)
-            let fechaAnteriorString = ocurrencias[fila-1].formatoMMddYYYYHHmm()
+            let fechaAnteriorString = ocurrencias[fila+1].formatoMMddYYYYHHmm()
             let fechaAnteriorDate = Fecha().fechaCompletaStringToDate(fechaAnteriorString)
             let intervalo = fechaActualDate.timeIntervalSince(fechaAnteriorDate) // número de segundos de diferencia
             print("Restando \(fechaActualString) de \(fechaAnteriorString). Intervalo: \(intervalo.description)")

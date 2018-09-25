@@ -122,7 +122,9 @@ class EventosDB: NSObject {
         })
         return  arrayResultado//arrayResultado.reverse() // los más nuevos primero
     }
-    
+  
+  // Devuelve un array ordenado de las ocurrencias
+  // Orden de ocurrrencias: de más nueva a más antigua
     func arrayOcurrencias(_ idEvento:String)->[Ocurrencia] {
         var arrayResultado = [Ocurrencia]()
         if database.open() {
