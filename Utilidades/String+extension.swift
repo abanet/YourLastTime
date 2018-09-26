@@ -23,3 +23,12 @@ extension String {
     return ceil(boundingBox.width)
   }
 }
+
+extension StringProtocol where Index == String.Index {
+  var lines: [SubSequence] {
+    return split(maxSplits: .max, omittingEmptySubsequences: true, whereSeparator: { $0 == "\n" })
+  }
+  var removingAllExtraNewLines: String {
+    return lines.joined(separator: "\n")
+  }
+}

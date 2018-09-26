@@ -190,7 +190,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             print("Restando \(fechaActualString) de \(fechaAnteriorString). Intervalo: \(intervalo.description)")
             return Fecha().stringFromTimeInterval(interval: intervalo)
         }
-        return String(" ")
+        return NSLocalizedString("First time!", comment:"")
     }
   
   @objc func dismissKeyboard(){
@@ -210,7 +210,7 @@ extension HistorialVC: UITextViewDelegate {
     }
     let ocurrenciaModificada = ocurrencias[textView.tag]
     // grabar la modificación de la descripción en la ocurrencia modificada
-    database.modificarOcurrencia(ocurrenciaModificada.idOcurrencia, ocurrenciaModificada.idEvento, descripcion: textView.text)
+    database.modificarOcurrencia(ocurrenciaModificada.idOcurrencia, ocurrenciaModificada.idEvento, descripcion: textView.text.removingAllExtraNewLines)
     // refrescar la tabla para que coja el nuevo valor?
   }
   

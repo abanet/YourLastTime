@@ -61,7 +61,7 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     @IBAction func btnOkPulsado(_ sender: AnyObject) {
         let database = EventosDB()
         //database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text!)
-        database.addOcurrencia(idEvento, descripcion: textViewDescripcionOcurrencia.text.removeMoreThanOneEndOfLines())
+        database.addOcurrencia(idEvento, descripcion: textViewDescripcionOcurrencia.text.removingAllExtraNewLines)
     
       
         // Ha ocurrido una nueva ocurrencia.
@@ -112,10 +112,4 @@ extension NuevaOcurrenciaVC: UITextViewDelegate {
   
 }
 
-extension String {
-  func removeMoreThanOneEndOfLines () -> String {
-    var linesArray: [String] = []
-    self.enumerateLines { line, _ in linesArray.append(line) }
-    return linesArray.filter{!$0.isEmpty}.joined(separator: "\n")
-  }
-}
+
