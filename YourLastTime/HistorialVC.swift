@@ -39,6 +39,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableView.automaticDimension
         
         tableView.separatorStyle = .none
       
@@ -108,7 +109,8 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
         cell.lblFecha.text = fecha.devolverFechaLocalizada(ocurrencias[indexPath.row].fecha)
         cell.lblHora.text = ocurrencias[indexPath.row].hora
-        cell.descripcion.text = ocurrencias[indexPath.row].descripcion
+        cell.textViewDescripcion.text = ocurrencias[indexPath.row].descripcion
+        cell.textViewDescripcionCopia.text = ocurrencias[indexPath.row].descripcion
         // No funcionaba utilizar DesignableTextView que sería lo idóneo. 
         // Esperar a ver si más adelante funciona.
         //cell.descripcion.font = UIFont(name: "AvenirNext-Regular", size: 17.0)

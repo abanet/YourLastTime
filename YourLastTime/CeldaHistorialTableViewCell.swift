@@ -8,18 +8,21 @@
 
 import UIKit
 
-class CeldaHistorialTableViewCell: UITableViewCell {
+class CeldaHistorialTableViewCell: UITableViewCell, UITextViewDelegate {
 
     @IBOutlet weak var lblFecha: UILabel!
-    @IBOutlet weak var descripcion: UILabel!
     @IBOutlet weak var imgHito: UIImageView!
     @IBOutlet weak var lblHora: UILabel!
     @IBOutlet weak var lblHace: UILabel!
-    
-    override func awakeFromNib() {
+    @IBOutlet weak var textViewDescripcion: UITextView!
+    @IBOutlet weak var textViewDescripcionCopia: UITextView! // se usa sólo para dimensionamiento y tiene enable scroll = false
+  
+  override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     
+    textViewDescripcion.delegate = self
+    textViewDescripcionCopia.isHidden = true
         
     }
 
@@ -29,4 +32,7 @@ class CeldaHistorialTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+  func textViewDidBeginEditing(_ textView: UITextView) {
+    print("exampleTextView: BEGIN EDIT")
+  }
 }
