@@ -83,7 +83,24 @@ class EventosDB: NSObject {
             print("Error abriendo bbdd: \(database.lastErrorMessage())")
         }
     }
-    
+  
+  
+  // Modifica una ocurrencia identificada por el id de ocurrencia y el id del evento al que pertenece
+  func modificarOcurrencia(_ idOcurrencia: String, _ idEvento: String, descripcion: String) {
+    if database.open(){
+      let updateSQL = "UPDATE OCURRENCIAS SET DESCRIPCION = '\(descripcion)' WHERE ID = '\(idOcurrencia)' AND IDEVENTO = '\(idEvento)'"
+      print(updateSQL)
+      let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)
+      if !resultado {
+        print("Error: \(database.lastErrorMessage())")
+      } else {
+        print("Ocurrencia modificada")
+      }
+      
+    }
+  }
+  
+  
     func eliminarOcurrencias(_ idEvento:String)->Bool {
         if database.open() {
             let deleteSQL = "DELETE FROM OCURRENCIAS WHERE IDEVENTO = '\(idEvento)'"
@@ -128,10 +145,15 @@ class EventosDB: NSObject {
     func arrayOcurrencias(_ idEvento:String)->[Ocurrencia] {
         var arrayResultado = [Ocurrencia]()
         if database.open() {
-            let selectSQL = "SELECT IDEVENTO, FECHA, HORA, DESCRIPCION FROM OCURRENCIAS WHERE IDEVENTO = '\(idEvento)'"
+            let selectSQL = "SELECT ID, IDEVENTO, FECHA, HORA, DESCRIPCION FROM OCURRENCIAS WHERE IDEVENTO = '\(idEvento)'"
             let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
             while resultados?.next() == true {
-                let unaOcurrencia: Ocurrencia = Ocurrencia(idEvento: resultados!.string(forColumn: "IDEVENTO"), fecha: resultados!.string(forColumn: "FECHA"), hora: resultados!.string(forColumn: "HORA"), descripcion: resultados!.string(forColumn: "DESCRIPCION"))
+              
+              let unaOcurrencia: Ocurrencia = Ocurrencia(idOcurrencia: resultados!.string(forColumn:"ID"),
+                  idEvento: resultados!.string(forColumn: "IDEVENTO"),
+                  fecha: resultados!.string(forColumn: "FECHA"),
+                  hora: resultados!.string(forColumn: "HORA"),
+                  descripcion: resultados!.string(forColumn: "DESCRIPCION"))
                 arrayResultado.append(unaOcurrencia)
             }
         } else {

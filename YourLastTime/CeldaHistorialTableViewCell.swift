@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CeldaHistorialTableViewCell: UITableViewCell, UITextViewDelegate {
+class CeldaHistorialTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblFecha: UILabel!
     @IBOutlet weak var imgHito: UIImageView!
@@ -21,7 +21,7 @@ class CeldaHistorialTableViewCell: UITableViewCell, UITextViewDelegate {
         super.awakeFromNib()
         // Initialization code
     
-    textViewDescripcion.delegate = self
+    
     textViewDescripcionCopia.isHidden = true
         
     }
@@ -32,7 +32,5 @@ class CeldaHistorialTableViewCell: UITableViewCell, UITextViewDelegate {
         // Configure the view for the selected state
     }
 
-  func textViewDidBeginEditing(_ textView: UITextView) {
-    print("exampleTextView: BEGIN EDIT")
-  }
+  
 }

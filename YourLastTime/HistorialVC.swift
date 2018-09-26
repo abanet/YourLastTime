@@ -32,7 +32,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     var idEvento: String!
     var database: EventosDB!
     var ocurrencias: [Ocurrencia] = [Ocurrencia]()
-    
+  
+    var ocurrenciaModificada = false // ¿se ha modificado una ocurrencia?
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,7 +49,11 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         database = EventosDB()
         
         lblNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
-        
+      
+      // Gesto para cerrar teclado
+      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+      self.view.addGestureRecognizer(tapGesture)
+      
         // Animación del botón para cerrar
         _ = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(HistorialVC.agitar), userInfo: nil, repeats: true)
     }
@@ -93,6 +99,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         return true;
     }
 
+  // MARK: TableView
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -111,10 +118,8 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         cell.lblHora.text = ocurrencias[indexPath.row].hora
         cell.textViewDescripcion.text = ocurrencias[indexPath.row].descripcion
         cell.textViewDescripcionCopia.text = ocurrencias[indexPath.row].descripcion
-        // No funcionaba utilizar DesignableTextView que sería lo idóneo. 
-        // Esperar a ver si más adelante funciona.
-        //cell.descripcion.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
-        
+        cell.textViewDescripcion.delegate = self
+        cell.textViewDescripcion.tag = indexPath.row // identificamos los uitextview
         // Calculo de la diferencia entre dos ocurrencias
         cell.lblHace.text = self.informarIntervalodeDiferencia(fila: indexPath.row, ocurrencia: ocurrencias[indexPath.row])
         
@@ -126,7 +131,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         return cell
     }
     
-  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    print(indexPath.row)
+  }
     
     
     @objc func agitar() {
@@ -185,20 +192,34 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         }
         return String(" ")
     }
+  
+  @objc func dismissKeyboard(){
+    self.view.endEditing(true)
+  }
+
 }
 
-extension String {
-  func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
-    let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-    let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
-    
-    return ceil(boundingBox.height)
+extension HistorialVC: UITextViewDelegate {
+  func textViewDidBeginEditing(_ textView: UITextView) {
+    self.ocurrenciaModificada = false
   }
   
-  func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
-    let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
-    let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
-    
-    return ceil(boundingBox.width)
+  func textViewDidEndEditing(_ textView: UITextView) {
+    guard self.ocurrenciaModificada else {
+      return
+    }
+    let ocurrenciaModificada = ocurrencias[textView.tag]
+    // grabar la modificación de la descripción en la ocurrencia modificada
+    database.modificarOcurrencia(ocurrenciaModificada.idOcurrencia, ocurrenciaModificada.idEvento, descripcion: textView.text)
+    // refrescar la tabla para que coja el nuevo valor?
   }
+  
+  func textViewDidChange(_ textView: UITextView) {
+    self.ocurrenciaModificada = true
+  }
+  
+  
 }
+
+
+

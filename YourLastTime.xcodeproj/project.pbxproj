@@ -42,6 +42,7 @@
 		C041D7561B3D51CF004E2FCB /* ABMDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C041D7551B3D51CF004E2FCB /* ABMDate.swift */; };
 		C04C1F751B25ACAC00CF79E4 /* yourLastTime.sql in Resources */ = {isa = PBXBuildFile; fileRef = C04C1F741B25ACAC00CF79E4 /* yourLastTime.sql */; };
 		C04C1F7B1B25AE2E00CF79E4 /* EventosDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */; };
+		C062BF3D215C0A9400944803 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C062BF3C215C0A9400944803 /* String+extension.swift */; };
 		C07E3A281E535FF400CE95EB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */; };
 		C09506191B4D3D3500961F8B /* NuevaAlarmaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */; };
 		C0AB36781B3432B30054D573 /* HistorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36771B3432B30054D573 /* HistorialVC.swift */; };
@@ -120,6 +121,7 @@
 		C041D7551B3D51CF004E2FCB /* ABMDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABMDate.swift; sourceTree = "<group>"; };
 		C04C1F741B25ACAC00CF79E4 /* yourLastTime.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yourLastTime.sql; sourceTree = "<group>"; };
 		C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventosDB.swift; sourceTree = "<group>"; };
+		C062BF3C215C0A9400944803 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
 		C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuevaAlarmaVC.swift; sourceTree = "<group>"; };
 		C0AB36771B3432B30054D573 /* HistorialVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistorialVC.swift; sourceTree = "<group>"; };
@@ -186,9 +188,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C062BF3B215C0A6800944803 /* Utilidades */ = {
+			isa = PBXGroup;
+			children = (
+				C062BF3C215C0A9400944803 /* String+extension.swift */,
+			);
+			path = Utilidades;
+			sourceTree = "<group>";
+		};
 		C0FEE5AB1B259AE9000B0627 = {
 			isa = PBXGroup;
 			children = (
+				C062BF3B215C0A6800944803 /* Utilidades */,
 				C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */,
 				C0FEE5B91B259AE9000B0627 /* AppDelegate.swift */,
 				C01855F81DE3114600EE347B /* GATracker.swift */,
@@ -484,6 +495,7 @@
 				C0380AB821516D9800060EED /* ImageLoader.swift in Sources */,
 				C0FEE6171B259B62000B0627 /* FMDatabaseAdditions.m in Sources */,
 				C0380AC221516D9800060EED /* Misc.swift in Sources */,
+				C062BF3D215C0A9400944803 /* String+extension.swift in Sources */,
 				C0380AAE21516D9800060EED /* UnwindSegue.swift in Sources */,
 				C0380AB621516D9800060EED /* TransitionManager.swift in Sources */,
 				C0380ABE21516D9800060EED /* SoundPlayer.swift in Sources */,

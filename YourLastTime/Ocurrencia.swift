@@ -9,20 +9,22 @@
 import UIKit
 
 class Ocurrencia: NSObject {
-    
+  private (set) var idOcurrencia: String
     var idEvento: String
     var fecha: String
     var hora: String
     var descripcion: String
     
-    init(idEvento:String, fecha:String, hora: String, descripcion: String) {
+  init(idOcurrencia: String, idEvento:String, fecha:String, hora: String, descripcion: String) {
+        self.idOcurrencia = idOcurrencia
         self.idEvento = idEvento
         self.fecha = fecha
         self.hora = hora
         self.descripcion = descripcion
     }
     
-    init(idEvento:String, fecha:String) {
+  init(idOcurrencia:String, idEvento:String, fecha:String) {
+        self.idOcurrencia = idOcurrencia
         self.idEvento = idEvento
         self.fecha = fecha
         self.hora = ""
