@@ -43,6 +43,7 @@
 		C04C1F751B25ACAC00CF79E4 /* yourLastTime.sql in Resources */ = {isa = PBXBuildFile; fileRef = C04C1F741B25ACAC00CF79E4 /* yourLastTime.sql */; };
 		C04C1F7B1B25AE2E00CF79E4 /* EventosDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */; };
 		C062BF3D215C0A9400944803 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C062BF3C215C0A9400944803 /* String+extension.swift */; };
+		C062BF3F215C217700944803 /* KeyboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C062BF3E215C217700944803 /* KeyboardService.swift */; };
 		C07E3A281E535FF400CE95EB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */; };
 		C09506191B4D3D3500961F8B /* NuevaAlarmaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */; };
 		C0AB36781B3432B30054D573 /* HistorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36771B3432B30054D573 /* HistorialVC.swift */; };
@@ -122,6 +123,7 @@
 		C04C1F741B25ACAC00CF79E4 /* yourLastTime.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yourLastTime.sql; sourceTree = "<group>"; };
 		C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventosDB.swift; sourceTree = "<group>"; };
 		C062BF3C215C0A9400944803 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
+		C062BF3E215C217700944803 /* KeyboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardService.swift; sourceTree = "<group>"; };
 		C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuevaAlarmaVC.swift; sourceTree = "<group>"; };
 		C0AB36771B3432B30054D573 /* HistorialVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistorialVC.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				C062BF3C215C0A9400944803 /* String+extension.swift */,
+				C062BF3E215C217700944803 /* KeyboardService.swift */,
 			);
 			path = Utilidades;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C062BF3F215C217700944803 /* KeyboardService.swift in Sources */,
 				C0FEE63C1B259B62000B0627 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				C0FEE6151B259B62000B0627 /* EntradaTableViewCell.swift in Sources */,
 				C0380AAC21516D9800060EED /* KeyboardLayoutConstraint.swift in Sources */,

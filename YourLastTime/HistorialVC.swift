@@ -199,6 +199,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
 
 }
 
+// MARK: UITextViewDelegate
 extension HistorialVC: UITextViewDelegate {
   func textViewDidBeginEditing(_ textView: UITextView) {
     self.ocurrenciaModificada = false
@@ -218,6 +219,38 @@ extension HistorialVC: UITextViewDelegate {
     self.ocurrenciaModificada = true
   }
   
+  // TODO: Hay que hacer que sólo se mueva si está en la zona cubierta por el teclado. Y que al salir de editar vuelva a la posición de origen
+  func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    let keyboardSize = KeyboardService.keyboardSize() // Tamaño del teclado
+    let aRect = textView.frame
+    
+    let pointInTable:CGPoint = textView.superview!.convert(textView.frame.origin, to: tableView)
+    let puntoAltoTecladoY = tableView.frame.height - keyboardSize.height
+    print("if ((pointInTable.y (\(pointInTable.y)) + aRect.height/2 (\(aRect.height/2))) > puntoAltoTecladoY (\(puntoAltoTecladoY)))")
+    if ((pointInTable.y + aRect.height/2) > puntoAltoTecladoY) {
+      // Tiene q haber desplazamiento
+      var contentOffset:CGPoint = tableView.contentOffset
+      print("contentOffset inicial: \(contentOffset.y)")
+      print("Tamaño teclado: \(keyboardSize.height)")
+      print("tableView.frame.height: \(tableView.frame.height)")
+      print("posición textView.superview: \(textView.superview!.frame.height)")
+      print("pointInTable de la uitextView: \(pointInTable.y)")
+      contentOffset.y  = pointInTable.y - puntoAltoTecladoY + textView.superview!.frame.height
+      
+      if let accessoryView = textView.inputAccessoryView {
+        contentOffset.y -= accessoryView.frame.size.height
+      }
+      DispatchQueue.main.async {
+        UIView.animate(withDuration: 0.5, delay: 0.1, options: UIView.AnimationOptions.curveLinear, animations: {
+          self.tableView.contentOffset = contentOffset
+        }, completion: nil)
+        
+      }
+    }
+    
+    
+    return true;
+  }
   
 }
 
