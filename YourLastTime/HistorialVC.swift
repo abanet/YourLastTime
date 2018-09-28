@@ -203,9 +203,11 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
 extension HistorialVC: UITextViewDelegate {
   func textViewDidBeginEditing(_ textView: UITextView) {
     self.ocurrenciaModificada = false
+    remarcarTextView(textView)
   }
   
   func textViewDidEndEditing(_ textView: UITextView) {
+    desmarcarTextView(textView)
     guard self.ocurrenciaModificada else {
       return
     }
@@ -250,6 +252,19 @@ extension HistorialVC: UITextViewDelegate {
     
     
     return true;
+  }
+  
+  func remarcarTextView (_ textView: UITextView) {
+    textView.layer.borderColor = YourLastTime.colorFondoCelda.cgColor
+    textView.layer.borderWidth = 1.0
+    textView.layer.cornerRadius = 5.0
+    textView.backgroundColor = YourLastTime.colorFondoCelda.colorWithAlpha(0.3)
+  }
+  
+  func desmarcarTextView (_ textView: UITextView) {
+    textView.layer.borderColor = UIColor.clear.cgColor
+    textView.layer.borderWidth = 0
+    textView.backgroundColor = UIColor.clear
   }
   
 }

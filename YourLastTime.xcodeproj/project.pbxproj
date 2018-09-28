@@ -48,6 +48,7 @@
 		C09506191B4D3D3500961F8B /* NuevaAlarmaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */; };
 		C0AB36781B3432B30054D573 /* HistorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36771B3432B30054D573 /* HistorialVC.swift */; };
 		C0AB367A1B343CF40054D573 /* CeldaHistorialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */; };
+		C0AD3AE0215E777E00FE4295 /* adornoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AD3ADF215E777E00FE4295 /* adornoView.swift */; };
 		C0B39B931B53AE7200E3D680 /* Notificacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B39B921B53AE7200E3D680 /* Notificacion.swift */; };
 		C0B39B951B53CBFE00E3D680 /* PeriodoTemporal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B39B941B53CBFE00E3D680 /* PeriodoTemporal.swift */; };
 		C0B39B981B53D4A200E3D680 /* AlertaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B39B961B53D4A200E3D680 /* AlertaVC.swift */; };
@@ -128,6 +129,7 @@
 		C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuevaAlarmaVC.swift; sourceTree = "<group>"; };
 		C0AB36771B3432B30054D573 /* HistorialVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistorialVC.swift; sourceTree = "<group>"; };
 		C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaHistorialTableViewCell.swift; sourceTree = "<group>"; };
+		C0AD3ADF215E777E00FE4295 /* adornoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = adornoView.swift; sourceTree = "<group>"; };
 		C0B39B921B53AE7200E3D680 /* Notificacion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notificacion.swift; sourceTree = "<group>"; };
 		C0B39B941B53CBFE00E3D680 /* PeriodoTemporal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeriodoTemporal.swift; sourceTree = "<group>"; };
 		C0B39B961B53D4A200E3D680 /* AlertaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertaVC.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				C0FEE5D91B259B41000B0627 /* Main.storyboard */,
 				C0FEE5DB1B259B62000B0627 /* EntradaTableViewCell.swift */,
 				C0FEE5E91B259B62000B0627 /* NuevoEventoVC.swift */,
+				C0AD3ADF215E777E00FE4295 /* adornoView.swift */,
 				C0C09BFC1B301C68004AC072 /* NuevaOcurrenciaVC.swift */,
 				C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */,
 				C0B39B921B53AE7200E3D680 /* Notificacion.swift */,
@@ -489,6 +492,7 @@
 				C0FEE6161B259B62000B0627 /* FMDatabase.m in Sources */,
 				C0FEE61C1B259B62000B0627 /* PrincipalViewController.swift in Sources */,
 				C0380AB021516D9800060EED /* SpringButton.swift in Sources */,
+				C0AD3AE0215E777E00FE4295 /* adornoView.swift in Sources */,
 				C0FEE63D1B259B62000B0627 /* TPKeyboardAvoidingTableView.m in Sources */,
 				C0380AAD21516D9800060EED /* SpringLabel.swift in Sources */,
 				C04C1F7B1B25AE2E00CF79E4 /* EventosDB.swift in Sources */,
@@ -671,7 +675,7 @@
 					"$(PROJECT_DIR)/YourLastTime",
 				);
 				INFOPLIST_FILE = YourLastTime/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "es.iosconnection.$(PRODUCT_NAME:rfc1034identifier)";
@@ -695,7 +699,7 @@
 					"$(PROJECT_DIR)/YourLastTime",
 				);
 				INFOPLIST_FILE = YourLastTime/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "es.iosconnection.$(PRODUCT_NAME:rfc1034identifier)";

@@ -10,15 +10,17 @@ import UIKit
 
 class NuevoEventoVC: UIViewController, UITextFieldDelegate {
 
-    
+  static let valoresSwitch = ["Not editable event", "Editable event"]
     @IBOutlet weak var lblCabecera1: UILabel!
     @IBOutlet weak var lblCabecera2: UILabel!
     @IBOutlet weak var btnOk: UIButton!
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var descripcionEvento: UITextField!
     @IBOutlet weak var cuadroNuevoEvento: DesignableView!
-    
-    
+  
+  
+ 
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,6 +37,7 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
         btnCancel.setTitleColor(YourLastTime.colorFondoCelda, for: .normal)
         descripcionEvento.delegate = self
         descripcionEvento.autocapitalizationType = .sentences
+      
     }
     
     override func viewDidAppear(_ animated: Bool) {
