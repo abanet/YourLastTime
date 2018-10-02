@@ -100,6 +100,18 @@ class EventosDB: NSObject {
     }
   }
   
+  // Modificación de la fecha y hora de una ocurrencia
+  func modificarOcurrenciaFechaHora(_ idOcurrencia: String, _ idEvento: String, nuevaFecha fecha: Fecha) {
+    if database.open(){
+      let updateSQL = "UPDATE OCURRENCIAS SET FECHA = '\(fecha.fecha)', HORA = '\(fecha.hora)' WHERE ID = '\(idOcurrencia)' AND IDEVENTO = '\(idEvento)'"
+      let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)
+      if !resultado {
+        print("Error: \(database.lastErrorMessage())")
+      } else {
+        print("Ocurrencia modificada en Fecha")
+      }
+    }
+  }
   
     func eliminarOcurrencias(_ idEvento:String)->Bool {
         if database.open() {

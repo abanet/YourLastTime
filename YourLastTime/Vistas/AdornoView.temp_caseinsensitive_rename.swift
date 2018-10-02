@@ -8,8 +8,9 @@
 
 import UIKit
 
-class adornoView: UIView {
+class AdornoView: UIView {
 
+    var rellenar = false
   
     override func draw(_ rect: CGRect) {
       // línea que cruza verticalmente el rect
@@ -24,7 +25,11 @@ class adornoView: UIView {
       // Círculo
       let radio = (frame.width - frame.width/3)/2 //aire para el círculo
       let circlePath = UIBezierPath(arcCenter: CGPoint(x: frame.width/2,y: frame.height/2), radius: radio, startAngle: CGFloat(0), endAngle:CGFloat(Float.pi * 2), clockwise: true)
-      YourLastTime.colorBackground.setFill()
+      if rellenar {
+        YourLastTime.colorFechaHistorico.setFill() }
+      else {
+        YourLastTime.colorBackground.setFill()
+      }
       circlePath.fill()
       YourLastTime.colorFechaHistorico.setStroke()
       circlePath.stroke()

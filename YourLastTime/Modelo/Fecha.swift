@@ -11,7 +11,22 @@ import UIKit
 class Fecha: NSObject, Comparable {
     var fecha: String
     var hora: String
-    
+  
+  init(fecha:String, hora: String) {
+    self.fecha = fecha
+    self.hora = hora
+    super.init()
+  }
+  
+  init(date:Date) {
+    let formateador = DateFormatter()
+    // El formateador de fecha lo mantenemos siempre a MM-dd-yyy para guardarlo en el mismo formato en la bbdd
+    formateador.dateFormat = "MM-dd-yyyy" //NSLocalizedString("MM-dd-yyyy", comment: "Formato de fecha")
+    fecha = formateador.string(from: date)
+    formateador.dateFormat = "HH:mm"
+    hora = formateador.string(from: date)
+    super.init()
+  }
     override init(){
         let date = Date()
         let formateador = DateFormatter()
@@ -40,14 +55,25 @@ class Fecha: NSObject, Comparable {
         let fechaTemp = formateador.date(from: fecha)
         return fechaTemp!
     }
+  
+  
     
     // fecha completa: fecha con  hora incluida.
+  // Deprecate en un futuro. Usar siguiente versión.
     func fechaCompletaStringToDate(_ fechaCompleta: String) -> Date {
         let formateador = DateFormatter()
         formateador.dateFormat = "MM-dd-yyyyHH:mm"
         let fechaTemp = formateador.date(from: fechaCompleta)
         return fechaTemp!
     }
+  
+  // versión mejorada de la anterior q trabaja con los datos de la instancia
+  func fechaCompletaStringToDate() -> Date {
+    let formateador = DateFormatter()
+    formateador.dateFormat = "MM-dd-yyyyHH:mm"
+    let fechaTemp = formateador.date(from: self.fecha+self.hora)
+    return fechaTemp!
+  }
     
     func estaEnUltimosXdias(_ fecha:String, dias: Int)->Bool{
         let formateador = DateFormatter()

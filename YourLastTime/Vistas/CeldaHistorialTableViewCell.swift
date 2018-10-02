@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class CeldaHistorialTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblFecha: UILabel!
@@ -16,12 +18,12 @@ class CeldaHistorialTableViewCell: UITableViewCell {
     @IBOutlet weak var lblHace: UILabel!
     @IBOutlet weak var textViewDescripcion: UITextView!
     @IBOutlet weak var textViewDescripcionCopia: UITextView! // se usa sólo para dimensionamiento y tiene enable scroll = false
+    @IBOutlet weak var adorno: AdornoView!
+  
   
   override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    
-    
     textViewDescripcionCopia.isHidden = true
         
     }

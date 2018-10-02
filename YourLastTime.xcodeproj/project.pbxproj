@@ -42,13 +42,15 @@
 		C041D7561B3D51CF004E2FCB /* ABMDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C041D7551B3D51CF004E2FCB /* ABMDate.swift */; };
 		C04C1F751B25ACAC00CF79E4 /* yourLastTime.sql in Resources */ = {isa = PBXBuildFile; fileRef = C04C1F741B25ACAC00CF79E4 /* yourLastTime.sql */; };
 		C04C1F7B1B25AE2E00CF79E4 /* EventosDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */; };
+		C06200EA216234A1005D9277 /* CustomizeDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06200E9216234A1005D9277 /* CustomizeDatePicker.swift */; };
 		C062BF3D215C0A9400944803 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C062BF3C215C0A9400944803 /* String+extension.swift */; };
 		C062BF3F215C217700944803 /* KeyboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C062BF3E215C217700944803 /* KeyboardService.swift */; };
 		C07E3A281E535FF400CE95EB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */; };
 		C09506191B4D3D3500961F8B /* NuevaAlarmaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */; };
 		C0AB36781B3432B30054D573 /* HistorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36771B3432B30054D573 /* HistorialVC.swift */; };
 		C0AB367A1B343CF40054D573 /* CeldaHistorialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */; };
-		C0AD3AE0215E777E00FE4295 /* adornoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AD3ADF215E777E00FE4295 /* adornoView.swift */; };
+		C0AD3AE0215E777E00FE4295 /* AdornoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AD3ADF215E777E00FE4295 /* AdornoView.swift */; };
+		C0AD3AE2215E8F0100FE4295 /* CambioFechaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AD3AE1215E8F0100FE4295 /* CambioFechaViewController.swift */; };
 		C0B39B931B53AE7200E3D680 /* Notificacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B39B921B53AE7200E3D680 /* Notificacion.swift */; };
 		C0B39B951B53CBFE00E3D680 /* PeriodoTemporal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B39B941B53CBFE00E3D680 /* PeriodoTemporal.swift */; };
 		C0B39B981B53D4A200E3D680 /* AlertaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B39B961B53D4A200E3D680 /* AlertaVC.swift */; };
@@ -123,13 +125,15 @@
 		C041D7551B3D51CF004E2FCB /* ABMDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABMDate.swift; sourceTree = "<group>"; };
 		C04C1F741B25ACAC00CF79E4 /* yourLastTime.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yourLastTime.sql; sourceTree = "<group>"; };
 		C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventosDB.swift; sourceTree = "<group>"; };
+		C06200E9216234A1005D9277 /* CustomizeDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeDatePicker.swift; sourceTree = "<group>"; };
 		C062BF3C215C0A9400944803 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
 		C062BF3E215C217700944803 /* KeyboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardService.swift; sourceTree = "<group>"; };
 		C07E3A271E535FF400CE95EB /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuevaAlarmaVC.swift; sourceTree = "<group>"; };
 		C0AB36771B3432B30054D573 /* HistorialVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistorialVC.swift; sourceTree = "<group>"; };
 		C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaHistorialTableViewCell.swift; sourceTree = "<group>"; };
-		C0AD3ADF215E777E00FE4295 /* adornoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = adornoView.swift; sourceTree = "<group>"; };
+		C0AD3ADF215E777E00FE4295 /* AdornoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdornoView.swift; sourceTree = "<group>"; };
+		C0AD3AE1215E8F0100FE4295 /* CambioFechaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CambioFechaViewController.swift; sourceTree = "<group>"; };
 		C0B39B921B53AE7200E3D680 /* Notificacion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notificacion.swift; sourceTree = "<group>"; };
 		C0B39B941B53CBFE00E3D680 /* PeriodoTemporal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeriodoTemporal.swift; sourceTree = "<group>"; };
 		C0B39B961B53D4A200E3D680 /* AlertaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertaVC.swift; sourceTree = "<group>"; };
@@ -192,6 +196,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C06200EB21623A2D005D9277 /* Modelo */ = {
+			isa = PBXGroup;
+			children = (
+				C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */,
+				C0008CF41B2702A80028F850 /* Evento.swift */,
+				C0DBB2D31B2839CD0017AF6E /* Ocurrencia.swift */,
+				C0008CF61B27100D0028F850 /* Fecha.swift */,
+			);
+			path = Modelo;
+			sourceTree = "<group>";
+		};
+		C06200EC21623A51005D9277 /* Vistas */ = {
+			isa = PBXGroup;
+			children = (
+				C0FEE5D91B259B41000B0627 /* Main.storyboard */,
+				C06200E9216234A1005D9277 /* CustomizeDatePicker.swift */,
+				C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */,
+				C0AD3ADF215E777E00FE4295 /* AdornoView.swift */,
+				C0B39B961B53D4A200E3D680 /* AlertaVC.swift */,
+				C0B39B971B53D4A200E3D680 /* AlertaVC.xib */,
+			);
+			path = Vistas;
+			sourceTree = "<group>";
+		};
 		C062BF3B215C0A6800944803 /* Utilidades */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,29 +257,23 @@
 		C0FEE5B61B259AE9000B0627 /* YourLastTime */ = {
 			isa = PBXGroup;
 			children = (
+				C06200EC21623A51005D9277 /* Vistas */,
+				C06200EB21623A2D005D9277 /* Modelo */,
 				C0C168311B38067B00387F3F /* Media.xcassets */,
 				C0FEE60C1B259B62000B0627 /* TPKeyboardAvoiding */,
 				C0FEE5DC1B259B62000B0627 /* fmdb */,
 				C03DA6C21B4BEC930053E1B5 /* YourLastTime.swift */,
 				C0F6968F1B3C157F004F3214 /* constantes.swift */,
-				C0FEE5D91B259B41000B0627 /* Main.storyboard */,
+				C0AD3AE1215E8F0100FE4295 /* CambioFechaViewController.swift */,
 				C0FEE5DB1B259B62000B0627 /* EntradaTableViewCell.swift */,
 				C0FEE5E91B259B62000B0627 /* NuevoEventoVC.swift */,
-				C0AD3ADF215E777E00FE4295 /* adornoView.swift */,
 				C0C09BFC1B301C68004AC072 /* NuevaOcurrenciaVC.swift */,
 				C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */,
 				C0B39B921B53AE7200E3D680 /* Notificacion.swift */,
 				C0FEE5EA1B259B62000B0627 /* PrincipalViewController.swift */,
-				C04C1F7A1B25AE2E00CF79E4 /* EventosDB.swift */,
-				C0008CF41B2702A80028F850 /* Evento.swift */,
-				C0DBB2D31B2839CD0017AF6E /* Ocurrencia.swift */,
 				C0AB36771B3432B30054D573 /* HistorialVC.swift */,
-				C0AB36791B343CF40054D573 /* CeldaHistorialTableViewCell.swift */,
-				C0008CF61B27100D0028F850 /* Fecha.swift */,
 				C041D7551B3D51CF004E2FCB /* ABMDate.swift */,
 				C0B39B941B53CBFE00E3D680 /* PeriodoTemporal.swift */,
-				C0B39B961B53D4A200E3D680 /* AlertaVC.swift */,
-				C0B39B971B53D4A200E3D680 /* AlertaVC.xib */,
 				C0BCADAC1B2986FE00B20009 /* Localizable.strings */,
 				C0FEE5B71B259AE9000B0627 /* Supporting Files */,
 			);
@@ -478,6 +500,7 @@
 				C0380ABD21516D9800060EED /* DesignableButton.swift in Sources */,
 				C0380AC021516D9800060EED /* SpringTextField.swift in Sources */,
 				C0FEE61B1B259B62000B0627 /* NuevoEventoVC.swift in Sources */,
+				C0AD3AE2215E8F0100FE4295 /* CambioFechaViewController.swift in Sources */,
 				C0380AAA21516D9800060EED /* AutoTextView.swift in Sources */,
 				C0380AC421516D9800060EED /* SpringTextView.swift in Sources */,
 				C0FEE6191B259B62000B0627 /* FMDatabaseQueue.m in Sources */,
@@ -491,8 +514,9 @@
 				C0FEE5BA1B259AE9000B0627 /* AppDelegate.swift in Sources */,
 				C0FEE6161B259B62000B0627 /* FMDatabase.m in Sources */,
 				C0FEE61C1B259B62000B0627 /* PrincipalViewController.swift in Sources */,
+				C06200EA216234A1005D9277 /* CustomizeDatePicker.swift in Sources */,
 				C0380AB021516D9800060EED /* SpringButton.swift in Sources */,
-				C0AD3AE0215E777E00FE4295 /* adornoView.swift in Sources */,
+				C0AD3AE0215E777E00FE4295 /* AdornoView.swift in Sources */,
 				C0FEE63D1B259B62000B0627 /* TPKeyboardAvoidingTableView.m in Sources */,
 				C0380AAD21516D9800060EED /* SpringLabel.swift in Sources */,
 				C04C1F7B1B25AE2E00CF79E4 /* EventosDB.swift in Sources */,
