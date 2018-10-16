@@ -36,7 +36,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     var ocurrenciaSeleccionada: Int? // la ocurrencia con la que se está trabajando
     var ocurrenciaModificada = false // ¿se ha modificado una ocurrencia?
     var originalOffset = CGPoint(x: 0.0, y: 0.0)
-  
+    var isCustomizeDatePickerShow: Bool = false
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,15 +117,16 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
       print("Ocurrencia seleccionada: \(ocurrenciaSeleccionada), row: \(indexPath.row)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaHistorial") as! CeldaHistorialTableViewCell
       // Al reutilizar las celdas hay que tener cuidado con el relleno de los adornos.
-      if let indice = ocurrenciaSeleccionada {
-        if indice == indexPath.row {
-          cell.adorno.rellenar = true
-          cell.adorno.setNeedsDisplay()
-        } else {
-          cell.adorno.rellenar = false
-          cell.adorno.setNeedsDisplay()
+        
+        if let indice = ocurrenciaSeleccionada {
+            if indice == indexPath.row {
+                cell.adorno.rellenar = true
+                cell.adorno.setNeedsDisplay()
+            }  else {
+                cell.adorno.rellenar = false
+                cell.adorno.setNeedsDisplay()
+            }
         }
-      }
       
       if indexPath.row == ocurrencias.count - 1 {
         cell.adorno.esUltimaCelda = true
@@ -245,6 +246,8 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
   
   //MARK: Etiqueta pulsada
   @objc func tapLabel(_ sender:UITapGestureRecognizer) {
+    guard isCustomizeDatePickerShow == false else { return }
+    isCustomizeDatePickerShow = true
       let datePicker: CustomizeDatePicker = {
       let keyboardSize = KeyboardService.keyboardSize()
       return CustomizeDatePicker(frame: keyboardSize)
@@ -353,6 +356,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
 // MARK: UITextViewDelegate
 extension HistorialVC: UITextViewDelegate {
   func textViewDidBeginEditing(_ textView: UITextView) {
+    guard isCustomizeDatePickerShow == false else { return } // que no esté el cambio de fecha activo
     self.ocurrenciaModificada = false
     removeDatePicker()
     remarcarTextView(textView)
@@ -386,6 +390,7 @@ extension HistorialVC: UITextViewDelegate {
   
   // TODO: Hay que hacer que sólo se mueva si está en la zona cubierta por el teclado. Y que al salir de editar vuelva a la posición de origen
   func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    guard isCustomizeDatePickerShow == false else { return false}
     let keyboardSize = KeyboardService.keyboardSize() // Tamaño del teclado
     let aRect = textView.frame
     
@@ -424,7 +429,8 @@ extension HistorialVC: UITextViewDelegate {
 
 // MARK: CustomizeDatePickerDelegate
 extension HistorialVC: CustomizeDatePickerDelegate {
-  // Actualiza la base de datos. Si viene del botón cancel la fecha es nil
+    
+    // Actualiza la base de datos. Si viene del botón cancel la fecha es nil
   func setFechaValueToDatabase(_ fecha: Fecha?) {
     guard ocurrenciaSeleccionada != nil else {
       return

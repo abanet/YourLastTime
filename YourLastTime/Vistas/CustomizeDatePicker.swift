@@ -9,7 +9,8 @@
 import UIKit
 
 protocol CustomizeDatePickerDelegate: class {
-  func setFechaValueToDatabase(_ fecha: Fecha?)
+    var isCustomizeDatePickerShow: Bool { get set }
+    func setFechaValueToDatabase(_ fecha: Fecha?)
 }
 
 class CustomizeDatePicker: UIView {
@@ -109,7 +110,7 @@ class CustomizeDatePicker: UIView {
         ])
       
     } else {
-      let standardSpacing: CGFloat = 8.0
+      let standardSpacing: CGFloat = -8
       NSLayoutConstraint.activate([
         okButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: standardSpacing),
         cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: standardSpacing)
@@ -122,11 +123,13 @@ class CustomizeDatePicker: UIView {
   @objc func cancelPulsado() {
     self.removeFromSuperview()
     delegate?.setFechaValueToDatabase(nil)
+    delegate?.isCustomizeDatePickerShow = false
   }
   
   @objc func okPulsado() {
     let fecha = Fecha(date: datePicker.date)
     delegate?.setFechaValueToDatabase(fecha)
+    delegate?.isCustomizeDatePickerShow = false
     self.removeFromSuperview()
   }
 }
