@@ -11,6 +11,8 @@ import UIKit
 class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
 
     var idEvento: String!
+    var isDescription = false
+    
     @IBOutlet weak var lblCabecera1: UILabel!
     @IBOutlet weak var lblCabecera2: UILabel!
     @IBOutlet weak var btnOk: UIButton!
@@ -59,9 +61,12 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btnOkPulsado(_ sender: AnyObject) {
+        
         let database = EventosDB()
         //database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text!)
-        database.addOcurrencia(idEvento, descripcion: textViewDescripcionOcurrencia.text.removingAllExtraNewLines)
+        
+        let description = isDescription ? textViewDescripcionOcurrencia.text.removingAllExtraNewLines : ""
+        database.addOcurrencia(idEvento, descripcion: description)
     
       
         // Ha ocurrido una nueva ocurrencia.
@@ -91,6 +96,8 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         return newLength <= Constants.Texto.longitudMaximaNuevaOcurrencia // Bool
     }
 
+    
+   
 }
 
 // Control del uitextview
@@ -100,6 +107,7 @@ extension NuevaOcurrenciaVC: UITextViewDelegate {
     if textView.textColor == UIColor.lightGray {
       textView.text = nil
       textView.textColor = UIColor.black
+      isDescription = true
     }
   }
   
@@ -107,6 +115,7 @@ extension NuevaOcurrenciaVC: UITextViewDelegate {
     if textView.text.isEmpty {
       textView.text = NSLocalizedString("Add an optional description", comment:"")
       textView.textColor = UIColor.lightGray
+        isDescription = false
     }
   }
   
