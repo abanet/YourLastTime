@@ -23,6 +23,9 @@ class EventosDB: NSObject {
         database.logsErrors = true
     }
     
+    //
+    // MARK: Tratamiento de los eventos
+    //
     func addEvento(_ evento:String){
         
         let fecha = Fecha()
@@ -44,6 +47,18 @@ class EventosDB: NSObject {
         }
     }
     
+    
+    func updateEventoDate(idEvento: String, fecha: Fecha) {
+        if database.open(){
+            let updateSQL = "UPDATE EVENTOS SET FECHA = '\(fecha.fecha)', HORA = '\(fecha.hora)' WHERE ID = '\(idEvento)'"
+            let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)
+            if !resultado {
+                print("Error: \(database.lastErrorMessage())")
+            } else {
+                print("Ocurrencia modificada en Fecha")
+            }
+        }
+    }
     // Devuelve true si el evento se ha podido eliminar
     func eliminarEvento(_ idEvento:String, descripcion: String?)->Bool {
         if database.open(){
@@ -61,6 +76,58 @@ class EventosDB: NSObject {
         return false
     }
     
+    func arrayEventos()->[Evento] {
+        var arrayResultado = [Evento]()
+        if database.open() {
+            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO, ARCHIVADO FROM EVENTOS"
+            let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
+            while resultados?.next() == true {
+                let unEvento: Evento = Evento(id: resultados!.string(forColumn: "ID"),
+                                              descripcion: resultados!.string(forColumn: "DESCRIPCION")!,
+                                              fecha: resultados!.string(forColumn: "FECHA"),
+                                              hora: resultados!.string(forColumn: "HORA"),
+                                              contador: Int(resultados!.int(forColumn: "CONTADOR")),
+                                              cantidad: Int(resultados!.int(forColumn: "CANTIDAD")),
+                                              periodo: PeriodoTemporal(rawValue:Int(resultados!.int(forColumn: "PERIODO"))))
+                arrayResultado.append(unEvento)
+            }
+        } else {
+            // problemas al abrir la bbdd
+        }
+        arrayResultado.sort(by: {(e1: Evento, e2: Evento) in
+            let fecha1NSDate: Date = Fecha().fechaCompletaStringToDate(e1.fecha+e1.hora)
+            let fecha2NSDate: Date = Fecha().fechaCompletaStringToDate(e2.fecha+e2.hora)
+            return fecha1NSDate.isGreaterThanDate(fecha2NSDate)
+        })
+        return  arrayResultado//arrayResultado.reverse() // los más nuevos primero
+    }
+    
+    func tieneOcurrenciasElEvento(_ idEvento:String)->Bool {
+        return arrayOcurrencias(idEvento).count != 0
+    }
+    
+    func encontrarEvento(_ idEvento: String)->Evento?{
+        if database.open() {
+            let selectSQL = "SELECT DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO FROM EVENTOS WHERE ID                                               = '\(idEvento)'"
+            let resultado: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
+            if resultado!.next() {
+                let eventoFinal = Evento(id: idEvento,
+                                         descripcion: resultado!.string(forColumn: "DESCRIPCION"),
+                                         fecha: resultado!.string(forColumn: "FECHA"),
+                                         hora: resultado!.string(forColumn: "HORA"),
+                                         contador: Int(resultado!.int(forColumn: "CONTADOR")),
+                                         cantidad: Int(resultado!.int(forColumn: "CANTIDAD")),
+                                         periodo: PeriodoTemporal(rawValue: Int(resultado!.int(forColumn: "PERIODO")))
+                )
+                return eventoFinal
+            }
+        }
+        return nil
+    }
+    
+    //
+    // MARK: Tratamiento de las Ocurrencias
+    //
     func addOcurrencia(_ idEvento: String, descripcion: String) {
         let fecha = Fecha()
         // la descripción no puede llevar comillas simples que lia al sqlite y da error
@@ -126,31 +193,7 @@ class EventosDB: NSObject {
         return false
     }
     
-    func arrayEventos()->[Evento] {
-        var arrayResultado = [Evento]()
-        if database.open() {
-            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO, ARCHIVADO FROM EVENTOS"
-            let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
-            while resultados?.next() == true {
-                let unEvento: Evento = Evento(id: resultados!.string(forColumn: "ID"),
-                                            descripcion: resultados!.string(forColumn: "DESCRIPCION")!,
-                                            fecha: resultados!.string(forColumn: "FECHA"),
-                                            hora: resultados!.string(forColumn: "HORA"),
-                                            contador: Int(resultados!.int(forColumn: "CONTADOR")),
-                                            cantidad: Int(resultados!.int(forColumn: "CANTIDAD")),
-                                            periodo: PeriodoTemporal(rawValue:Int(resultados!.int(forColumn: "PERIODO"))))
-                arrayResultado.append(unEvento)
-            }
-        } else {
-            // problemas al abrir la bbdd
-        }
-        arrayResultado.sort(by: {(e1: Evento, e2: Evento) in
-            let fecha1NSDate: Date = Fecha().fechaCompletaStringToDate(e1.fecha+e1.hora)
-            let fecha2NSDate: Date = Fecha().fechaCompletaStringToDate(e2.fecha+e2.hora)
-            return fecha1NSDate.isGreaterThanDate(fecha2NSDate)
-        })
-        return  arrayResultado//arrayResultado.reverse() // los más nuevos primero
-    }
+    
   
   // Devuelve un array ordenado de las ocurrencias
   // Orden de ocurrrencias: de más nueva a más antigua
@@ -174,28 +217,7 @@ class EventosDB: NSObject {
         return arrayResultado.reversed() // los más nuevos primero
     }
     
-    func tieneOcurrenciasElEvento(_ idEvento:String)->Bool {
-        return arrayOcurrencias(idEvento).count != 0
-    }
     
-    func encontrarEvento(_ idEvento: String)->Evento?{
-        if database.open() {
-            let selectSQL = "SELECT DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO FROM EVENTOS WHERE ID                                               = '\(idEvento)'"
-            let resultado: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
-            if resultado!.next() {
-                let eventoFinal = Evento(id: idEvento,
-                    descripcion: resultado!.string(forColumn: "DESCRIPCION"),
-                    fecha: resultado!.string(forColumn: "FECHA"),
-                    hora: resultado!.string(forColumn: "HORA"),
-                    contador: Int(resultado!.int(forColumn: "CONTADOR")),
-                    cantidad: Int(resultado!.int(forColumn: "CANTIDAD")),
-                    periodo: PeriodoTemporal(rawValue: Int(resultado!.int(forColumn: "PERIODO")))
-                )
-                return eventoFinal
-            }
-        }
-        return nil
-    }
     
     func contarOcurrenciasSemanaMesAnno(_ idEvento: String) -> (Int, Int, Int) {
         var resultado = (ultimaSemana: 0, ultimoMes: 0, ultimoAnno: 0)
@@ -219,6 +241,10 @@ class EventosDB: NSObject {
         return resultado
     }
 
+    
+    //
+    // MARK: Tratamiento de alarmas
+    //
     func arrayAlarmasEventos() -> [Evento] {
         var arrayResultado = [Evento]()
         if database.open() {

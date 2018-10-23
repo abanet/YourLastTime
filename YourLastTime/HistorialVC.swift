@@ -246,7 +246,13 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
   
   //MARK: Etiqueta pulsada
   @objc func tapLabel(_ sender:UITapGestureRecognizer) {
-    guard isCustomizeDatePickerShow == false else { return }
+    print("Tap en fecha")
+    if let dp = view.viewWithTag(CustomizeDatePickerConfiguration.tag.rawValue) as? CustomizeDatePicker {
+        dp.cancelPulsado()
+    }
+    guard isCustomizeDatePickerShow == false else {
+        return
+    }
     isCustomizeDatePickerShow = true
       let datePicker: CustomizeDatePicker = {
       let keyboardSize = KeyboardService.keyboardSize()
@@ -315,19 +321,23 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
   }
   
-  func updateLabelFechaHora(paraOcurrencia ocurrencia: Int, conFecha fecha: Fecha) {
-    if let cellSelect = tableView.cellForRow(at: IndexPath(row:ocurrencia,section:0)) as? CeldaHistorialTableViewCell {
-      cellSelect.lblFecha.text = fecha.devolverFechaLocalizada(fecha.fecha)
-      cellSelect.lblHora.text = fecha.hora
-      cellSelect.lblFecha.setNeedsDisplay()
-      cellSelect.lblHora.setNeedsDisplay()
-      // Actualizamos la ocurrencia correspondiente para no perder coherencia de datos
-      ocurrencias[ocurrencia].fecha = fecha.fecha
-      ocurrencias[ocurrencia].hora  = fecha.hora
-      
+    func updateLabelFechaHora(paraOcurrencia ocurrencia: Int, conFecha fecha: Fecha) {
+        let indice = IndexPath(row: ocurrencia, section: 0)
+        if let cellSelect = tableView.cellForRow(at: indice) as? CeldaHistorialTableViewCell {
+            cellSelect.lblFecha.text = fecha.devolverFechaLocalizada(fecha.fecha)
+            cellSelect.lblHora.text = fecha.hora
+            // Calculo de la diferencia entre dos ocurrencias
+            cellSelect.lblHace.text = self.informarIntervalodeDiferencia(fila: ocurrencia, ocurrencia: ocurrencias[ocurrencia])
+            // refrescar valores de los textos
+            cellSelect.lblHace.setNeedsDisplay()
+            cellSelect.lblFecha.setNeedsDisplay()
+            cellSelect.lblHora.setNeedsDisplay()
+            // Actualizamos la ocurrencia correspondiente para no perder coherencia de datos
+            ocurrencias[ocurrencia].fecha = fecha.fecha
+            ocurrencias[ocurrencia].hora  = fecha.hora
+        }
     }
-  }
-  
+    
   func desmarcarTodasCeldas () {
     _ = tableView.subviews.filter{$0 is CeldaHistorialTableViewCell}.map{
       ($0 as? CeldaHistorialTableViewCell)?.adorno.rellenar = false
@@ -439,6 +449,9 @@ extension HistorialVC: CustomizeDatePickerDelegate {
       let ocur = ocurrencias[ocurrenciaSeleccionada!]
       database.modificarOcurrenciaFechaHora(ocur.idOcurrencia, ocur.idEvento, nuevaFecha: fecha)
       updateLabelFechaHora(paraOcurrencia: ocurrenciaSeleccionada!, conFecha: fecha)
+        if ocurrenciaSeleccionada! == 0 {// es la primera, hay que cambiar la fecha del evento
+           database.updateEventoDate(idEvento: ocur.idEvento, fecha: fecha)
+        }
     }
     desplazarTableViewToOrigin(tableView)
   }

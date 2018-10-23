@@ -13,8 +13,13 @@ protocol CustomizeDatePickerDelegate: class {
     func setFechaValueToDatabase(_ fecha: Fecha?)
 }
 
+enum CustomizeDatePickerConfiguration: Int {
+   case tag = 100
+}
+
 class CustomizeDatePicker: UIView {
   weak var delegate: CustomizeDatePickerDelegate?
+
   
   var date: Date? {
     didSet {
@@ -74,6 +79,7 @@ class CustomizeDatePicker: UIView {
   
   //common func to init our view
   private func setupView() {
+    self.tag = CustomizeDatePickerConfiguration.tag.rawValue
     backgroundColor = YourLastTime.colorFechaHistorico
     addSubview(datePicker)
     addSubview(okButton)
