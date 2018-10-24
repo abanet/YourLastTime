@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  YourLastTime
+
+  Created by Alberto Banet Masa on 24/10/2018.
+  Copyright © 2018 abanet. All rights reserved.
+*/
+NSCameraUsageDescription = "Accederemos a tus fotos sólo si quieres cambiar la imagen de fondo a una de tu elección.";

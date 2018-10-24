@@ -55,3 +55,9 @@
 
 /* Notificaciones */
 "Your Last Time Alarm!" = "¡Alarma de Última Vez!";
+
+
+/* pickerImageViewController */
+"Select" = "Seleccionar";
+"Restore default" = "Fondo original";
+"Save" = "Guardar";
