@@ -54,17 +54,19 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.dataSource = self
         
+        // Crear background
+        setupBackground(imageView: backView)
+        
         // Creamos una vista como background de la tabla para evitar que quede gris al desplazar la tabla (con buscador no cogía el color de background)
        // let backgroundView = UIView(frame: self.tableView.bounds)
-        if let img = loadImageCustomBackground(name: imageNameCustomBackground) {
-             backView.image = img
-        } else {
-            backView.image =  UIImage(named: "background2")!
-        }
         //YourLastTime.colorBackground
        // self.tableView.backgroundView = backgroundView
       //  self.tableView.backgroundView?.alpha = 0.5
         //self.tableView.bounces = false
+        
+        // Nos registramos como observadores del cambio de background
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onDidChangeBackground), name: .didChangeBackground , object: nil)
       
         // Configuración searchController
         self.buscador = ({
@@ -445,5 +447,11 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             self.present(chooseImageVC, animated: true, completion: nil)
         }
     }
+    
+    // MARK: Notification didChangeBackground
+    @objc func onDidChangeBackground() {
+        setupBackground(imageView: backView)
+    }
+    
 }
 

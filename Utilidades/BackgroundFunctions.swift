@@ -15,7 +15,17 @@ public let imageNameBackgroundDefault = "background2"
 func saveImageToLocal(_ image: UIImage, name: String) {
     let imagePath: String = "\(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])/\(name).png"
     let imageUrl: URL = URL(fileURLWithPath: imagePath)
-    try? image.pngData()?.write(to: imageUrl)
+    DispatchQueue.global().async {
+        do {
+            try image.pngData()?.write(to: imageUrl)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .didChangeBackground, object: nil)
+            }
+            
+        } catch {
+            print(error)
+        }
+    }
 }
 
 func loadImageCustomBackground(name: String) -> UIImage? {

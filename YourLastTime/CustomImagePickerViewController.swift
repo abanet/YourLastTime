@@ -10,9 +10,11 @@ import UIKit
 
 
 
+
 class CustomImagePickerViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     let HEIGHT_BUTTON: CGFloat = 50.0
+    let CORNER_RADIUS: CGFloat = 5.0
     
     
     let picker: UIImagePickerController = {
@@ -29,9 +31,15 @@ class CustomImagePickerViewController: UIViewController, UINavigationControllerD
     }()
     
     lazy var okButton: UIButton = {
+        //let button = UIButton(type: .system)
         let button = UIButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.gray.colorWithAlpha(0.60)
+        button.translatesAutoresizingMaskIntoConstraints = false // un poco de aire para que no se ajuste hasta el límite del texto
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        button.setContentHuggingPriority(UILayoutPriority(rawValue: 750.0), for: .horizontal)
+        button.layer.cornerRadius = CORNER_RADIUS
+        button.backgroundColor = YourLastTime.colorFondoCelda
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(.yellow, for: .highlighted)
         button.setTitle(NSLocalizedString("Save", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(CustomImagePickerViewController.okPulsado), for: .touchUpInside)
         return button
@@ -40,7 +48,10 @@ class CustomImagePickerViewController: UIViewController, UINavigationControllerD
     lazy var cancelButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.gray.colorWithAlpha(0.60)
+        button.layer.cornerRadius = CORNER_RADIUS
+        button.backgroundColor = YourLastTime.colorFondoCelda
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(.yellow, for: .highlighted)
         button.setTitle(NSLocalizedString("Cancel", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(CustomImagePickerViewController.cancelPulsado), for: .touchUpInside)
         return button
@@ -49,8 +60,11 @@ class CustomImagePickerViewController: UIViewController, UINavigationControllerD
     lazy var pickAnotherButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.gray.colorWithAlpha(0.60)
-        button.setTitle(NSLocalizedString("Change photo", comment: ""), for: .normal)
+        button.layer.cornerRadius = CORNER_RADIUS
+        button.backgroundColor = YourLastTime.colorFondoCelda
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(.yellow, for: .highlighted)
+        button.setTitle(NSLocalizedString("Select", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(CustomImagePickerViewController.changePhotoPulsado), for: .touchUpInside)
         return button
     }()
@@ -58,7 +72,10 @@ class CustomImagePickerViewController: UIViewController, UINavigationControllerD
     lazy var restoreBackgroundButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.gray.colorWithAlpha(0.60)
+        button.layer.cornerRadius = CORNER_RADIUS
+        button.backgroundColor = YourLastTime.colorFondoCelda
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(.yellow, for: .highlighted)
         button.setTitle(NSLocalizedString("Restore default", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(CustomImagePickerViewController.restoreBackgroundPulsado), for: .touchUpInside)
         return button
@@ -104,21 +121,21 @@ class CustomImagePickerViewController: UIViewController, UINavigationControllerD
             okButton.heightAnchor.constraint(equalToConstant: HEIGHT_BUTTON),
             okButton.trailingAnchor.constraint(equalTo: pickAnotherButton.leadingAnchor, constant: -8.0),
             //okButton.widthAnchor.constraint(equalToConstant: view.frame.width/3),
-            okButton.bottomAnchor.constraint(equalTo: restoreBackgroundButton.topAnchor, constant: -32.0),
+            okButton.bottomAnchor.constraint(equalTo: restoreBackgroundButton.topAnchor, constant: -16.0),
             
             // cancelButton
             cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0),
             cancelButton.heightAnchor.constraint(equalToConstant: HEIGHT_BUTTON),
             //cancelButton.widthAnchor.constraint(equalToConstant: view.frame.width/3),
             cancelButton.leadingAnchor.constraint(equalTo: pickAnotherButton.trailingAnchor, constant: 8.0),
-            cancelButton.bottomAnchor.constraint(equalTo: restoreBackgroundButton.topAnchor, constant: -32.0),
+            cancelButton.bottomAnchor.constraint(equalTo: restoreBackgroundButton.topAnchor, constant: -16.0),
             cancelButton.widthAnchor.constraint(equalTo: okButton.widthAnchor),
             
             // pickAnotherButton
             pickAnotherButton.leadingAnchor.constraint(equalTo: okButton.trailingAnchor),
             pickAnotherButton.heightAnchor.constraint(equalToConstant: HEIGHT_BUTTON),
             //pickAnotherButton.widthAnchor.constraint(equalToConstant: view.frame.width/3),
-            pickAnotherButton.bottomAnchor.constraint(equalTo:restoreBackgroundButton.topAnchor, constant: -32.0),
+            pickAnotherButton.bottomAnchor.constraint(equalTo:restoreBackgroundButton.topAnchor, constant: -16.0),
             
             // imageBackgrounView
             imageBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -156,11 +173,18 @@ class CustomImagePickerViewController: UIViewController, UINavigationControllerD
     // MARK: UIImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
-            imageBackgroundView.image = pickedImage
+            imageBackgroundView.image = fixImageOrientation(pickedImage)
             self.dismiss(animated: true)
         }
     }
     
-    
+    // función auxiliar que devuelve la imagen con la orientación correcta.
+    func fixImageOrientation(_ image: UIImage)->UIImage {
+        UIGraphicsBeginImageContext(image.size)
+        image.draw(at: .zero)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage ?? image
+    }
     
 }

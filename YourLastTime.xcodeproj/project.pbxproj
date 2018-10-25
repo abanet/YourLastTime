@@ -79,6 +79,7 @@
 		D318DB27218073FB001AE78F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D318DB25218073FB001AE78F /* InfoPlist.strings */; };
 		D318DB2921807576001AE78F /* BackgroundFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318DB2821807576001AE78F /* BackgroundFunctions.swift */; };
 		D3A72AB1217F729A0064C15C /* CustomImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A72AB0217F729A0064C15C /* CustomImagePickerViewController.swift */; };
+		D3CB3C852181BC4300412DEB /* CustomNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB3C842181BC4300412DEB /* CustomNotifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +182,7 @@
 		D318DB26218073FB001AE78F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D318DB2821807576001AE78F /* BackgroundFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundFunctions.swift; sourceTree = "<group>"; };
 		D3A72AB0217F729A0064C15C /* CustomImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickerViewController.swift; sourceTree = "<group>"; };
+		D3CB3C842181BC4300412DEB /* CustomNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +234,7 @@
 				C062BF3C215C0A9400944803 /* String+extension.swift */,
 				C062BF3E215C217700944803 /* KeyboardService.swift */,
 				D318DB2821807576001AE78F /* BackgroundFunctions.swift */,
+				D3CB3C842181BC4300412DEB /* CustomNotifications.swift */,
 			);
 			path = Utilidades;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				C0380AC221516D9800060EED /* Misc.swift in Sources */,
 				C062BF3D215C0A9400944803 /* String+extension.swift in Sources */,
 				C0380AAE21516D9800060EED /* UnwindSegue.swift in Sources */,
+				D3CB3C852181BC4300412DEB /* CustomNotifications.swift in Sources */,
 				C0380AB621516D9800060EED /* TransitionManager.swift in Sources */,
 				C0380ABE21516D9800060EED /* SoundPlayer.swift in Sources */,
 				C0008CF51B2702A80028F850 /* Evento.swift in Sources */,
