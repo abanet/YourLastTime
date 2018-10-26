@@ -21,6 +21,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9oO-et-Kr1" userLabel="background">
+                                <rect key="frame" x="0.0" y="90" width="375" height="577"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUY-eJ-rd5">
                                 <rect key="frame" x="0.0" y="50" width="375" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -327,6 +330,7 @@
                             <constraint firstItem="fK1-6B-hhZ" firstAttribute="leading" secondItem="foQ-8b-xBT" secondAttribute="leading" constant="20" symbolic="YES" id="0bO-Mh-Biw">
                                 <variation key="heightClass=regular" constant="20" symbolic="YES"/>
                             </constraint>
+                            <constraint firstItem="9oO-et-Kr1" firstAttribute="leading" secondItem="foQ-8b-xBT" secondAttribute="leading" id="2HY-0O-Z2s"/>
                             <constraint firstItem="fK1-6B-hhZ" firstAttribute="top" secondItem="Kah-jy-E9r" secondAttribute="bottom" constant="8" id="3jR-0y-fU9">
                                 <variation key="heightClass=regular" constant="8" symbolic="YES"/>
                             </constraint>
@@ -334,9 +338,11 @@
                             <constraint firstItem="eRr-t3-lBA" firstAttribute="top" secondItem="bUY-eJ-rd5" secondAttribute="bottom" priority="750" id="40r-xc-KPb">
                                 <variation key="heightClass=regular" constant="0.0"/>
                             </constraint>
+                            <constraint firstAttribute="trailing" secondItem="9oO-et-Kr1" secondAttribute="trailing" id="CbQ-Dr-gcK"/>
                             <constraint firstItem="eRr-t3-lBA" firstAttribute="top" secondItem="fK1-6B-hhZ" secondAttribute="bottom" constant="15.5" id="E1e-YI-eJJ">
                                 <variation key="heightClass=regular" constant="0.0"/>
                             </constraint>
+                            <constraint firstItem="9oO-et-Kr1" firstAttribute="top" secondItem="bUY-eJ-rd5" secondAttribute="bottom" id="E6l-dV-c02"/>
                             <constraint firstItem="eRr-t3-lBA" firstAttribute="top" secondItem="bUY-eJ-rd5" secondAttribute="bottom" id="GBl-Ko-4qt">
                                 <variation key="heightClass=regular" constant="-40"/>
                             </constraint>
@@ -344,6 +350,7 @@
                             <constraint firstItem="eRr-t3-lBA" firstAttribute="leading" secondItem="foQ-8b-xBT" secondAttribute="leading" id="IZh-LT-i0t"/>
                             <constraint firstItem="eRr-t3-lBA" firstAttribute="top" secondItem="foQ-8b-xBT" secondAttribute="top" constant="40" id="NqM-fl-Qxz"/>
                             <constraint firstAttribute="trailing" secondItem="eRr-t3-lBA" secondAttribute="trailing" id="OFc-9g-2ra"/>
+                            <constraint firstItem="TC9-TJ-y6d" firstAttribute="top" secondItem="9oO-et-Kr1" secondAttribute="bottom" id="RgW-Gs-xXd"/>
                             <constraint firstItem="eRr-t3-lBA" firstAttribute="top" secondItem="bUY-eJ-rd5" secondAttribute="bottom" constant="3" id="WbR-nm-30e"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bUY-eJ-rd5" secondAttribute="trailing" id="aOk-FH-plp">
                                 <variation key="heightClass=regular" constant="0.0"/>
@@ -412,6 +419,7 @@
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="backView" destination="9oO-et-Kr1" id="MyD-x0-5ru"/>
                         <outlet property="btnLupa" destination="vXE-H0-OHE" id="uBT-qR-ft8"/>
                         <outlet property="buscadorView" destination="bUY-eJ-rd5" id="8U7-8s-IOn"/>
                         <outlet property="constraintTopBuscadorView" destination="dbC-7c-QLd" id="aUR-iS-vTX"/>
@@ -432,7 +440,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="532" y="-106"/>
+            <point key="canvasLocation" x="532" y="-106.59670164917542"/>
         </scene>
         <!--HistorialVC-->
         <scene sceneID="qlg-av-X8r">

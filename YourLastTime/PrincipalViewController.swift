@@ -17,11 +17,13 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buscadorView: UIView!
     @IBOutlet weak var btnLupa: SpringButton!
-  
+    
+    @IBOutlet weak var backView: UIImageView!
+    
   
   @IBOutlet weak var constraintTopBuscadorView: NSLayoutConstraint!
  
-
+    
 
     fileprivate var bbdd: EventosDB
     fileprivate var eventos: [Evento]
@@ -42,7 +44,9 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
-      
+        // Edge pan
+        addingEdgePanDetection()
+        
         // Título
         lblTitulo.text = NSLocalizedString("When was the last time I...?", comment:"cabecera de la pantalla principal")
         lblTitulo.textColor = YourLastTime.colorTextoPrincipal
@@ -50,13 +54,19 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.dataSource = self
         
+        // Crear background
+        setupBackground(imageView: backView)
+        
         // Creamos una vista como background de la tabla para evitar que quede gris al desplazar la tabla (con buscador no cogía el color de background)
-        let backgroundView = UIView(frame: self.tableView.bounds)
-        backgroundView.backgroundColor = UIColor(patternImage: UIImage(named: "background2")!)
+       // let backgroundView = UIView(frame: self.tableView.bounds)
         //YourLastTime.colorBackground
-        self.tableView.backgroundView = backgroundView
-        self.tableView.backgroundView?.alpha = 0.5
+       // self.tableView.backgroundView = backgroundView
+      //  self.tableView.backgroundView?.alpha = 0.5
         //self.tableView.bounces = false
+        
+        // Nos registramos como observadores del cambio de background
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onDidChangeBackground), name: .didChangeBackground , object: nil)
       
         // Configuración searchController
         self.buscador = ({
@@ -362,7 +372,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
    
-  // MARK: Botón para mostrar/ocultar buscador
+  // MARK: Acciones de botones
   @IBAction func pulsarLupa(_ sender: UIButton) {
     self.buscadorOculto = !self.buscadorOculto
     //self.buscadorView.hidden = !self.buscadorView.hidden
@@ -374,7 +384,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     boton.animate()
   }
   
-  
+    
+    
   // actualización de la constraint de la table view
   func updateConstraints(){
     UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut , animations: {
@@ -420,7 +431,27 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         return UIImage(named: nombreImagen)!
     }
   
-  
+    // MARK: Configuración de la app
+    func addingEdgePanDetection() {
+        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+        edgePan.edges = .left
+        
+        view.addGestureRecognizer(edgePan)
+    }
+    
+    @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+        if recognizer.state == .recognized {
+            print("Screen edge swiped!")
+            let chooseImageVC = CustomImagePickerViewController()
+            chooseImageVC.modalTransitionStyle = .flipHorizontal
+            self.present(chooseImageVC, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: Notification didChangeBackground
+    @objc func onDidChangeBackground() {
+        setupBackground(imageView: backView)
+    }
     
 }
 

@@ -76,6 +76,10 @@
 		C0FEE63D1B259B62000B0627 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FEE6121B259B62000B0627 /* TPKeyboardAvoidingTableView.m */; };
 		C0FEE63E1B259B62000B0627 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FEE6141B259B62000B0627 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		C0FEE6421B25A650000B0627 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C0FEE6411B25A650000B0627 /* libsqlite3.dylib */; };
+		D318DB27218073FB001AE78F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D318DB25218073FB001AE78F /* InfoPlist.strings */; };
+		D318DB2921807576001AE78F /* BackgroundFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318DB2821807576001AE78F /* BackgroundFunctions.swift */; };
+		D3A72AB1217F729A0064C15C /* CustomImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A72AB0217F729A0064C15C /* CustomImagePickerViewController.swift */; };
+		D3CB3C852181BC4300412DEB /* CustomNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB3C842181BC4300412DEB /* CustomNotifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +179,10 @@
 		C0FEE6141B259B62000B0627 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
 		C0FEE6401B25A56B000B0627 /* YourLastTime-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YourLastTime-Bridging-Header.h"; sourceTree = "<group>"; };
 		C0FEE6411B25A650000B0627 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		D318DB26218073FB001AE78F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D318DB2821807576001AE78F /* BackgroundFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundFunctions.swift; sourceTree = "<group>"; };
+		D3A72AB0217F729A0064C15C /* CustomImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickerViewController.swift; sourceTree = "<group>"; };
+		D3CB3C842181BC4300412DEB /* CustomNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +233,8 @@
 			children = (
 				C062BF3C215C0A9400944803 /* String+extension.swift */,
 				C062BF3E215C217700944803 /* KeyboardService.swift */,
+				D318DB2821807576001AE78F /* BackgroundFunctions.swift */,
+				D3CB3C842181BC4300412DEB /* CustomNotifications.swift */,
 			);
 			path = Utilidades;
 			sourceTree = "<group>";
@@ -266,6 +276,7 @@
 				C0F6968F1B3C157F004F3214 /* constantes.swift */,
 				C0AD3AE1215E8F0100FE4295 /* CambioFechaViewController.swift */,
 				C0FEE5DB1B259B62000B0627 /* EntradaTableViewCell.swift */,
+				D3A72AB0217F729A0064C15C /* CustomImagePickerViewController.swift */,
 				C0FEE5E91B259B62000B0627 /* NuevoEventoVC.swift */,
 				C0C09BFC1B301C68004AC072 /* NuevaOcurrenciaVC.swift */,
 				C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */,
@@ -275,6 +286,7 @@
 				C041D7551B3D51CF004E2FCB /* ABMDate.swift */,
 				C0B39B941B53CBFE00E3D680 /* PeriodoTemporal.swift */,
 				C0BCADAC1B2986FE00B20009 /* Localizable.strings */,
+				D318DB25218073FB001AE78F /* InfoPlist.strings */,
 				C0FEE5B71B259AE9000B0627 /* Supporting Files */,
 			);
 			path = YourLastTime;
@@ -460,6 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0FEE5DA1B259B41000B0627 /* Main.storyboard in Resources */,
+				D318DB27218073FB001AE78F /* InfoPlist.strings in Resources */,
 				C0380AB721516D9800060EED /* LoadingView.xib in Resources */,
 				C07E3A281E535FF400CE95EB /* Launch Screen.storyboard in Resources */,
 				C0C168321B38067B00387F3F /* Media.xcassets in Resources */,
@@ -512,6 +525,7 @@
 				C09506191B4D3D3500961F8B /* NuevaAlarmaVC.swift in Sources */,
 				C0380ABB21516D9800060EED /* TransitionZoom.swift in Sources */,
 				C0FEE5BA1B259AE9000B0627 /* AppDelegate.swift in Sources */,
+				D3A72AB1217F729A0064C15C /* CustomImagePickerViewController.swift in Sources */,
 				C0FEE6161B259B62000B0627 /* FMDatabase.m in Sources */,
 				C0FEE61C1B259B62000B0627 /* PrincipalViewController.swift in Sources */,
 				C06200EA216234A1005D9277 /* CustomizeDatePicker.swift in Sources */,
@@ -529,6 +543,7 @@
 				C0380AC221516D9800060EED /* Misc.swift in Sources */,
 				C062BF3D215C0A9400944803 /* String+extension.swift in Sources */,
 				C0380AAE21516D9800060EED /* UnwindSegue.swift in Sources */,
+				D3CB3C852181BC4300412DEB /* CustomNotifications.swift in Sources */,
 				C0380AB621516D9800060EED /* TransitionManager.swift in Sources */,
 				C0380ABE21516D9800060EED /* SoundPlayer.swift in Sources */,
 				C0008CF51B2702A80028F850 /* Evento.swift in Sources */,
@@ -539,6 +554,7 @@
 				C0B39B931B53AE7200E3D680 /* Notificacion.swift in Sources */,
 				C0380AA821516D9800060EED /* LoadingView.swift in Sources */,
 				C0380AB321516D9800060EED /* BlurView.swift in Sources */,
+				D318DB2921807576001AE78F /* BackgroundFunctions.swift in Sources */,
 				C0F696901B3C157F004F3214 /* constantes.swift in Sources */,
 				C0B39B951B53CBFE00E3D680 /* PeriodoTemporal.swift in Sources */,
 				C0380ABC21516D9800060EED /* DesignableTextField.swift in Sources */,
@@ -573,6 +589,14 @@
 			);
 			name = Localizable.strings;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		D318DB25218073FB001AE78F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D318DB26218073FB001AE78F /* es */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
