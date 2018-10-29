@@ -11,6 +11,7 @@ import UIKit
 class Fecha: NSObject, Comparable {
     var fecha: String
     var hora: String
+    
   
   init(fecha:String, hora: String) {
     self.fecha = fecha
@@ -62,6 +63,8 @@ class Fecha: NSObject, Comparable {
   // Deprecate en un futuro. Usar siguiente versión.
     func fechaCompletaStringToDate(_ fechaCompleta: String) -> Date {
         let formateador = DateFormatter()
+        formateador.timeZone = TimeZone(abbreviation: "GMT+0:00") //¡¡ si no se añade esto resta dos horas!!
+        formateador.locale = Locale.current
         formateador.dateFormat = "MM-dd-yyyyHH:mm"
         let fechaTemp = formateador.date(from: fechaCompleta)
         return fechaTemp!
@@ -70,6 +73,8 @@ class Fecha: NSObject, Comparable {
   // versión mejorada de la anterior q trabaja con los datos de la instancia
   func fechaCompletaStringToDate() -> Date {
     let formateador = DateFormatter()
+     formateador.timeZone = TimeZone(abbreviation: "GMT+0:00") //¡¡ si no se añade esto resta dos horas!!
+    formateador.locale = Locale.current
     formateador.dateFormat = "MM-dd-yyyyHH:mm"
     let fechaTemp = formateador.date(from: self.fecha+self.hora)
     return fechaTemp!

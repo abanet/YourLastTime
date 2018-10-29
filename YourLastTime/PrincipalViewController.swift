@@ -144,7 +144,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.entradaView.animation = "slideRight"
         cell.entradaView.animate()
             if(eventos[indexPath.row].cantidad > 0) {
-                cell.imgDespertador.image = imagenDespertador(eventos[indexPath.row])
+                cell.imgDespertador.image = UIImage(named: "despertador_white")?.withRenderingMode(.alwaysTemplate)
+                cell.imgDespertador.tintColor = eventos[indexPath.row].colorParaEvento()
                 cell.imgDespertador.isHidden = false
                 cell.lblDetalleAlarma.text = eventos[indexPath.row].descripcionAlarma()
             } else {
@@ -160,12 +161,14 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.lblContador.text = String(eventosFiltrados[indexPath.row].contador)
             cell.idEvento = eventosFiltrados[indexPath.row].id
             if(eventosFiltrados[indexPath.row].cantidad > 0) {
-                cell.imgDespertador.image = imagenDespertador(eventos[indexPath.row])
+                cell.imgDespertador.image = UIImage(named: "despertador_white")?.withRenderingMode(.alwaysTemplate)
+                cell.imgDespertador.tintColor = eventos[indexPath.row].colorParaEvento()
                 cell.imgDespertador.isHidden = false
             } else {
                 cell.imgDespertador.isHidden = true
             }
         }
+
         // Fondo de la celda transparente para mostrar la vista background de la tabla (foto de fondo)
         cell.backgroundColor = UIColor.clear;
       
@@ -389,7 +392,6 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
   // actualización de la constraint de la table view
   func updateConstraints(){
     UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut , animations: {
-      
       if self.buscadorOculto {
         self.constraintTopBuscadorView.constant = -self.buscadorView.frame.height
         self.buscadorView.alpha = 0
@@ -418,7 +420,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         _ =  evento.intervaloAlarmaEnHoras()
         _ = evento.fechaUltimaOcurrencia()
         
-        let fechaMedia = Date(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 30, since: evento.fechaUltimaOcurrencia())
+        let fechaMedia = Date(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 60 / 2, since: evento.fechaUltimaOcurrencia())
         let fechaFinal = Date(timeInterval: evento.intervaloAlarmaEnHoras() * 60 * 60, since: evento.fechaUltimaOcurrencia())
         let ahora = Date(timeIntervalSinceNow: 0)
         
@@ -430,6 +432,10 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         return UIImage(named: nombreImagen)!
     }
+    
+    
+    
+    
   
     // MARK: Configuración de la app
     func addingEdgePanDetection() {

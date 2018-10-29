@@ -78,6 +78,7 @@
 		C0FEE6421B25A650000B0627 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C0FEE6411B25A650000B0627 /* libsqlite3.dylib */; };
 		D318DB27218073FB001AE78F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D318DB25218073FB001AE78F /* InfoPlist.strings */; };
 		D318DB2921807576001AE78F /* BackgroundFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318DB2821807576001AE78F /* BackgroundFunctions.swift */; };
+		D3838B1121835DCB0056AA1F /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3838B1021835DCB0056AA1F /* Color+extension.swift */; };
 		D3A72AB1217F729A0064C15C /* CustomImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A72AB0217F729A0064C15C /* CustomImagePickerViewController.swift */; };
 		D3CB3C852181BC4300412DEB /* CustomNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB3C842181BC4300412DEB /* CustomNotifications.swift */; };
 /* End PBXBuildFile section */
@@ -181,6 +182,7 @@
 		C0FEE6411B25A650000B0627 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		D318DB26218073FB001AE78F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D318DB2821807576001AE78F /* BackgroundFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundFunctions.swift; sourceTree = "<group>"; };
+		D3838B1021835DCB0056AA1F /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
 		D3A72AB0217F729A0064C15C /* CustomImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickerViewController.swift; sourceTree = "<group>"; };
 		D3CB3C842181BC4300412DEB /* CustomNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -235,6 +237,7 @@
 				C062BF3E215C217700944803 /* KeyboardService.swift */,
 				D318DB2821807576001AE78F /* BackgroundFunctions.swift */,
 				D3CB3C842181BC4300412DEB /* CustomNotifications.swift */,
+				D3838B1021835DCB0056AA1F /* Color+extension.swift */,
 			);
 			path = Utilidades;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 				C0380AB121516D9800060EED /* DesignableImageView.swift in Sources */,
 				C01855F91DE3114600EE347B /* GATracker.swift in Sources */,
 				C0008CF71B27100D0028F850 /* Fecha.swift in Sources */,
+				D3838B1121835DCB0056AA1F /* Color+extension.swift in Sources */,
 				C0B39B931B53AE7200E3D680 /* Notificacion.swift in Sources */,
 				C0380AA821516D9800060EED /* LoadingView.swift in Sources */,
 				C0380AB321516D9800060EED /* BlurView.swift in Sources */,

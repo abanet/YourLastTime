@@ -41,7 +41,8 @@ class Evento: NSObject {
     // Devuelve un string descriptivo de cuanto tiempo ha pasado desde la fecha y hora del evento
     func cuantoTiempoHaceDesdeLaUltimaVez()->String {
         let fechaEvento = Fecha().fechaCompletaStringToDate(self.fecha + self.hora)
-        let intervalo = Date(timeIntervalSinceNow: 0).timeIntervalSince(fechaEvento)
+        // Usamos Fecha pq formatea en la misma zona. Usando Date directamente la hora que da son 2 horas menos...
+        let intervalo = Fecha(date:Date(timeIntervalSinceNow: 0)).fechaCompletaStringToDate().timeIntervalSince(fechaEvento) //
         
         let ti = NSInteger(intervalo)
         let minutos = (ti / 60) % 60
@@ -95,4 +96,30 @@ class Evento: NSObject {
         return false
     }
 
+    // Decide el color para un evento dato.
+    // Se elige de un array de colores que indican del color dependiendo del tiempo
+    // Dar más intensidad según al tiempo
+    func colorParaEvento() -> UIColor? {
+        let colores = [YourLastTime.colorTextoSecundario.darker(by: 10.0), YourLastTime.colorTextoSecundario.darker(by: 20.0), YourLastTime.colorTextoSecundario.darker(by: 40.0), YourLastTime.colorTextoSecundario.darker(by: 60.0), YourLastTime.colorTextoSecundario.darker(by: 80.0), UIColor.red]
+        let fechaUltimaOcurrencia = self.fechaUltimaOcurrencia()
+        let fechaAlarma = Date(timeInterval: self.intervaloAlarmaEnHoras() * 60 * 60, since: fechaUltimaOcurrencia)
+        let ahora = Fecha(date:Date()).fechaCompletaStringToDate()
+        var indiceSector = 0
+        var colorElegido: UIColor?
+        let intervaloHitos = (fechaAlarma.timeIntervalSince1970 - fechaUltimaOcurrencia.timeIntervalSince1970) / Double(colores.count)
+        if intervaloHitos > 0 {
+            for index in 1...colores.count {
+                let hitoDate = Date(timeInterval: intervaloHitos * Double(index), since: fechaUltimaOcurrencia)
+                // ¿está en el intervalo?
+                if ahora.isLessThanDate(hitoDate) {
+                    indiceSector = index - 1
+                    colorElegido = colores[index-1]
+                    break
+                }
+            }
+        } else {
+            colorElegido = colores[colores.count-1] // último color que es el que marca la urgencia
+        }
+        return colorElegido
+    }
 }

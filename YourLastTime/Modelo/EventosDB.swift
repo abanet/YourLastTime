@@ -90,6 +90,11 @@ class EventosDB: NSObject {
                                               cantidad: Int(resultados!.int(forColumn: "CANTIDAD")),
                                               periodo: PeriodoTemporal(rawValue:Int(resultados!.int(forColumn: "PERIODO"))))
                 arrayResultado.append(unEvento)
+                // DEBUG
+                let descrip = resultados!.string(forColumn: "DESCRIPCION")!
+                let f = resultados!.string(forColumn: "FECHA")
+                let h = resultados!.string(forColumn: "HORA")
+               // print("Evento: \(descrip), fecha: \(f), hora: \(h)")
             }
         } else {
             // problemas al abrir la bbdd
