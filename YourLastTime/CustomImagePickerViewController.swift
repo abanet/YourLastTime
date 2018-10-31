@@ -86,6 +86,7 @@ class CustomImagePickerViewController: UIViewController, UINavigationControllerD
         view.backgroundColor = UIColor.blue
         picker.delegate = self
         setupBackground(imageView: imageBackgroundView)
+        addingEdgePanDetection()
         
     }
     
@@ -185,6 +186,20 @@ class CustomImagePickerViewController: UIViewController, UINavigationControllerD
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage ?? image
+    }
+    
+    func addingEdgePanDetection() {
+        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+        edgePan.edges = .left
+        
+        view.addGestureRecognizer(edgePan)
+    }
+    
+    @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+        if recognizer.state == .recognized {
+            print("Screen edge swiped!")
+             self.dismiss(animated: true)
+        }
     }
     
 }
