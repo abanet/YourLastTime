@@ -76,6 +76,7 @@
 		C0FEE63D1B259B62000B0627 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FEE6121B259B62000B0627 /* TPKeyboardAvoidingTableView.m */; };
 		C0FEE63E1B259B62000B0627 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FEE6141B259B62000B0627 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		C0FEE6421B25A650000B0627 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C0FEE6411B25A650000B0627 /* libsqlite3.dylib */; };
+		D3133E112187369A00027D1C /* NotificacionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3133E102187369A00027D1C /* NotificacionDelegate.swift */; };
 		D318DB27218073FB001AE78F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D318DB25218073FB001AE78F /* InfoPlist.strings */; };
 		D318DB2921807576001AE78F /* BackgroundFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318DB2821807576001AE78F /* BackgroundFunctions.swift */; };
 		D3838B1121835DCB0056AA1F /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3838B1021835DCB0056AA1F /* Color+extension.swift */; };
@@ -180,6 +181,7 @@
 		C0FEE6141B259B62000B0627 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
 		C0FEE6401B25A56B000B0627 /* YourLastTime-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YourLastTime-Bridging-Header.h"; sourceTree = "<group>"; };
 		C0FEE6411B25A650000B0627 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		D3133E102187369A00027D1C /* NotificacionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificacionDelegate.swift; sourceTree = "<group>"; };
 		D318DB26218073FB001AE78F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D318DB2821807576001AE78F /* BackgroundFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundFunctions.swift; sourceTree = "<group>"; };
 		D3838B1021835DCB0056AA1F /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				C0C09BFC1B301C68004AC072 /* NuevaOcurrenciaVC.swift */,
 				C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */,
 				C0B39B921B53AE7200E3D680 /* Notificacion.swift */,
+				D3133E102187369A00027D1C /* NotificacionDelegate.swift */,
 				C0FEE5EA1B259B62000B0627 /* PrincipalViewController.swift */,
 				C0AB36771B3432B30054D573 /* HistorialVC.swift */,
 				C041D7551B3D51CF004E2FCB /* ABMDate.swift */,
@@ -538,6 +541,7 @@
 				C0380AAD21516D9800060EED /* SpringLabel.swift in Sources */,
 				C04C1F7B1B25AE2E00CF79E4 /* EventosDB.swift in Sources */,
 				C0FEE63E1B259B62000B0627 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
+				D3133E112187369A00027D1C /* NotificacionDelegate.swift in Sources */,
 				C0FEE61A1B259B62000B0627 /* FMResultSet.m in Sources */,
 				C0380AB921516D9800060EED /* AsyncImageView.swift in Sources */,
 				C0380AB521516D9800060EED /* Spring.swift in Sources */,

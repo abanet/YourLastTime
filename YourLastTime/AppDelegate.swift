@@ -7,30 +7,28 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    var categoryID:String {
-        get{
-            return "OK_CATEGORY"
-        }
-    }
+   
     
+    let notificacionDelegate = NotificacionDelegate()
+    let center = UNUserNotificationCenter.current()
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // Activamos estadísticas
         GATracker.setup(tid: "UA-87790452-1") // id de GA para cronoTask (cuenta alberto.banet)
         GATracker.sharedInstance.screenView(screenName: "Sesiones Abiertas YourLastTime", customParameters: nil)
-        // Registramos notificaciones locales
-        if(UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))))
-        {
-            application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: []))
-        }
-        
+    
+        // Solicitamos autorización para las notificaciones
+        solicitarAutorizaciónNotificaciones()
+        setupNotificaciones()
+        application.registerForRemoteNotifications()
         
         // Si es la primera vez creamos la base de datos
         let yaentre = UserDefaults.standard.bool(forKey: "yaentre")
@@ -85,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             
         }
-        registerNotification()
+    
         return true
     }
 
@@ -101,6 +99,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        // Al entrar eliminamos el badge number
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -111,53 +111,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
-    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        print("notification is here. Open alert window or whatever")
-        //let alerta = AlertaVC()
-        //window?.addSubview(alerta.view)
-        
-        // Handle notification action *****************************************
-        if notification.category == categoryID {
-            //No hacemos nada. De momento sólo es para ver si muestra la acción.
-        }
-        // Abrir alerta notificando alarma
-        // Desactivar alarma de la base de datos
-        let database = EventosDB()
-        let info: [String: String] = notification.userInfo as! [String: String]
-        if let identificador = info["id"] {
-            database.eliminarAlarma(identificador)
-        }
-        
-        // Must be called when finished
-        completionHandler()
+    
+  
+    func setupNotificaciones() {
+        let action = UNNotificationAction(identifier: "Ok", title: "Ok", options: [])
+        let category = UNNotificationCategory(identifier: "Categoria",actions: [action], intentIdentifiers:[],options:[])
+        UNUserNotificationCenter.current().setNotificationCategories([category])
     }
     
-    // Register notification settings
-    func registerNotification() {
-        // 1. Create the actions
-        // reset Action
-        let okAction = UIMutableUserNotificationAction()
-        okAction.identifier = "Ok"
-        okAction.title = "OK"
-        okAction.activationMode = UIUserNotificationActivationMode.foreground
-        // NOT USED resetAction.authenticationRequired = true
-        okAction.isDestructive = true
-        
-        
-        // 2. Create the category
-        
-        // Category
-        let counterCategory = UIMutableUserNotificationCategory()
-        counterCategory.identifier = categoryID
-        
-        // A. Set actions for the default context
-        counterCategory.setActions([okAction],
-            for: UIUserNotificationActionContext.default)
-        
-        // B. Set actions for the minimal context
-        counterCategory.setActions([okAction],
-            for: UIUserNotificationActionContext.minimal)
+    
+    func solicitarAutorizaciónNotificaciones() {
+        let center = UNUserNotificationCenter.current()
+        center.delegate = notificacionDelegate
+        let options: UNAuthorizationOptions = [.sound, .alert, .badge]
+        center.requestAuthorization(options: options) {
+            (granted, error) in
+            if !granted {
+                print("Algo fue mal con las notificaciones")
+            }
+        }
     }
 
 }

@@ -15,8 +15,8 @@ class Evento: NSObject {
     var hora: String
     var contador: Int
     var archivado: Bool
-    var cantidad: Int
-    var periodo: PeriodoTemporal
+    var cantidad: Int   // unidades de la alarma establecida
+    var periodo: PeriodoTemporal // hora, día, mes, año
     
     init(id:String, descripcion:String, fecha:String, hora: String, contador:Int, cantidad: Int = 0, periodo: PeriodoTemporal = .dias, archivado: Bool = false) {
         self.id = id
@@ -36,6 +36,17 @@ class Evento: NSObject {
     func intervaloAlarmaEnHoras()->TimeInterval {
         let horas = periodo.numHoras
         return TimeInterval(cantidad * horas)
+    }
+    
+    func intervaloParaProgramarAlarma() -> TimeInterval? {
+        let segundosPasados = (Date().timeIntervalSince1970 - fechaUltimaOcurrencia().timeIntervalSince1970)
+        let segundosAlarma = TimeInterval(intervaloAlarmaEnHoras() * 60 * 60)
+        let segundosRestantes = segundosAlarma - segundosPasados
+        if segundosRestantes > 0 {
+            return segundosRestantes
+        } else {
+            return nil
+        }
     }
     
     // Devuelve un string descriptivo de cuanto tiempo ha pasado desde la fecha y hora del evento

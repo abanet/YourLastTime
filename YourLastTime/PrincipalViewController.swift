@@ -10,6 +10,7 @@ import UIKit
 
 
 
+
 class PrincipalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate
 {
 
@@ -44,6 +45,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
         // Edge pan
         addingEdgePanDetection()
         
@@ -65,9 +68,9 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         //self.tableView.bounces = false
         
         // Nos registramos como observadores del cambio de background
-        
         NotificationCenter.default.addObserver(self, selector: #selector(onDidChangeBackground), name: .didChangeBackground , object: nil)
-      
+        NotificationCenter.default.addObserver(self, selector: #selector(onReloadEventsTable), name: Notification.Name(rawValue: "reloadEventsTable"), object: nil)
+        
         // Configuración searchController
         self.buscador = ({
             let controller = UISearchController(searchResultsController: nil)
@@ -100,7 +103,6 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         if self.tableView.numberOfRows(inSection: 0) > 0 {
           self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: false)
         }
-        
         // generamos los eventos ordenados
         eventos = bbdd.arrayEventos()
         self.tableView.reloadData()
@@ -109,6 +111,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
   override func viewDidAppear(_ animated: Bool) {
     updateConstraints()
   }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -454,10 +457,14 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    // MARK: Notification didChangeBackground
+    // MARK: Notifications
     @objc func onDidChangeBackground() {
         setupBackground(imageView: backView)
     }
     
+    @objc func onReloadEventsTable() {
+        eventos = bbdd.arrayEventos()
+        tableView.reloadData()
+    }
 }
 

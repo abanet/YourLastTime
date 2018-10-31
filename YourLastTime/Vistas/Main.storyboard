@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9oO-et-Kr1" userLabel="background">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="9oO-et-Kr1" userLabel="background">
                                 <rect key="frame" x="0.0" y="106" width="375" height="561"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUY-eJ-rd5">
@@ -212,9 +212,9 @@
                                                             <exclude reference="nu4-kL-Huw"/>
                                                             <exclude reference="ffB-YQ-aW7"/>
                                                             <exclude reference="RPx-VP-YYP"/>
+                                                            <exclude reference="MBK-r4-sv0"/>
                                                             <exclude reference="QYP-dj-JxC"/>
                                                             <exclude reference="hgg-z6-49V"/>
-                                                            <exclude reference="MBK-r4-sv0"/>
                                                             <exclude reference="3gk-QM-cuU"/>
                                                             <exclude reference="WRe-c3-tph"/>
                                                             <exclude reference="j0p-Ov-827"/>
@@ -234,9 +234,9 @@
                                                             <include reference="PGG-o6-BNI"/>
                                                             <exclude reference="nu4-kL-Huw"/>
                                                             <include reference="ffB-YQ-aW7"/>
+                                                            <include reference="MBK-r4-sv0"/>
                                                             <include reference="QYP-dj-JxC"/>
                                                             <exclude reference="hgg-z6-49V"/>
-                                                            <include reference="MBK-r4-sv0"/>
                                                             <exclude reference="3gk-QM-cuU"/>
                                                             <include reference="WRe-c3-tph"/>
                                                             <exclude reference="j0p-Ov-827"/>

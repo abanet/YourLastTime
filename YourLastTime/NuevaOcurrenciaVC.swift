@@ -12,6 +12,8 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
 
     var idEvento: String!
     var isDescription = false
+    var notificacion = Notificacion(id: "")
+   
     
     @IBOutlet weak var lblCabecera1: UILabel!
     @IBOutlet weak var lblCabecera2: UILabel!
@@ -72,10 +74,17 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         // Ha ocurrido una nueva ocurrencia.
         // Si hay una notificación local puesta hay que quitarla y volver a poner otra.
         if let evento = database.encontrarEvento(idEvento) {
-            if evento.tieneAlarma() {
-                let notificacion = Notificacion(id: evento.id)
-                let horas = evento.cantidad * evento.periodo.numHoras
-                notificacion.reprogramarFechaNotificacion(horas)
+            if evento.tieneAlarma(), let intervaloAlarma = evento.intervaloParaProgramarAlarma() { // programamos una notificación local
+               
+                var informacionEvento = [String:String]()
+                informacionEvento["id"] = evento.id
+                informacionEvento["descripcion"] = evento.descripcion
+                informacionEvento["fecha"] = evento.fecha
+                informacionEvento["hora"] = evento.hora
+                notificacion = Notificacion(id: evento.id, info: informacionEvento)
+                // Calcular cuando hay que poner alarma: x tiempo desde la última vez.
+                let intervaloSegundos = TimeInterval(evento.cantidad * evento.periodo.numHoras * 60 * 60)
+                notificacion.reprogramarFechaNotificacion(intervaloSegundos)
             }
         }
         

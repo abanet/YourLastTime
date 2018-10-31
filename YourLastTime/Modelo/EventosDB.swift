@@ -272,7 +272,6 @@ class EventosDB: NSObject {
     
     func establecerAlarma(_ idEvento:String, cantidad: Int, periodo: PeriodoTemporal) -> Bool {
         if database.open(){
-            
             let updateSQL = "UPDATE EVENTOS SET CANTIDAD = '\(cantidad)', PERIODO = '\(periodo.rawValue)' WHERE ID = '\(idEvento)'"
             print("updateAlarma: \(updateSQL)")
             let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)

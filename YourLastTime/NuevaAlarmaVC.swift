@@ -22,6 +22,7 @@ class NuevaAlarmaVC: UIViewController {
     fileprivate var intervaloHoras: Int = 0
     fileprivate var factorTemporal: Int = 0
     
+    private lazy var notificacionLocal:Notificacion = Notificacion(id: self.idEvento)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,8 +92,8 @@ class NuevaAlarmaVC: UIViewController {
         performSegue(withIdentifier: "cerrarAlarma", sender: nil)
         
         // programamos una notificación local
-        // TODO: si funciona esto no habría que almacenar las horas en la bbdd ya que al saltar la alarma vamos a quitarla del sistema...
-        let evento: Evento = bbdd.encontrarEvento(self.idEvento)!
+        guard let evento: Evento = bbdd.encontrarEvento(self.idEvento),
+        let intervaloAlarma = evento.intervaloParaProgramarAlarma() else { return }
         
         var informacionEvento = [String:String]()
         informacionEvento["id"] = evento.id
@@ -100,10 +101,10 @@ class NuevaAlarmaVC: UIViewController {
         informacionEvento["fecha"] = evento.fecha
         informacionEvento["hora"] = evento.hora
         
-        let notificacionLocal = Notificacion(id: evento.id, info: informacionEvento)
-        notificacionLocal.addLocalNotification(intervaloHoras)
-        // Una vez registrada la notificación local borramos la alarma
-        
+        // Calcular cuando hay que poner alarma: x tiempo desde la última vez.
+        notificacionLocal = Notificacion(id: evento.id, info: informacionEvento)
+        notificacionLocal.addLocalNotification(intervaloAlarma)
+   
     }
    
     @IBAction func borrarAlarma(_ sender: AnyObject) {
@@ -112,8 +113,8 @@ class NuevaAlarmaVC: UIViewController {
         performSegue(withIdentifier: "cerrarAlarma", sender: nil)
         
         // Hay que borrar la notificación de esta alarma
-        let notificacionLocal = Notificacion(id:self.idEvento)
         notificacionLocal.cancelLocalNotification()
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadEventsTable"), object: nil)
     }
     
     @IBAction func cancelarAlarma(_ sender: AnyObject) {
@@ -162,4 +163,6 @@ class NuevaAlarmaVC: UIViewController {
         despertador.duration = 0.5
         despertador.animate()
     }
+    
+    
 }
