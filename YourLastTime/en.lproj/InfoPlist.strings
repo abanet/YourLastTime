@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  YourLastTime
+
+  Created by Alberto Banet Masa on 24/10/2018.
+  Copyright © 2018 abanet. All rights reserved.
+*/
+NSCameraUsageDescription = "We will access to your photos only if you would like to change the background photo of the app.";
+ NSPhotoLibraryUsageDescription = "We will access to your photos only if you would like to change the background photo of the app.";

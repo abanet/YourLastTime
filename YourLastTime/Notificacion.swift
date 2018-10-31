@@ -63,9 +63,7 @@ class Notificacion: NSObject {
             [unowned self](notificationRequests) in
             var reprogramada = false
             for request in notificationRequests {
-                print(request.content.userInfo["id"] as! String)
-                print(self.idNotificacion)
-                if (request.content.userInfo["id"] as! String) == self.idNotificacion {
+                if let idRequest = request.content.userInfo["id"] as? String, idRequest == self.idNotificacion {
                     self.userInfo = request.content.userInfo as! [String:String]
                     self.addLocalNotification(intervalo) // añadir una notificación con un id ya existente la sobreescribe.
                     reprogramada = true // se ha encontrado y se ha reprogramado

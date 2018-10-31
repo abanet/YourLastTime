@@ -186,6 +186,7 @@
 		D318DB2821807576001AE78F /* BackgroundFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundFunctions.swift; sourceTree = "<group>"; };
 		D3838B1021835DCB0056AA1F /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
 		D3A72AB0217F729A0064C15C /* CustomImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickerViewController.swift; sourceTree = "<group>"; };
+		D3BF112F218A267100A718FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D3CB3C842181BC4300412DEB /* CustomNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -603,6 +604,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				D318DB26218073FB001AE78F /* es */,
+				D3BF112F218A267100A718FC /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

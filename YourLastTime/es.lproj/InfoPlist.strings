@@ -6,3 +6,4 @@
   Copyright © 2018 abanet. All rights reserved.
 */
 NSCameraUsageDescription = "Accederemos a tus fotos sólo si quieres cambiar la imagen de fondo a una de tu elección.";
+ NSPhotoLibraryUsageDescription = "Accederemos a tus fotos sólo si quieres cambiar la imagen de fondo a una de tu elección.";
