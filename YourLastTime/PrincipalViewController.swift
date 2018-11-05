@@ -397,10 +397,23 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut , animations: {
       if self.buscadorOculto {
         self.constraintTopBuscadorView.constant = -self.buscadorView.frame.height
-        self.buscadorView.alpha = 0
-      } else {
-        self.constraintTopBuscadorView.constant = 0
+        self.buscadorView.isUserInteractionEnabled = false
         self.buscadorView.alpha = 1.0
+        for v in self.buscadorView.subviews {
+            v.subviews.forEach({
+                $0.alpha = 0
+            })
+        }
+      } else {
+        self.buscadorView.isUserInteractionEnabled = true
+        self.buscadorView.alpha = 1.0
+        self.constraintTopBuscadorView.constant = 0
+        self.buscador.isEditing = true
+        for v in self.buscadorView.subviews {
+            v.subviews.forEach({
+                $0.alpha = 1.0
+            })
+        }
       }
       
       self.view.layoutIfNeeded()
