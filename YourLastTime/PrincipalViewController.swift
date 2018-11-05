@@ -216,38 +216,54 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             arrayAcciones.append(alarmaRowAction)
         }
         
+        // alerta de borrado
+        let tituloAlerta = String.localizedStringWithFormat(NSLocalizedString("Delete Event", comment: ""), self.eventos[indexPath.row].descripcion)
+        let alert = UIAlertController(title: tituloAlerta, message: NSLocalizedString("Msg Delete Event", comment: ""), preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive, handler: { action in
+            var idEventoEliminar = ""
+            var descripcionEvento: String?
+            if !self.filtroAplicado {
+                idEventoEliminar = self.eventos[indexPath.row].id
+                descripcionEvento = self.eventos[indexPath.row].descripcion
+                self.eventos.remove(at: indexPath.row)
+            } else {
+                idEventoEliminar = self.eventosFiltrados[indexPath.row].id
+                descripcionEvento = self.eventosFiltrados[indexPath.row].descripcion
+                self.eventosFiltrados.remove(at: indexPath.row)
+                // Hay que eliminar también el evento de la lista eventos para que no aparezca al volver del buscardor
+                self.eliminarEventoArrayEventos(idEventoEliminar)
+            }
+            
+            
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+            
+            // Tenemos que eliminar el evento y sus ocurrencias
+            if self.bbdd.eliminarOcurrencias(idEventoEliminar) {
+                print("Eliminadas ocurrencias asociadas a idEvento = '\(idEventoEliminar)'")
+                // se han eliminado las ocurrencias correctamente. Eliminamos el evento asociado
+                if self.bbdd.eliminarEvento(idEventoEliminar, descripcion: descripcionEvento){
+                    print("Evento eliminado con id = '\(idEventoEliminar)'")
+                } else {
+                    print("No se puede eliminar Evento con id = '\(idEventoEliminar)'")
+                }
+            } else {
+                print("No se han podido eliminar ocurrencias asociadas con idEvento = '\(idEventoEliminar)'")
+            }
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil))
+        
         // Acción de borrado
       let deleteRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
-                             var idEventoEliminar = ""
-            
-            var descripcionEvento: String?
-                if !self.filtroAplicado {
-                    idEventoEliminar = self.eventos[indexPath.row].id
-                    descripcionEvento = self.eventos[indexPath.row].descripcion
-                    self.eventos.remove(at: indexPath.row)
-                } else {
-                    idEventoEliminar = self.eventosFiltrados[indexPath.row].id
-                    descripcionEvento = self.eventosFiltrados[indexPath.row].descripcion
-                    self.eventosFiltrados.remove(at: indexPath.row)
-                    // Hay que eliminar también el evento de la lista eventos para que no aparezca al volver del buscardor
-                    self.eliminarEventoArrayEventos(idEventoEliminar)
-                }
-                
-                
-        tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
-                
-                // Tenemos que eliminar el evento y sus ocurrencias
-                if self.bbdd.eliminarOcurrencias(idEventoEliminar) {
-                    print("Eliminadas ocurrencias asociadas a idEvento = '\(idEventoEliminar)'")
-                    // se han eliminado las ocurrencias correctamente. Eliminamos el evento asociado
-                    if self.bbdd.eliminarEvento(idEventoEliminar, descripcion: descripcionEvento){
-                        print("Evento eliminado con id = '\(idEventoEliminar)'")
-                    } else {
-                        print("No se puede eliminar Evento con id = '\(idEventoEliminar)'")
-                    }
-                } else {
-                    print("No se han podido eliminar ocurrencias asociadas con idEvento = '\(idEventoEliminar)'")
-                }
+        
+        
+        
+        
+        self.present(alert, animated: true)
+        
+        
             
             
         });

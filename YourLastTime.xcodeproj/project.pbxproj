@@ -214,6 +214,7 @@
 				C0008CF41B2702A80028F850 /* Evento.swift */,
 				C0DBB2D31B2839CD0017AF6E /* Ocurrencia.swift */,
 				C0008CF61B27100D0028F850 /* Fecha.swift */,
+				C0B39B941B53CBFE00E3D680 /* PeriodoTemporal.swift */,
 			);
 			path = Modelo;
 			sourceTree = "<group>";
@@ -289,7 +290,6 @@
 				C0FEE5EA1B259B62000B0627 /* PrincipalViewController.swift */,
 				C0AB36771B3432B30054D573 /* HistorialVC.swift */,
 				C041D7551B3D51CF004E2FCB /* ABMDate.swift */,
-				C0B39B941B53CBFE00E3D680 /* PeriodoTemporal.swift */,
 				C0BCADAC1B2986FE00B20009 /* Localizable.strings */,
 				D318DB25218073FB001AE78F /* InfoPlist.strings */,
 				C0FEE5B71B259AE9000B0627 /* Supporting Files */,

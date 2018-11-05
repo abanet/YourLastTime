@@ -60,4 +60,6 @@
 "Restore default" = "Restore default";
 "Save" = "Save";
 
-
+/* Eliminar una ocurrencia */
+"Delete Event" = "%@ will be remove!";
+"Msg Delete Event" = "The event and all his data will be remove forever.";

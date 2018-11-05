@@ -61,3 +61,7 @@
 "Select" = "Seleccionar";
 "Restore default" = "Fondo original";
 "Save" = "Guardar";
+
+/* Eliminar una ocurrencia */
+"Delete Event" = "¡Vas a eliminar %@!";
+"Msg Delete Event" = "El evento y su historial serán eliminados para siempre";
