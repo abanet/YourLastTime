@@ -23,9 +23,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>We access to your photos only if you would like to change to a custom background</string>
+	<string>We will access to your photos only if you would like to change to a custom background</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>We will access to your photos only if you would like to change the background photo of the app.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>
