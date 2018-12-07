@@ -27,7 +27,6 @@ class EventosDB: NSObject {
     // MARK: Tratamiento de los eventos
     //
     func addEvento(_ evento:String){
-        
         let fecha = Fecha()
         // la descripción no puede llevar comillas simples que lia al sqlite y da error
         let descripcionSinComillasSimples = evento.replacingOccurrences(of: "'", with: "''", options: .literal, range: nil)
@@ -46,7 +45,29 @@ class EventosDB: NSObject {
             print("Error abriendo bbdd: \(database.lastErrorMessage())")
         }
     }
-    
+  
+  func addEventoWithCompletion(_ evento: String, completion: (String) ->()) {
+    let fecha = Fecha()
+    // la descripción no puede llevar comillas simples que lia al sqlite y da error
+    let descripcionSinComillasSimples = evento.replacingOccurrences(of: "'", with: "''", options: .literal, range: nil)
+    if database.open(){
+      let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR, ARCHIVADO, CANTIDAD, PERIODO) VALUES ('\(descripcionSinComillasSimples)', '\(fecha.fecha)', '\(fecha.hora)', 0, 0, 0, 0)"
+      let resultado = database.executeUpdate(insertSQL, withArgumentsIn: nil)
+      if !resultado {
+        print("Error: \(database.lastErrorMessage())")
+      } else {
+        let selectSQL = "SELECT ID FROM EVENTOS  WHERE DESCRIPCION = '\(descripcionSinComillasSimples)' AND FECHA = '\(fecha.fecha)' AND HORA = '\(fecha.hora)'"
+        let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
+        if resultados?.next() != nil {
+          let idEvento: String = resultados!.string(forColumn: "ID")
+          completion(idEvento)
+        }
+        GATracker.sharedInstance.event(category: "Eventos", action: "Nuevo evento", label:"\(descripcionSinComillasSimples)", customParameters: nil)
+      }
+    } else {
+      print("Error abriendo bbdd: \(database.lastErrorMessage())")
+    }
+  }
     
     func updateEventoDate(idEvento: String, fecha: Fecha) {
         if database.open(){

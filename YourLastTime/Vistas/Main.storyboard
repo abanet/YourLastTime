@@ -1403,10 +1403,23 @@
                                                                 <action selector="btnCancelarPulsado:" destination="dus-Hg-THX" eventType="touchUpInside" id="tWf-Fb-vdY"/>
                                                             </connections>
                                                         </button>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3F2-Mt-6A2">
+                                                            <rect key="frame" x="10" y="233" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="switchValueChanged:" destination="dus-Hg-THX" eventType="valueChanged" id="ARy-e7-ysU"/>
+                                                            </connections>
+                                                        </switch>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No ha ocurrido todavía" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRX-AO-s23">
+                                                            <rect key="frame" x="75" y="237.5" width="168.5" height="22"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.8753821849822998" green="0.95069402456283569" blue="0.84010946750640869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="7ue-pg-SSu" firstAttribute="top" secondItem="XSw-rW-3UX" secondAttribute="bottom" constant="8" id="04t-B2-CFu"/>
+                                                        <constraint firstAttribute="bottom" secondItem="3F2-Mt-6A2" secondAttribute="bottom" constant="16" id="4xR-Er-lAh"/>
                                                         <constraint firstAttribute="bottom" secondItem="cue-Bf-DPg" secondAttribute="bottom" constant="72" id="5i0-cw-pCv"/>
                                                         <constraint firstItem="CSs-Xp-Kz6" firstAttribute="centerY" secondItem="cue-Bf-DPg" secondAttribute="centerY" id="8xh-lq-5gw"/>
                                                         <constraint firstItem="cue-Bf-DPg" firstAttribute="centerX" secondItem="Rfs-vm-iju" secondAttribute="centerX" constant="-50" id="AL1-t2-apr"/>
@@ -1416,11 +1429,14 @@
                                                         <constraint firstItem="XSw-rW-3UX" firstAttribute="top" secondItem="P2W-y5-DaR" secondAttribute="top" constant="15" id="Mx7-95-O9E"/>
                                                         <constraint firstAttribute="bottom" secondItem="cue-Bf-DPg" secondAttribute="bottom" constant="72" id="NJu-th-3Q0"/>
                                                         <constraint firstItem="cue-Bf-DPg" firstAttribute="centerX" secondItem="Rfs-vm-iju" secondAttribute="centerX" constant="-50" id="aBA-dK-D4z"/>
+                                                        <constraint firstItem="3F2-Mt-6A2" firstAttribute="leading" secondItem="P2W-y5-DaR" secondAttribute="leading" constant="10" id="ad9-pS-bGv"/>
                                                         <constraint firstItem="Rfs-vm-iju" firstAttribute="top" secondItem="7ue-pg-SSu" secondAttribute="bottom" constant="32" id="bT4-zr-nbY"/>
+                                                        <constraint firstItem="zRX-AO-s23" firstAttribute="centerY" secondItem="3F2-Mt-6A2" secondAttribute="centerY" id="cTE-F0-iJd"/>
                                                         <constraint firstAttribute="centerX" secondItem="XSw-rW-3UX" secondAttribute="centerX" id="d0W-fL-IRi"/>
                                                         <constraint firstItem="Rfs-vm-iju" firstAttribute="leading" secondItem="P2W-y5-DaR" secondAttribute="leading" constant="8" id="dNf-eB-eoP"/>
                                                         <constraint firstItem="cue-Bf-DPg" firstAttribute="centerX" secondItem="Rfs-vm-iju" secondAttribute="centerX" constant="-50" id="kRf-I9-4j8"/>
                                                         <constraint firstAttribute="centerX" secondItem="7ue-pg-SSu" secondAttribute="centerX" id="ljd-Fo-g8B"/>
+                                                        <constraint firstItem="zRX-AO-s23" firstAttribute="leading" secondItem="3F2-Mt-6A2" secondAttribute="trailing" constant="16" id="lmk-M1-5qi"/>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="nWz-fQ-baO"/>
                                                         <constraint firstItem="CSs-Xp-Kz6" firstAttribute="centerX" secondItem="Rfs-vm-iju" secondAttribute="centerX" constant="50" id="ngL-z4-hGH"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="280" id="pv4-ER-ceu"/>
@@ -1481,14 +1497,16 @@
                         <outlet property="btnOk" destination="cue-Bf-DPg" id="wuh-zX-V3R"/>
                         <outlet property="cuadroNuevoEvento" destination="P2W-y5-DaR" id="sDc-o7-HjW"/>
                         <outlet property="descripcionEvento" destination="Rfs-vm-iju" id="xLA-hl-A4m"/>
+                        <outlet property="labelSwitch" destination="zRX-AO-s23" id="933-8D-3eR"/>
                         <outlet property="lblCabecera1" destination="XSw-rW-3UX" id="Kr4-Iq-Uew"/>
                         <outlet property="lblCabecera2" destination="7ue-pg-SSu" id="mh5-2r-gq6"/>
+                        <outlet property="switchCrearOcurrencia" destination="3F2-Mt-6A2" id="NZ7-2m-3l3"/>
                         <segue destination="PEH-Bx-G9T" kind="presentation" identifier="cerrarNuevoEvento" modalPresentationStyle="currentContext" modalTransitionStyle="crossDissolve" id="HZz-ds-0EH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tej-1M-kP8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-225" y="-891"/>
+            <point key="canvasLocation" x="-226.40000000000001" y="-891.00449775112452"/>
         </scene>
     </scenes>
     <resources>

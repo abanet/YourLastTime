@@ -15,6 +15,9 @@
 "Create a" = "Create a";
 "New Event" = "New Event";
 "Name of the new event" = "Name of the new event";
+"It just happened!" = "It just happened!";
+"It didn't happen yet" = "It didn't happen yet";
+
 
 /* Acciones de celda */
 "Delete" = "Delete";

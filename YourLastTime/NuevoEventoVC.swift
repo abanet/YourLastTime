@@ -10,16 +10,19 @@ import UIKit
 
 class NuevoEventoVC: UIViewController, UITextFieldDelegate {
 
-  static let valoresSwitch = ["Not editable event", "Editable event"]
+    static let valoresSwitch = ["Not editable event", "Editable event"]
+    var switchValue: Bool = true
+  
     @IBOutlet weak var lblCabecera1: UILabel!
     @IBOutlet weak var lblCabecera2: UILabel!
     @IBOutlet weak var btnOk: UIButton!
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var descripcionEvento: UITextField!
     @IBOutlet weak var cuadroNuevoEvento: DesignableView!
+    @IBOutlet weak var switchCrearOcurrencia: UISwitch!
   
+  @IBOutlet weak var labelSwitch: UILabel!
   
- 
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +41,12 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
         descripcionEvento.delegate = self
         descripcionEvento.autocapitalizationType = .sentences
       
+      switchCrearOcurrencia.tintColor = YourLastTime.colorFondoCelda
+      switchCrearOcurrencia.onTintColor = YourLastTime.colorFondoCelda
+      
+      // TODO: Preferencias: elegir valor por defecto
+      switchCrearOcurrencia.setOn(switchValue, animated: false)
+      labelSwitch.text = NSLocalizedString("It just happened!", comment: "")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,7 +69,12 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
         let descripcion = descripcionEvento.text
         if !descripcion!.isEmpty {
             let bbdd = EventosDB()
-            bbdd.addEvento(descripcion!)
+          bbdd.addEventoWithCompletion(descripcion!) { [unowned self] id in
+            if self.switchCrearOcurrencia.isOn  {
+              bbdd.addOcurrencia(id, descripcion: NSLocalizedString("First time!", comment: ""))
+            }
+          }
+          
             view.endEditing(true) // ocultamos el teclado
         } else {
             // No podemos añadir un evento sin descripción
@@ -78,5 +92,14 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
         let newLength = textField.text!.utf16.count + string.utf16.count - range.length
         return newLength <= Constants.Texto.longitudMaximaNuevoEvento // Bool
     }
-    
+  
+  // MARK: Switch event
+  
+  @IBAction func switchValueChanged(_ sender: UISwitch) {
+    if sender.isOn {
+      labelSwitch.text = NSLocalizedString("It just happened!", comment: "")
+    } else {
+      labelSwitch.text = NSLocalizedString("It didn't happen yet", comment: "")
+    }
+  }
 }
