@@ -3,6 +3,9 @@
 "Cancel" = "Cancel";
 "Ok" = "Ok";
 
+/* Pantalla principal */
+"It didn't happend yet!" = "It didn't happend yet!";
+
 /* Pantalla de nueva ocurrencia */
 "It happened again!" = "It happened again!";
 "Add a new occurrence" = "Add a new occurrence";

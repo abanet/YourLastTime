@@ -223,6 +223,20 @@ class EventosDB: NSObject {
     }
     
     
+    /**
+     Indica si el evento tiene o no ocurrencias
+     */
+    func tieneOcurrencias(idEvento: String) -> Bool {
+        if database.open() {
+            let selectSQL = "SELECT IDEVENTO FROM OCURRENCIAS WHERE IDEVENTO = '\(idEvento)'"
+            let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
+            if resultados != nil {
+                return resultados!.next()
+            }
+        }
+       return false
+    }
+    
     
     func contarOcurrenciasSemanaMesAnno(_ idEvento: String) -> (Int, Int, Int) {
         var resultado = (ultimaSemana: 0, ultimoMes: 0, ultimoAnno: 0)

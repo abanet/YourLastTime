@@ -138,7 +138,11 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         if !filtroAplicado {
         cell.lbDescripcion.text = eventos[indexPath.row].descripcion
       //print(cell.lbDescripcion.text)
-        cell.lblHace.text = eventos[indexPath.row].cuantoTiempoHaceDesdeLaUltimaVez()
+        if bbdd.tieneOcurrencias(idEvento: eventos[indexPath.row].id) {
+            cell.lblHace.text = eventos[indexPath.row].cuantoTiempoHaceDesdeLaUltimaVez()
+        } else {
+            cell.lblHace.text = NSLocalizedString("It didn't happend yet!", comment: "")
+            }
         cell.lblFecha.text = fecha.devolverFechaLocalizada(eventos[indexPath.row].fecha)
         cell.lblHora.text = eventos[indexPath.row].hora
         cell.lblContador.text = String(eventos[indexPath.row].contador)
