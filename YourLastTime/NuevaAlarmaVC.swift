@@ -38,7 +38,7 @@ class NuevaAlarmaVC: UIViewController {
         btnCancelar.setTitle(NSLocalizedString("Cancel",comment: ""), for: .normal)
         btnBorrarAlarma.setTitle(NSLocalizedString("Delete Alarm",comment: ""), for: .normal)
         
-        fraseDescriptiva.text = NSLocalizedString("The event doesn't happened!",comment: "")
+        
         selectorTemporal.removeAllSegments()
         selectorTemporal.insertSegment(withTitle: NSLocalizedString("years",comment: ""), at: 0, animated: false)
         selectorTemporal.insertSegment(withTitle: NSLocalizedString("months",comment: ""), at: 1, animated: false)
@@ -47,6 +47,8 @@ class NuevaAlarmaVC: UIViewController {
         selectorTemporal.selectedSegmentIndex = 2
         factorTemporal = 24 // se corresponde con dias segmentIndex = 1
         
+        fraseDescriptiva.text = stringAviso(unidades: Int(stepper.value), indiceSegmento: selectorTemporal.selectedSegmentIndex)
+        fraseDescriptiva.text = String.localizedStringWithFormat(NSLocalizedString("The event doesn't happened!",comment: ""), "8", "años")
         // Animación de la alarma
         _ = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(NuevaAlarmaVC.agitar), userInfo: nil, repeats: true)
     }
@@ -61,6 +63,7 @@ class NuevaAlarmaVC: UIViewController {
             // Recuperamos los datos de 
             stepper.value = Double(evento.cantidad)
             lblNumero.text = String(format:"%03d", Int(stepper.value))
+            fraseDescriptiva.text = stringAviso(unidades: Int(stepper.value), indiceSegmento: selectorTemporal.selectedSegmentIndex)
             switch evento.periodo {
             case .annos:
                 selectorTemporal.selectedSegmentIndex = 0
@@ -127,6 +130,8 @@ class NuevaAlarmaVC: UIViewController {
         // Intervalo posible: 1-365
         let step = sender as! UIStepper
         lblNumero.text = String(format:"%03d", Int(step.value))
+        fraseDescriptiva.text = stringAviso(unidades: Int(step.value), indiceSegmento: selectorTemporal.selectedSegmentIndex)
+        //fraseDescriptiva.setNeedsDisplay()
         self.actualizarIntervaloHoras()
     }
 
@@ -150,6 +155,7 @@ class NuevaAlarmaVC: UIViewController {
             factorTemporal = 1
             self.actualizarIntervaloHoras()
         }
+        fraseDescriptiva.text = stringAviso(unidades: Int(stepper.value), indiceSegmento: selectorTemporal.selectedSegmentIndex)
     }
     
     func actualizarIntervaloHoras(){
@@ -165,4 +171,32 @@ class NuevaAlarmaVC: UIViewController {
     }
     
     
+    /**
+    * Dado un número de unidades y un valor de segmento devuelve el string con la frase a mostrar.
+     * Valor por defecto: 1 día
+    */
+    func stringAviso(unidades: Int?, indiceSegmento: Int?) -> String {
+        let cantidad = unidades ?? 1    // por defecto 1
+        let indice   = indiceSegmento ?? 2 // por defecto días
+        return String.localizedStringWithFormat(NSLocalizedString("The event doesn't happened!",comment: ""), String(cantidad), literalSelectedSegment(indice: indice,cantidad: cantidad))
+    }
+    /**
+    * Devuelve el literal correspondiente a la selección del UISegmentedControl (indice) según la cantidad de unidades
+    */
+    func literalSelectedSegment(indice: Int, cantidad: Int) -> String {
+        
+        switch indice {
+        case 0: /*años*/
+            return cantidad > 1 ? NSLocalizedString("years", comment: "") : NSLocalizedString("year", comment: "")
+        case 1: /*meses*/
+            return cantidad > 1 ? NSLocalizedString("months", comment: "") : NSLocalizedString("month", comment: "")
+        case 2: /*días*/
+            return cantidad > 1 ? NSLocalizedString("days", comment: "") : NSLocalizedString("day", comment: "")
+        case 3: /*horas*/
+            return cantidad > 1 ? NSLocalizedString("hours", comment: "") : NSLocalizedString("hour", comment: "")
+        default:
+            return ""
+        }
+        
+    }
 }

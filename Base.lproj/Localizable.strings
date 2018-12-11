@@ -47,7 +47,7 @@
 "First time!" = "First time!";
 
 /* Pantalla de creación de alarma */
-"The event doesn't happened!" = "Set alarm for ";
+"The event doesn't happened!" = "Set the alarm for %@ %@.";
 "Set Alarm" = "Set Alarm";
 "Delete Alarm" = "Delete Alarm";
 "hours" = "hours"; // días y años ya se definió en pantalla de historial
