@@ -36,6 +36,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     fileprivate var hayqueBorrarRegistro = false // usado en protocolo alertaVC
     fileprivate var buscadorActivado = false   // usado para inhabilitar botones cuando está el buscador activado
    
+    let chooseImageVC = CustomImagePickerViewController()
+    
     required init?(coder aDecoder: NSCoder) {
         bbdd = EventosDB()
         eventos = bbdd.arrayEventos()
@@ -473,18 +475,17 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
   
-    // MARK: Configuración de la app
+    // MARK: EdgePan Detection
     func addingEdgePanDetection() {
         let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
         edgePan.edges = .left
-        
         view.addGestureRecognizer(edgePan)
     }
     
     @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
         if recognizer.state == .recognized {
             print("Screen edge swiped!")
-            let chooseImageVC = CustomImagePickerViewController()
+            
             chooseImageVC.modalTransitionStyle = .flipHorizontal
             self.present(chooseImageVC, animated: true, completion: nil)
         }
