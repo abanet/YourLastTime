@@ -114,7 +114,6 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      print("Ocurrencia seleccionada: \(ocurrenciaSeleccionada), row: \(indexPath.row)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaHistorial") as! CeldaHistorialTableViewCell
       // Al reutilizar las celdas hay que tener cuidado con el relleno de los adornos.
         
@@ -324,17 +323,16 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     func updateLabelFechaHora(paraOcurrencia ocurrencia: Int, conFecha fecha: Fecha) {
         let indice = IndexPath(row: ocurrencia, section: 0)
         if let cellSelect = tableView.cellForRow(at: indice) as? CeldaHistorialTableViewCell {
+            // Actualizamos la ocurrencia correspondiente para no perder coherencia de datos
+            ocurrencias[ocurrencia].fecha = fecha.fecha
+            ocurrencias[ocurrencia].hora  = fecha.hora
+            
             cellSelect.lblFecha.text = fecha.devolverFechaLocalizada(fecha.fecha)
             cellSelect.lblHora.text = fecha.hora
             // Calculo de la diferencia entre dos ocurrencias
             cellSelect.lblHace.text = self.informarIntervalodeDiferencia(fila: ocurrencia, ocurrencia: ocurrencias[ocurrencia])
             // refrescar valores de los textos
-            cellSelect.lblHace.setNeedsDisplay()
-            cellSelect.lblFecha.setNeedsDisplay()
-            cellSelect.lblHora.setNeedsDisplay()
-            // Actualizamos la ocurrencia correspondiente para no perder coherencia de datos
-            ocurrencias[ocurrencia].fecha = fecha.fecha
-            ocurrencias[ocurrencia].hora  = fecha.hora
+            cellSelect.setNeedsDisplay()
         }
     }
     
