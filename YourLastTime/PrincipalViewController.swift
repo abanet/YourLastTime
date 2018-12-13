@@ -132,6 +132,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         return eventos.count
         }
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! EntradaTableViewCell
         let fecha = Fecha()
@@ -147,7 +148,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.lblHora.text = eventos[indexPath.row].hora
         cell.lblContador.text = String(eventos[indexPath.row].contador)
         cell.idEvento = eventos[indexPath.row].id
-        cell.entradaView.delay = CGFloat(0.05) * CGFloat(indexPath.row)
+        cell.entradaView.delay = CGFloat(0.01) * CGFloat(indexPath.row)
         cell.entradaView.animation = "slideRight"
         cell.entradaView.animate()
             if(eventos[indexPath.row].cantidad > 0) {
@@ -181,6 +182,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
       
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 //        if !self.buscadorActivado {
