@@ -100,10 +100,13 @@ class NuevaAlarmaVC: UIViewController {
         
         var informacionEvento = [String:String]()
         informacionEvento["id"] = evento.id
-        informacionEvento["descripcion"] = evento.descripcion
+        //informacionEvento["descripcion"] = evento.descripcion
+        let fecha = Fecha()
+        informacionEvento["descripcion"] = String.localizedStringWithFormat(NSLocalizedString("Description Alarm!",comment: ""), evento.descripcion, fecha.devolverFechaLocalizada(evento.fecha)!, evento.hora)
         informacionEvento["fecha"] = evento.fecha
         informacionEvento["hora"] = evento.hora
         
+    
         // Calcular cuando hay que poner alarma: x tiempo desde la última vez.
         notificacionLocal = Notificacion(id: evento.id, info: informacionEvento)
         notificacionLocal.addLocalNotification(intervaloAlarma)

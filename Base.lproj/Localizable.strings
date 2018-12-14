@@ -60,6 +60,7 @@
 
 /* Notificaciones */
 "Your Last Time Alarm!" = "Your Last Time Alarm!";
+"Description Alarm!" = "Last time the event '%@' happened was the %@ at %@";
 
 /* pickerImageViewController */
 "Select" = "Select";

@@ -8,9 +8,6 @@
 
 import UIKit
 
-
-
-
 class PrincipalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate
 {
 
@@ -45,8 +42,6 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        
         // Edge pan
         addingEdgePanDetection()
         
