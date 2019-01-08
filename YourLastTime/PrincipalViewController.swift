@@ -132,20 +132,20 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! EntradaTableViewCell
         let fecha = Fecha()
         if !filtroAplicado {
-        cell.lbDescripcion.text = eventos[indexPath.row].descripcion
-      //print(cell.lbDescripcion.text)
-        if bbdd.tieneOcurrencias(idEvento: eventos[indexPath.row].id) {
-            cell.lblHace.text = eventos[indexPath.row].cuantoTiempoHaceDesdeLaUltimaVez()
-        } else {
-            cell.lblHace.text = NSLocalizedString("It didn't happend yet!", comment: "")
+            cell.lbDescripcion.text = eventos[indexPath.row].descripcion
+            //print(cell.lbDescripcion.text)
+            if bbdd.tieneOcurrencias(idEvento: eventos[indexPath.row].id) {
+                cell.lblHace.text = eventos[indexPath.row].cuantoTiempoHaceDesdeLaUltimaVez()
+            } else {
+                cell.lblHace.text = NSLocalizedString("It didn't happend yet!", comment: "")
             }
-        cell.lblFecha.text = fecha.devolverFechaLocalizada(eventos[indexPath.row].fecha)
-        cell.lblHora.text = eventos[indexPath.row].hora
-        cell.lblContador.text = String(eventos[indexPath.row].contador)
-        cell.idEvento = eventos[indexPath.row].id
-        cell.entradaView.delay = CGFloat(0.01) * CGFloat(indexPath.row)
-        cell.entradaView.animation = "slideRight"
-        cell.entradaView.animate()
+            cell.lblFecha.text = fecha.devolverFechaLocalizada(eventos[indexPath.row].fecha)
+            cell.lblHora.text = eventos[indexPath.row].hora
+            cell.lblContador.text = String(eventos[indexPath.row].contador)
+            cell.idEvento = eventos[indexPath.row].id
+            cell.entradaView.delay = CGFloat(0.01) * CGFloat(indexPath.row)
+            cell.entradaView.animation = "slideRight"
+            cell.entradaView.animate()
             if(eventos[indexPath.row].cantidad > 0) {
                 cell.imgDespertador.image = UIImage(named: "despertador_white")?.withRenderingMode(.alwaysTemplate)
                 cell.imgDespertador.tintColor = eventos[indexPath.row].colorParaEvento()
@@ -158,23 +158,23 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             
         } else {
             cell.lbDescripcion.text = eventosFiltrados[indexPath.row].descripcion
-            cell.lblHace.text = eventos[indexPath.row].cuantoTiempoHaceDesdeLaUltimaVez()
+            cell.lblHace.text = eventosFiltrados[indexPath.row].cuantoTiempoHaceDesdeLaUltimaVez()
             cell.lblFecha.text = fecha.devolverFechaLocalizada(eventosFiltrados[indexPath.row].fecha)
             cell.lblHora.text = eventosFiltrados[indexPath.row].hora
             cell.lblContador.text = String(eventosFiltrados[indexPath.row].contador)
             cell.idEvento = eventosFiltrados[indexPath.row].id
             if(eventosFiltrados[indexPath.row].cantidad > 0) {
                 cell.imgDespertador.image = UIImage(named: "despertador_white")?.withRenderingMode(.alwaysTemplate)
-                cell.imgDespertador.tintColor = eventos[indexPath.row].colorParaEvento()
+                cell.imgDespertador.tintColor = eventosFiltrados[indexPath.row].colorParaEvento()
                 cell.imgDespertador.isHidden = false
             } else {
                 cell.imgDespertador.isHidden = true
             }
         }
-
+        
         // Fondo de la celda transparente para mostrar la vista background de la tabla (foto de fondo)
         cell.backgroundColor = UIColor.clear;
-      
+        
         return cell
     }
     
