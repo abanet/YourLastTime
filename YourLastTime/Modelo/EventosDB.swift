@@ -74,7 +74,7 @@ class EventosDB: NSObject {
             let updateSQL = "UPDATE EVENTOS SET FECHA = '\(fecha.fecha)', HORA = '\(fecha.hora)' WHERE ID = '\(idEvento)'"
             let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)
             if !resultado {
-                print("Error: \(database.lastErrorMessage())")
+                print("Error updateEventoDate: \(database.lastErrorMessage())")
             } else {
                 print("Ocurrencia modificada en Fecha")
             }
@@ -185,7 +185,7 @@ class EventosDB: NSObject {
       print(updateSQL)
       let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)
       if !resultado {
-        print("Error: \(database.lastErrorMessage())")
+        print("Error modificarOcurrencia: \(database.lastErrorMessage())")
       } else {
         print("Ocurrencia modificada")
       }
@@ -199,12 +199,16 @@ class EventosDB: NSObject {
       let updateSQL = "UPDATE OCURRENCIAS SET FECHA = '\(fecha.fecha)', HORA = '\(fecha.hora)' WHERE ID = '\(idOcurrencia)' AND IDEVENTO = '\(idEvento)'"
       let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)
       if !resultado {
-        print("Error: \(database.lastErrorMessage())")
+        print("Error modificarOcurrenciaFechaHora: \(database.lastErrorMessage())")
       } else {
         print("Ocurrencia modificada en Fecha")
+        // Notificar cambio en la fechahora de la base de datos
+        NotificationCenter.default.post(name: .didDateTimeChangedInDatabase, object: nil)
       }
     }
   }
+    
+    
   
     func eliminarOcurrencias(_ idEvento:String)->Bool {
         if database.open() {

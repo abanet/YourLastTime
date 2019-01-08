@@ -59,6 +59,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
       
         // Animación del botón para cerrar
         _ = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(HistorialVC.agitar), userInfo: nil, repeats: true)
+        
+     // Listening de la grabación de fecha y hora en la bbdd
+        NotificationCenter.default.addObserver(self, selector: #selector(onDateTimeChangedInDatabase(_:)), name: .didDateTimeChangedInDatabase, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -433,11 +436,19 @@ extension HistorialVC: UITextViewDelegate {
     textView.backgroundColor = UIColor.clear
   }
   
+    @objc func onDateTimeChangedInDatabase(_ notification: Notification) {
+        // Última vez hace...
+        // Si no se ejecutaba en el main daba problemas de database is locked
+        DispatchQueue.main.async {
+            self.lblHace.text = self.database.encontrarEvento(self.idEvento)!.cuantoTiempoHaceDesdeLaUltimaVez()
+            self.lblHace.setNeedsDisplay()
+        }
+    }
 }
+
 
 // MARK: CustomizeDatePickerDelegate
 extension HistorialVC: CustomizeDatePickerDelegate {
-    
     // Actualiza la base de datos. Si viene del botón cancel la fecha es nil
   func setFechaValueToDatabase(_ fecha: Fecha?) {
     guard ocurrenciaSeleccionada != nil else {

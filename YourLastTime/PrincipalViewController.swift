@@ -245,6 +245,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
                 // se han eliminado las ocurrencias correctamente. Eliminamos el evento asociado
                 if self.bbdd.eliminarEvento(idEventoEliminar, descripcion: descripcionEvento){
                     print("Evento eliminado con id = '\(idEventoEliminar)'")
+                    // eliminar alarma asociada si existe (08-01-2019)
+                    self.bbdd.eliminarAlarma(idEventoEliminar)
                 } else {
                     print("No se puede eliminar Evento con id = '\(idEventoEliminar)'")
                 }
