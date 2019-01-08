@@ -10,4 +10,5 @@ import Foundation
 
 extension Notification.Name {
    static let didChangeBackground = Notification.Name("didChangeBackground")
+   static let didDateTimeChangedInDatabase = Notification.Name("didDateTimeChangedInDatabase")
 }

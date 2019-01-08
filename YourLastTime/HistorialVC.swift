@@ -59,6 +59,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
       
         // Animación del botón para cerrar
         _ = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(HistorialVC.agitar), userInfo: nil, repeats: true)
+        
+     // Listening de la grabación de fecha y hora en la bbdd
+        NotificationCenter.default.addObserver(self, selector: #selector(onDateTimeChangedInDatabase(_:)), name: .didDateTimeChangedInDatabase, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,7 +117,6 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      print("Ocurrencia seleccionada: \(ocurrenciaSeleccionada), row: \(indexPath.row)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaHistorial") as! CeldaHistorialTableViewCell
       // Al reutilizar las celdas hay que tener cuidado con el relleno de los adornos.
         
@@ -324,17 +326,16 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     func updateLabelFechaHora(paraOcurrencia ocurrencia: Int, conFecha fecha: Fecha) {
         let indice = IndexPath(row: ocurrencia, section: 0)
         if let cellSelect = tableView.cellForRow(at: indice) as? CeldaHistorialTableViewCell {
+            // Actualizamos la ocurrencia correspondiente para no perder coherencia de datos
+            ocurrencias[ocurrencia].fecha = fecha.fecha
+            ocurrencias[ocurrencia].hora  = fecha.hora
+            
             cellSelect.lblFecha.text = fecha.devolverFechaLocalizada(fecha.fecha)
             cellSelect.lblHora.text = fecha.hora
             // Calculo de la diferencia entre dos ocurrencias
             cellSelect.lblHace.text = self.informarIntervalodeDiferencia(fila: ocurrencia, ocurrencia: ocurrencias[ocurrencia])
             // refrescar valores de los textos
-            cellSelect.lblHace.setNeedsDisplay()
-            cellSelect.lblFecha.setNeedsDisplay()
-            cellSelect.lblHora.setNeedsDisplay()
-            // Actualizamos la ocurrencia correspondiente para no perder coherencia de datos
-            ocurrencias[ocurrencia].fecha = fecha.fecha
-            ocurrencias[ocurrencia].hora  = fecha.hora
+            cellSelect.setNeedsDisplay()
         }
     }
     
@@ -435,11 +436,19 @@ extension HistorialVC: UITextViewDelegate {
     textView.backgroundColor = UIColor.clear
   }
   
+    @objc func onDateTimeChangedInDatabase(_ notification: Notification) {
+        // Última vez hace...
+        // Si no se ejecutaba en el main daba problemas de database is locked
+        DispatchQueue.main.async {
+            self.lblHace.text = self.database.encontrarEvento(self.idEvento)!.cuantoTiempoHaceDesdeLaUltimaVez()
+            self.lblHace.setNeedsDisplay()
+        }
+    }
 }
+
 
 // MARK: CustomizeDatePickerDelegate
 extension HistorialVC: CustomizeDatePickerDelegate {
-    
     // Actualiza la base de datos. Si viene del botón cancel la fecha es nil
   func setFechaValueToDatabase(_ fecha: Fecha?) {
     guard ocurrenciaSeleccionada != nil else {
