@@ -8,12 +8,16 @@
 
 import UIKit
 
+
 class Ocurrencia: NSObject {
   private (set) var idOcurrencia: String
     var idEvento: String
     var fecha: String
     var hora: String
     var descripcion: String
+    
+    
+    
     
   init(idOcurrencia: String, idEvento:String, fecha:String, hora: String, descripcion: String) {
         self.idOcurrencia = idOcurrencia

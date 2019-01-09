@@ -50,7 +50,7 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // descripcionEvento.becomeFirstResponder()
+         descripcionEvento.becomeFirstResponder()
     }
     
     // Para que oculte el teclado al pulsar fuera

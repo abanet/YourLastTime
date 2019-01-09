@@ -12,7 +12,7 @@
         <!--Principal View Controller-->
         <scene sceneID="6fN-H5-BXu">
             <objects>
-                <viewController id="PEH-Bx-G9T" customClass="PrincipalViewController" customModule="YourLastTime" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PrincipalViewController" id="PEH-Bx-G9T" customClass="PrincipalViewController" customModule="YourLastTime" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Kah-jy-E9r"/>
                         <viewControllerLayoutGuide type="bottom" id="TC9-TJ-y6d"/>
@@ -277,7 +277,7 @@
                                 </state>
                                 <connections>
                                     <action selector="touchDown:" destination="PEH-Bx-G9T" eventType="touchDown" id="E83-fs-rjw"/>
-                                    <segue destination="dus-Hg-THX" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="ceI-wH-FWb"/>
+                                    <segue destination="dus-Hg-THX" kind="presentation" identifier="CrearNuevoEvento" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="ceI-wH-FWb"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When was the last time I ...?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fK1-6B-hhZ" customClass="SpringLabel" customModule="YourLastTime" customModuleProvider="target">
@@ -1345,7 +1345,7 @@
         <!--Nuevo EventoVC-->
         <scene sceneID="AHc-ZI-TSm">
             <objects>
-                <viewController id="dus-Hg-THX" customClass="NuevoEventoVC" customModule="YourLastTime" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NuevoEventoVC" id="dus-Hg-THX" customClass="NuevoEventoVC" customModule="YourLastTime" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zi6-rU-188"/>
                         <viewControllerLayoutGuide type="bottom" id="sev-fV-rgc"/>
@@ -1520,6 +1520,6 @@
         <image name="imgGrafica" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VBY-wT-W1f"/>
+        <segue reference="HZz-ds-0EH"/>
     </inferredMetricsTieBreakers>
 </document>

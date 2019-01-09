@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import CoreSpotlight
+import MobileCoreServices
+import Intents
+
+public let kNewEventActivityType = "es.codigoswift.NewEvent"
 
 class Evento: NSObject {
     var id: String
@@ -17,6 +22,23 @@ class Evento: NSObject {
     var archivado: Bool
     var cantidad: Int   // unidades de la alarma establecida
     var periodo: PeriodoTemporal // hora, día, mes, año
+    
+    
+    @available(iOS 12.0, *)
+    public static func newEventShortcut(thumbnail: UIImage?) -> NSUserActivity {
+        let activity = NSUserActivity(activityType: kNewEventActivityType)
+        activity.persistentIdentifier =
+            NSUserActivityPersistentIdentifier(kNewEventActivityType)
+        activity.isEligibleForSearch = true
+        activity.isEligibleForPrediction = true
+        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
+        activity.title = "Nuevo evento"
+        attributes.contentDescription = "Incorpora un nuevo evento a Last Time!"
+        attributes.thumbnailData = thumbnail?.jpegData(compressionQuality: 1.0)
+        activity.suggestedInvocationPhrase = "Crear nuevo evento!"
+        activity.contentAttributeSet = attributes
+        return activity
+    }
     
     init(id:String, descripcion:String, fecha:String, hora: String, contador:Int, cantidad: Int = 0, periodo: PeriodoTemporal = .dias, archivado: Bool = false) {
         self.id = id

@@ -304,6 +304,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         let boton = sender as! SpringButton
         boton.animation = "pop"
         boton.animate()
+        
+        
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
@@ -354,6 +356,18 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             } else {
                 alarmaViewController.idEvento = eventosFiltrados[index.row].id
             }
+        }
+        
+        if(segue.identifier == "CrearNuevoEvento") {
+            if #available(iOS 12.0, *) {
+                let vc = segue.destination as! NuevoEventoVC
+                let activity = Evento.newEventShortcut(thumbnail: UIImage(named: "logo375verdoso"))
+                vc.userActivity = activity
+                activity.becomeCurrent()
+            } else {
+                // Fallback on earlier versions
+            }
+            
         }
         
     }

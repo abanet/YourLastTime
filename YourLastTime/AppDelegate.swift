@@ -131,6 +131,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    // User Activity
+    func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+        ) -> Bool {
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier:"NuevoEventoVC") as! NuevoEventoVC
+        let mainVC = storyboard.instantiateViewController(withIdentifier:"PrincipalViewController") as! PrincipalViewController
+        self.window?.rootViewController = mainVC
+        self.window?.makeKeyAndVisible()
+        mainVC.present(vc, animated: true, completion: nil)
+//        if let window = self.window, let rootViewController = window.rootViewController {
+//            let currentController = rootViewController
+//            currentController.present(vc, animated: true, completion: nil)
+//        }
+        return true
+    }
 
 }
 
