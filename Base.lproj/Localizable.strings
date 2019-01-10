@@ -70,3 +70,8 @@
 /* Eliminar una ocurrencia */
 "Delete Event" = "%@ will be remove!";
 "Msg Delete Event" = "The event and all his data will be remove forever.";
+
+/* Activity */
+"New Event" = "New Event";
+"Add a new event to Last Time!" = "Add a new event to Last Time!";
+"Create a new event!" = "Create a new event!";

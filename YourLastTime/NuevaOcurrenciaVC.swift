@@ -47,6 +47,10 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         textViewDescripcionOcurrencia.layer.cornerRadius = 10.0
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        textViewDescripcionOcurrencia.becomeFirstResponder()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -127,7 +131,8 @@ extension NuevaOcurrenciaVC: UITextViewDelegate {
         isDescription = false
     }
   }
-  
+ 
+    
 }
 
 

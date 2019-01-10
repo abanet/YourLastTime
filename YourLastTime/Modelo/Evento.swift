@@ -32,10 +32,10 @@ class Evento: NSObject {
         activity.isEligibleForSearch = true
         activity.isEligibleForPrediction = true
         let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
-        activity.title = "Nuevo evento"
-        attributes.contentDescription = "Incorpora un nuevo evento a Last Time!"
+        activity.title = NSLocalizedString("New Event", comment: "")
+        attributes.contentDescription = NSLocalizedString("Add a new event to Last Time!", comment: "")
         attributes.thumbnailData = thumbnail?.jpegData(compressionQuality: 1.0)
-        activity.suggestedInvocationPhrase = "Crear nuevo evento!"
+        activity.suggestedInvocationPhrase = NSLocalizedString("Create a new event!", comment: "")
         activity.contentAttributeSet = attributes
         return activity
     }

@@ -70,3 +70,9 @@
 /* Eliminar una ocurrencia */
 "Delete Event" = "¡Vas a eliminar %@!";
 "Msg Delete Event" = "El evento y su historial serán eliminados para siempre";
+
+
+/* Activity */
+"New Event" = "Nuevo Evento";
+"Add a new event to Last Time!" = "Incorpora un nuevo evento en Tu Última Vez!";
+"Create a new event!" = "Crea un nuevo evento!";
