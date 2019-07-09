@@ -22,6 +22,7 @@
 "Delete" = "Eliminar";
 "History" = "Historial";
 "Alarm" = "Alarma";
+"Edit" = "Editar";
 
 /* Pantalla de historial */
 "Ago: " = "Hace: ";

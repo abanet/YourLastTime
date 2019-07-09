@@ -196,6 +196,9 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         
         var arrayAcciones = [UITableViewRowAction]()
 
+        
+        
+        
         // Ver historial
         // Si no hay ocurrencias no mostramos la acción correspondiente
         
@@ -203,7 +206,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
           let historialRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: NSLocalizedString("History", comment: ""), handler:{action, indexpath in
             self.performSegue(withIdentifier: "verHistorial", sender: indexPath)
             });
-            historialRowAction.backgroundColor =  YourLastTime.colorAccion
+            historialRowAction.backgroundColor =  YourLastTime.colorAccion2
             arrayAcciones.append(historialRowAction)
         }
         
@@ -213,7 +216,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
           let alarmaRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: NSLocalizedString("Alarm", comment: ""), handler:{action, indexpath in
                 self.performSegue(withIdentifier: "crearAlarma", sender: indexPath)
             });
-            alarmaRowAction.backgroundColor =  YourLastTime.colorAccion2
+            alarmaRowAction.backgroundColor =  YourLastTime.colorAccion3
             arrayAcciones.append(alarmaRowAction)
         }
         
@@ -258,19 +261,19 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil))
         
+        
+        // Opción de acción de edición
+        let editarRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: NSLocalizedString("Edit", comment: ""), handler:{action, indexpath in
+            self.performSegue(withIdentifier: "editarEvento", sender: indexPath)
+        });
+        editarRowAction.backgroundColor =  YourLastTime.colorAccion
+        arrayAcciones.append(editarRowAction)
+        
         // Acción de borrado
       let deleteRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
-        
-        
-        
-        
         self.present(alert, animated: true)
-        
-        
-            
-            
         });
-        deleteRowAction.backgroundColor =  YourLastTime.colorAccion3
+        deleteRowAction.backgroundColor =  YourLastTime.colorAccion4
         arrayAcciones.append(deleteRowAction)
         return arrayAcciones
     }
@@ -337,6 +340,19 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             }
         }
+        
+        if(segue.identifier == "editarEvento") {
+            let editarEventoVC = segue.destination as! EditEventoVC
+            let buttonPosition: CGPoint = (sender! as AnyObject).convert(CGPoint.zero, to: self.tableView)
+            if let indexPathCeldaSeleccionada = self.tableView.indexPathForRow(at: buttonPosition) {
+                if !filtroAplicado {
+                    editarEventoVC.idEvento = self.eventos[indexPathCeldaSeleccionada.row].id
+                } else {
+                    editarEventoVC.idEvento = self.eventosFiltrados[indexPathCeldaSeleccionada.row].id
+                }
+            }
+        }
+        
         
         if(segue.identifier == "verHistorial"){
             let historicoViewController = segue.destination as! HistorialVC

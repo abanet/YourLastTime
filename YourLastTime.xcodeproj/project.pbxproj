@@ -57,6 +57,7 @@
 		C0B39B991B53D4A200E3D680 /* AlertaVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0B39B971B53D4A200E3D680 /* AlertaVC.xib */; };
 		C0BCADAA1B2986FE00B20009 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0BCADAC1B2986FE00B20009 /* Localizable.strings */; };
 		C0C09BFD1B301C68004AC072 /* NuevaOcurrenciaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C09BFC1B301C68004AC072 /* NuevaOcurrenciaVC.swift */; };
+		C0C0FD6222D4D0D9004F0627 /* EditEventoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C0FD6122D4D0D9004F0627 /* EditEventoVC.swift */; };
 		C0C168321B38067B00387F3F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0C168311B38067B00387F3F /* Media.xcassets */; };
 		C0DBB2D41B2839CD0017AF6E /* Ocurrencia.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DBB2D31B2839CD0017AF6E /* Ocurrencia.swift */; };
 		C0F696901B3C157F004F3214 /* constantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6968F1B3C157F004F3214 /* constantes.swift */; };
@@ -146,6 +147,7 @@
 		C0BCADAD1B29871700B20009 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C0BCADAF1B29B04D00B20009 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C0C09BFC1B301C68004AC072 /* NuevaOcurrenciaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuevaOcurrenciaVC.swift; sourceTree = "<group>"; };
+		C0C0FD6122D4D0D9004F0627 /* EditEventoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventoVC.swift; sourceTree = "<group>"; };
 		C0C168311B38067B00387F3F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		C0DBB2D31B2839CD0017AF6E /* Ocurrencia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ocurrencia.swift; sourceTree = "<group>"; };
 		C0F6968F1B3C157F004F3214 /* constantes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constantes.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				C0FEE5DB1B259B62000B0627 /* EntradaTableViewCell.swift */,
 				D3A72AB0217F729A0064C15C /* CustomImagePickerViewController.swift */,
 				C0FEE5E91B259B62000B0627 /* NuevoEventoVC.swift */,
+				C0C0FD6122D4D0D9004F0627 /* EditEventoVC.swift */,
 				C0C09BFC1B301C68004AC072 /* NuevaOcurrenciaVC.swift */,
 				C09506181B4D3D3500961F8B /* NuevaAlarmaVC.swift */,
 				C0B39B921B53AE7200E3D680 /* Notificacion.swift */,
@@ -500,6 +503,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0C0FD6222D4D0D9004F0627 /* EditEventoVC.swift in Sources */,
 				C062BF3F215C217700944803 /* KeyboardService.swift in Sources */,
 				C0FEE63C1B259B62000B0627 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				C0FEE6151B259B62000B0627 /* EntradaTableViewCell.swift in Sources */,

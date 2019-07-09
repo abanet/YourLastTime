@@ -39,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print ("no es la primera vez")
             // si no tiene columna de coste hay que añadir la columna
             let monetizado = UserDefaults.standard.bool(forKey: "monetizado")
-            
             if !monetizado {
                 monetizarDatabase()
             }
@@ -166,6 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let database = EventosDB()
         if database.columnaExiste(nombreTabla: "OCURRENCIAS", nombreColumna: "COSTE") {
             print("La columna COSTE ya existe en la tabla OCURRENCIAS. No se añade")
+            ocurrenciasModificado = true
         } else {
             print("La columna COSTE no existe en la tabla OCURRENCIAS. Vamos a añadirla")
             if database.addColumn("COSTE", to: "OCURRENCIAS") {
@@ -177,6 +177,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         if database.columnaExiste(nombreTabla: "EVENTOS", nombreColumna: "MONETIZADO") {
             print("La columna MONETIZADO ya existe en la tabla EVENTOS. No se añade")
+            eventosModificado = true
         } else {
             print("La columna MONETIZADO no existe en la tabla EVENTOS. Vamos a añadirla")
             if database.addColumn("MONETIZADO", to: "EVENTOS") {

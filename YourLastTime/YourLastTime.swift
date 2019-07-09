@@ -24,6 +24,7 @@ open class YourLastTime : NSObject {
         static var colorAccion: UIColor = UIColor(red: 0.431, green: 0.545, blue: 0.376, alpha: 1.000)
         static var colorAccion2: UIColor = YourLastTime.colorAccion.colorWithBrightness(0.7)
         static var colorAccion3: UIColor = YourLastTime.colorAccion.colorWithBrightness(0.8)
+        static var colorAccion4: UIColor = YourLastTime.colorAccion.colorWithBrightness(0.9)
         static var colorBackground: UIColor = UIColor(red: 0.875, green: 0.945, blue: 0.843, alpha: 1.000)
     }
 
@@ -36,6 +37,7 @@ open class YourLastTime : NSObject {
     open class var colorAccion: UIColor { return Cache.colorAccion }
     open class var colorAccion2: UIColor { return Cache.colorAccion2 }
     open class var colorAccion3: UIColor { return Cache.colorAccion3 }
+    open class var colorAccion4: UIColor { return Cache.colorAccion4 }
     open class var colorBackground: UIColor { return Cache.colorBackground }
 
     //// Drawing Methods
