@@ -330,5 +330,53 @@ class EventosDB: NSObject {
         }
         return false
     }
+    
+    // MARK: Alteración de la base de datos
+    
+    /** Chequear si una columna existe en una tabla dada
+     Los nombres de las tablas y columnas se chequean en mayúsculas
+    */
+    func columnaExiste(nombreTabla: String, nombreColumna: String) -> Bool {
+        var encontrado = false
+        let tabla = nombreTabla.uppercased()
+        let columna = nombreColumna.uppercased()
+        
+        // obtener esquema de la base de datos
+        if database.open() {
+            let rs: FMResultSet = database.getTableSchema(tabla)
+            while rs.next() {
+                if rs.string(forColumn: columna)?.uppercased() == columna {
+                    encontrado = true
+                    break
+                }
+            }
+        }
+        return encontrado
+    }
+    
+   
+    /**
+     Añade la columna especificada a la tabla especificada
+     Los nombres de tablas y columnas se interpretarán en mayúsculas
+    */
+    func addColumn(_ columna: String, to tabla: String) -> Bool {
+        var added = false
+        let nombreColumna = columna.uppercased()
+        let nombreTabla   = tabla.uppercased()
+        if database.open() {
+            if !(columnaExiste(nombreTabla: nombreTabla , nombreColumna: nombreColumna)) {
+                let alterTable = "ALTER TABLE \(nombreTabla) ADD COLUMN \(nombreColumna) DOUBLE"
+                if database.executeUpdate(alterTable, withArgumentsIn: nil) {
+                    print("Columna de \(nombreColumna) añadida correctamente a la tabla \(nombreTabla)")
+                    added = true
+                } else {
+                    print("No se ha podido añadir la columna \(nombreColumna) a la tabla \(nombreTabla)")
+                }
+            }
+        }
+        return added
+    }
+    
+    
    
 }

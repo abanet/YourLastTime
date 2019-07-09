@@ -19,12 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let notificacionDelegate = NotificacionDelegate()
     let center = UNUserNotificationCenter.current()
   
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // Activamos estadísticas
         GATracker.setup(tid: "UA-87790452-1") // id de GA para cronoTask (cuenta alberto.banet)
         GATracker.sharedInstance.screenView(screenName: "Sesiones Abiertas YourLastTime", customParameters: nil)
-    
+        
         // Solicitamos autorización para las notificaciones
         solicitarAutorizaciónNotificaciones()
         setupNotificaciones()
@@ -32,8 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Si es la primera vez creamos la base de datos
         let yaentre = UserDefaults.standard.bool(forKey: "yaentre")
+        
         if yaentre {
             print ("no es la primera vez")
+            // si no tiene columna de coste hay que añadir la columna
+            let monetizado = UserDefaults.standard.bool(forKey: "monetizado")
+            
+            if !monetizado {
+                monetizarDatabase()
+            }
         } else {
             print ("primera vez")
             // Creamos la base de datos
@@ -69,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         print("Error: \(contactDB?.lastErrorMessage())")
                     }
                     // tabla de ocurrencias
-                    let sql_crear_ocurrencias = "CREATE TABLE IF NOT EXISTS OCURRENCIAS (ID INTEGER PRIMARY KEY AUTOINCREMENT, IDEVENTO INTEGER, FECHA TEXT, HORA TEXT, DESCRIPCION TEXT)"
+                    let sql_crear_ocurrencias = "CREATE TABLE IF NOT EXISTS OCURRENCIAS (ID INTEGER PRIMARY KEY AUTOINCREMENT, IDEVENTO INTEGER, FECHA TEXT, HORA TEXT, DESCRIPCION TEXT, COSTE DOUBLE)"
                     if !(contactDB?.executeStatements(sql_crear_ocurrencias))! {
                         print("Error: \(contactDB?.lastErrorMessage())")
                     }
@@ -79,11 +88,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 } else {
                     print("Error: \(contactDB?.lastErrorMessage())")
                 }
-            }
-            
-            
+            } 
         }
-    
+        
         return true
     }
 
@@ -152,5 +159,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    
+    fileprivate func monetizarDatabase() {
+        var ocurrenciasModificado = false
+        var eventosModificado = false
+        let database = EventosDB()
+        if database.columnaExiste(nombreTabla: "OCURRENCIAS", nombreColumna: "COSTE") {
+            print("La columna COSTE ya existe en la tabla OCURRENCIAS. No se añade")
+        } else {
+            print("La columna COSTE no existe en la tabla OCURRENCIAS. Vamos a añadirla")
+            if database.addColumn("COSTE", to: "OCURRENCIAS") {
+                print("--columna añadida!")
+                ocurrenciasModificado = true
+            } else {
+                print("--columna no añadida!")
+            }
+        }
+        if database.columnaExiste(nombreTabla: "EVENTOS", nombreColumna: "MONETIZADO") {
+            print("La columna MONETIZADO ya existe en la tabla EVENTOS. No se añade")
+        } else {
+            print("La columna MONETIZADO no existe en la tabla EVENTOS. Vamos a añadirla")
+            if database.addColumn("MONETIZADO", to: "EVENTOS") {
+                print("--columna añadida!")
+                eventosModificado = true
+            } else {
+                print("--columna no añadida!")
+            }
+        }
+        // Si se han podido hacer las dos modificaciones lo damos por monetizado
+        if ocurrenciasModificado && eventosModificado {
+            UserDefaults.standard.set(true, forKey: "monetizado")
+        }
+    }
 }
 
