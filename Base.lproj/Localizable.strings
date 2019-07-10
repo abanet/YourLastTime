@@ -76,3 +76,7 @@
 "New Event" = "New Event";
 "Add a new event to Last Time!" = "Add a new event to Last Time!";
 "Create a new event!" = "Create a new event!";
+
+/* Edición de Evento */
+"Editing Event" = "Editing Event";
+"Add economic value" = "Add economic value";

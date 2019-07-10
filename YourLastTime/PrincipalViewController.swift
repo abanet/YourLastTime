@@ -343,14 +343,12 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if(segue.identifier == "editarEvento") {
             let editarEventoVC = segue.destination as! EditEventoVC
-            let buttonPosition: CGPoint = (sender! as AnyObject).convert(CGPoint.zero, to: self.tableView)
-            if let indexPathCeldaSeleccionada = self.tableView.indexPathForRow(at: buttonPosition) {
+            let index = sender as! IndexPath
                 if !filtroAplicado {
-                    editarEventoVC.idEvento = self.eventos[indexPathCeldaSeleccionada.row].id
+                    editarEventoVC.idEvento = self.eventos[index.row].id
                 } else {
-                    editarEventoVC.idEvento = self.eventosFiltrados[indexPathCeldaSeleccionada.row].id
+                    editarEventoVC.idEvento = self.eventosFiltrados[index.row].id
                 }
-            }
         }
         
         

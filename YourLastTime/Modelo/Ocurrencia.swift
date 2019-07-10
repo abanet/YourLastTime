@@ -15,16 +15,18 @@ class Ocurrencia: NSObject {
     var fecha: String
     var hora: String
     var descripcion: String
+    var coste: Double
     
     
     
     
-  init(idOcurrencia: String, idEvento:String, fecha:String, hora: String, descripcion: String) {
+    init(idOcurrencia: String, idEvento:String, fecha:String, hora: String, descripcion: String, coste: Double = 0) {
         self.idOcurrencia = idOcurrencia
         self.idEvento = idEvento
         self.fecha = fecha
         self.hora = hora
         self.descripcion = descripcion
+        self.coste = coste
     }
     
   init(idOcurrencia:String, idEvento:String, fecha:String) {
@@ -33,6 +35,7 @@ class Ocurrencia: NSObject {
         self.fecha = fecha
         self.hora = ""
         self.descripcion = ""
+        self.coste = 0
     }
     
     // Momento de la ocurrencia en formato MM-dd-YYYYHH:mm

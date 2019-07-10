@@ -22,6 +22,7 @@ class Evento: NSObject {
     var archivado: Bool
     var cantidad: Int   // unidades de la alarma establecida
     var periodo: PeriodoTemporal // hora, día, mes, año
+    var monetizado: Bool
     
     
     @available(iOS 12.0, *)
@@ -40,7 +41,7 @@ class Evento: NSObject {
         return activity
     }
     
-    init(id:String, descripcion:String, fecha:String, hora: String, contador:Int, cantidad: Int = 0, periodo: PeriodoTemporal = .dias, archivado: Bool = false) {
+    init(id:String, descripcion:String, fecha:String, hora: String, contador:Int, cantidad: Int = 0, periodo: PeriodoTemporal = .dias, archivado: Bool = false, monetizado: Bool = false) {
         self.id = id
         self.descripcion = descripcion
         self.fecha = fecha
@@ -49,6 +50,7 @@ class Evento: NSObject {
         self.archivado = archivado
         self.cantidad = cantidad
         self.periodo = periodo
+        self.monetizado = monetizado
     }
     
     func fechaUltimaOcurrencia()->Date {
@@ -127,6 +129,10 @@ class Evento: NSObject {
             return true
         }
         return false
+    }
+    
+    func estaMonetizado() -> Bool {
+        return self.monetizado
     }
 
     // Decide el color para un evento dato.

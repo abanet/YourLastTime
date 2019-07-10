@@ -31,7 +31,7 @@ class EventosDB: NSObject {
         // la descripción no puede llevar comillas simples que lia al sqlite y da error
         let descripcionSinComillasSimples = evento.replacingOccurrences(of: "'", with: "''", options: .literal, range: nil)
         if database.open(){
-            let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR, ARCHIVADO, CANTIDAD, PERIODO) VALUES ('\(descripcionSinComillasSimples)', '\(fecha.fecha)', '\(fecha.hora)', 0, 0, 0, 0)"
+            let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR, ARCHIVADO, CANTIDAD, PERIODO, MONETIZADO) VALUES ('\(descripcionSinComillasSimples)', '\(fecha.fecha)', '\(fecha.hora)', 0, 0, 0, 0, 0)"
             print("addEvento: \(insertSQL)")
             let resultado = database.executeUpdate(insertSQL, withArgumentsIn: nil)
             
@@ -51,7 +51,7 @@ class EventosDB: NSObject {
     // la descripción no puede llevar comillas simples que lia al sqlite y da error
     let descripcionSinComillasSimples = evento.replacingOccurrences(of: "'", with: "''", options: .literal, range: nil)
     if database.open(){
-      let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR, ARCHIVADO, CANTIDAD, PERIODO) VALUES ('\(descripcionSinComillasSimples)', '\(fecha.fecha)', '\(fecha.hora)', 0, 0, 0, 0)"
+      let insertSQL = "INSERT INTO EVENTOS (DESCRIPCION, FECHA, HORA, CONTADOR, ARCHIVADO, CANTIDAD, PERIODO, MONETIZADO) VALUES ('\(descripcionSinComillasSimples)', '\(fecha.fecha)', '\(fecha.hora)', 0, 0, 0, 0, 0)"
       let resultado = database.executeUpdate(insertSQL, withArgumentsIn: nil)
       if !resultado {
         print("Error: \(database.lastErrorMessage())")
@@ -76,10 +76,42 @@ class EventosDB: NSObject {
             if !resultado {
                 print("Error updateEventoDate: \(database.lastErrorMessage())")
             } else {
-                print("Ocurrencia modificada en Fecha")
+                print("Evento modificado en Fecha")
             }
         }
     }
+    
+    /**
+     Actualiza el nombre de un evento en la tabla EVENTOS
+    */
+    func updateEventoName(idEvento: String, newName name: String) {
+        if database.open() {
+            let updateSQL = "UPDATE EVENTOS SET DESCRIPCION = '\(name)' WHERE ID = '\(idEvento)'"
+            let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)
+            if !resultado {
+                print("Error updateEventoName: \(database.lastErrorMessage())")
+            } else {
+                print("Nombre del evento ha sido modificado a \(name)")
+            }
+        }
+    }
+    
+    /**
+     Actualiza el estado de monetización de un evento
+     */
+    func updateEventoMonetizado(idEvento: String, monetizado: Bool) {
+        if database.open() {
+            let updateSQL = "UPDATE EVENTOS SET MONETIZADO = \(monetizado) WHERE ID = '\(idEvento)'"
+            let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)
+            if !resultado {
+                print("Error updateEventoMonetizado: \(database.lastErrorMessage())")
+            } else {
+                print("Monetización del evento ha cambiado a \(monetizado)")
+            }
+        }
+    }
+    
+    
     // Devuelve true si el evento se ha podido eliminar
     func eliminarEvento(_ idEvento:String, descripcion: String?)->Bool {
         if database.open(){
@@ -100,7 +132,7 @@ class EventosDB: NSObject {
     func arrayEventos()->[Evento] {
         var arrayResultado = [Evento]()
         if database.open() {
-            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO, ARCHIVADO FROM EVENTOS"
+            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO, ARCHIVADO, MONETIZADO FROM EVENTOS"
             let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
             while resultados?.next() == true {
                 let unEvento: Evento = Evento(id: resultados!.string(forColumn: "ID"),
@@ -109,7 +141,8 @@ class EventosDB: NSObject {
                                               hora: resultados!.string(forColumn: "HORA"),
                                               contador: Int(resultados!.int(forColumn: "CONTADOR")),
                                               cantidad: Int(resultados!.int(forColumn: "CANTIDAD")),
-                                              periodo: PeriodoTemporal(rawValue:Int(resultados!.int(forColumn: "PERIODO"))))
+                                              periodo: PeriodoTemporal(rawValue:Int(resultados!.int(forColumn: "PERIODO"))),
+                                              monetizado: resultados!.bool(forColumn: "MONETIZADO"))
                 arrayResultado.append(unEvento)
                 // DEBUG
                 let descrip = resultados!.string(forColumn: "DESCRIPCION")!
@@ -134,7 +167,7 @@ class EventosDB: NSObject {
     
     func encontrarEvento(_ idEvento: String)->Evento?{
         if database.open() {
-            let selectSQL = "SELECT DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO FROM EVENTOS WHERE ID                                               = '\(idEvento)'"
+            let selectSQL = "SELECT DESCRIPCION, FECHA, HORA, CONTADOR, CANTIDAD, PERIODO, MONETIZADO FROM EVENTOS WHERE ID                                               = '\(idEvento)'"
             let resultado: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
             if resultado!.next() {
                 let eventoFinal = Evento(id: idEvento,
@@ -143,12 +176,19 @@ class EventosDB: NSObject {
                                          hora: resultado!.string(forColumn: "HORA"),
                                          contador: Int(resultado!.int(forColumn: "CONTADOR")),
                                          cantidad: Int(resultado!.int(forColumn: "CANTIDAD")),
-                                         periodo: PeriodoTemporal(rawValue: Int(resultado!.int(forColumn: "PERIODO")))
+                                         periodo: PeriodoTemporal(rawValue: Int(resultado!.int(forColumn: "PERIODO"))),
+                                         monetizado: resultado!.bool(forColumn: "MONETIZADO")
                 )
                 return eventoFinal
             }
         }
         return nil
+    }
+    
+    func eventoMonetizado(idEvento: String) -> Bool {
+        guard let eventoActual = encontrarEvento(idEvento)
+            else { return false }
+        return eventoActual.estaMonetizado()
     }
     
     //
@@ -159,7 +199,7 @@ class EventosDB: NSObject {
         // la descripción no puede llevar comillas simples que lia al sqlite y da error
         let descripcionSinComillasSimples = descripcion.replacingOccurrences(of: "'", with: "''", options: .literal, range: nil)
         if database.open(){
-            let selectSQL = "INSERT INTO OCURRENCIAS (IDEVENTO, FECHA, HORA, DESCRIPCION) VALUES ('\(idEvento)', '\(fecha.fecha)', '\(fecha.hora)', '\(descripcionSinComillasSimples)')"
+            let selectSQL = "INSERT INTO OCURRENCIAS (IDEVENTO, FECHA, HORA, DESCRIPCION, COSTE) VALUES ('\(idEvento)', '\(fecha.fecha)', '\(fecha.hora)', '\(descripcionSinComillasSimples)', 0)"
             let resultado = database.executeUpdate(selectSQL, withArgumentsIn: nil)
             if !resultado {
                 print("Error: \(database.lastErrorMessage())")
@@ -230,7 +270,7 @@ class EventosDB: NSObject {
     func arrayOcurrencias(_ idEvento:String)->[Ocurrencia] {
         var arrayResultado = [Ocurrencia]()
         if database.open() {
-            let selectSQL = "SELECT ID, IDEVENTO, FECHA, HORA, DESCRIPCION FROM OCURRENCIAS WHERE IDEVENTO = '\(idEvento)'"
+            let selectSQL = "SELECT ID, IDEVENTO, FECHA, HORA, DESCRIPCION, COSTE FROM OCURRENCIAS WHERE IDEVENTO = '\(idEvento)'"
             let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
             while resultados?.next() == true {
               
@@ -238,7 +278,8 @@ class EventosDB: NSObject {
                   idEvento: resultados!.string(forColumn: "IDEVENTO"),
                   fecha: resultados!.string(forColumn: "FECHA"),
                   hora: resultados!.string(forColumn: "HORA"),
-                  descripcion: resultados!.string(forColumn: "DESCRIPCION"))
+                  descripcion: resultados!.string(forColumn: "DESCRIPCION"),
+                  coste: resultados!.double(forColumn: "COSTE"))
                 arrayResultado.append(unaOcurrencia)
             }
         } else {
@@ -292,7 +333,7 @@ class EventosDB: NSObject {
     func arrayAlarmasEventos() -> [Evento] {
         var arrayResultado = [Evento]()
         if database.open() {
-            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CANTIDAD, PERIODO FROM EVENTOS WHERE CANTIDAD>0"
+            let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, CANTIDAD, PERIODO, MONETIZADO FROM EVENTOS WHERE CANTIDAD>0"
             let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
              while resultados?.next() == true {
                 let eventoConAlarma = Evento(id: resultados!.string(forColumn: "ID"),
@@ -301,7 +342,8 @@ class EventosDB: NSObject {
                     hora: resultados!.string(forColumn: "HORA"),
                     contador: Int(resultados!.int(forColumn: "CONTADOR")),
                     cantidad: Int(resultados!.int(forColumn: "CANTIDAD")),
-                    periodo: PeriodoTemporal(rawValue: Int(resultados!.int(forColumn: "PERIODO"))))
+                    periodo: PeriodoTemporal(rawValue: Int(resultados!.int(forColumn: "PERIODO"))),
+                    monetizado: resultados!.bool(forColumn: "MONETIZADO"))
                 arrayResultado.append(eventoConAlarma)
             }
         }

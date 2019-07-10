@@ -19,6 +19,7 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblCabecera2: UILabel!
     @IBOutlet weak var btnOk: UIButton!
     @IBOutlet weak var btnCancel: UIButton!
+    @IBOutlet weak var txtCoste: UITextField!
     @IBOutlet weak var textViewDescripcionOcurrencia: UITextView! {
     didSet {
       textViewDescripcionOcurrencia.text = NSLocalizedString("Add an optional description", comment:"")
@@ -30,7 +31,7 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
   override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+    
         // Do any additional setup after loading the view.
         
         lblCabecera1.text = NSLocalizedString("It happened again!", comment:"")
@@ -45,10 +46,17 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         btnCancel.setTitleColor(YourLastTime.colorFondoCelda, for: .normal)
 
         textViewDescripcionOcurrencia.layer.cornerRadius = 10.0
+    
+        // mostrar o no campo para añadir coste.
+        let database = EventosDB()
+        txtCoste.isHidden = !database.eventoMonetizado(idEvento: idEvento)
+    
     }
 
     override func viewDidAppear(_ animated: Bool) {
         textViewDescripcionOcurrencia.becomeFirstResponder()
+       
+        
     }
     
     override func didReceiveMemoryWarning() {
