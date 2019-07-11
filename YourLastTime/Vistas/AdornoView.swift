@@ -34,7 +34,7 @@ class AdornoView: UIView {
   
   func drawCircle () {
     //let centroCirculo = CGPoint(x: frame.width/2,y: frame.height/2)
-    let posY = (superview?.layoutMargins.top)! + 10 // Para centrarlo con la fecha
+    let posY = (superview?.layoutMargins.top)! + 10 // Para centrarlo con la fecha. Original: 10
     let centroCirculo = CGPoint(x: frame.width/2, y: posY)
     let radio = (frame.width - frame.width/3)/2 //aire para el círculo
     let circlePath = UIBezierPath(arcCenter: centroCirculo, radius: radio, startAngle: CGFloat(0), endAngle:CGFloat(Float.pi * 2), clockwise: true)

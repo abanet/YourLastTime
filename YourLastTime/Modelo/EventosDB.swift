@@ -194,18 +194,18 @@ class EventosDB: NSObject {
     //
     // MARK: Tratamiento de las Ocurrencias
     //
-    func addOcurrencia(_ idEvento: String, descripcion: String) {
+    func addOcurrencia(_ idEvento: String, descripcion: String, coste: Double) {
         let fecha = Fecha()
         // la descripción no puede llevar comillas simples que lia al sqlite y da error
         let descripcionSinComillasSimples = descripcion.replacingOccurrences(of: "'", with: "''", options: .literal, range: nil)
         if database.open(){
-            let selectSQL = "INSERT INTO OCURRENCIAS (IDEVENTO, FECHA, HORA, DESCRIPCION, COSTE) VALUES ('\(idEvento)', '\(fecha.fecha)', '\(fecha.hora)', '\(descripcionSinComillasSimples)', 0)"
+            let selectSQL = "INSERT INTO OCURRENCIAS (IDEVENTO, FECHA, HORA, DESCRIPCION, COSTE) VALUES ('\(idEvento)', '\(fecha.fecha)', '\(fecha.hora)', '\(descripcionSinComillasSimples)', '\(coste)')"
             let resultado = database.executeUpdate(selectSQL, withArgumentsIn: nil)
             if !resultado {
                 print("Error: \(database.lastErrorMessage())")
             } else {
                 print("Ocurrencia añadida")
-                // al añadir una ocurrrencia modificamos en la tabla eventos la fecha y hora para que muestre siempre la última vez
+                // al añadir una ocurrencia modificamos en la tabla eventos la fecha y hora para que muestre siempre la última vez
                 // Incrementamos en uno el número de ocurrencias en la tabla eventos
                 let updateSQL = "UPDATE EVENTOS SET FECHA = '\(fecha.fecha)', HORA = '\(fecha.hora)', CONTADOR = CONTADOR + 1 WHERE ID = '\(idEvento)'"
                 print(updateSQL)

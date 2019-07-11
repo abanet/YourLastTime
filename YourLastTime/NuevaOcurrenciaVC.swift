@@ -79,8 +79,13 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
         let database = EventosDB()
         //database.addOcurrencia(idEvento, descripcion: descripcionOcurrencia.text!)
         
+        // Cálculo del coste
+        var coste = 0.0
+        if !txtCoste.isHidden, let stringValue = txtCoste.text, let valor = Double(stringValue) {
+            coste = valor
+        }
         let description = isDescription ? textViewDescripcionOcurrencia.text.removingAllExtraNewLines : ""
-        database.addOcurrencia(idEvento, descripcion: description)
+        database.addOcurrencia(idEvento, descripcion: description, coste: coste)
     
       
         // Ha ocurrido una nueva ocurrencia.

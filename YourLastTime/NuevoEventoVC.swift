@@ -71,7 +71,7 @@ class NuevoEventoVC: UIViewController, UITextFieldDelegate {
             let bbdd = EventosDB()
           bbdd.addEventoWithCompletion(descripcion!) { [unowned self] id in
             if self.switchCrearOcurrencia.isOn  {
-              bbdd.addOcurrencia(id, descripcion: NSLocalizedString("First time!", comment: ""))
+                bbdd.addOcurrencia(id, descripcion: NSLocalizedString("First time!", comment: ""), coste: 0.0)
             }
           }
           
