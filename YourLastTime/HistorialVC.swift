@@ -12,6 +12,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lblNombreEvento: UILabel!
+    @IBOutlet weak var txtViewNombreEvento: UITextView!
     @IBOutlet weak var lblHace: UILabel!
     @IBOutlet weak var lblUltimaSemana: UILabel!
     @IBOutlet weak var lblResultadoUltimaSemana: UILabel!
@@ -52,6 +53,12 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         database = EventosDB()
         
         lblNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
+        txtViewNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
+        txtViewNombreEvento.backgroundColor = YourLastTime.colorAccion2
+        txtViewNombreEvento.isScrollEnabled = false
+        
+        //txtViewNombreEvento.contentInset = UIEdgeInsets(top: -7.0,left: 4.0,bottom: 0,right: 0.0)
+        
       
       // Gesto para cerrar teclado
       let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))

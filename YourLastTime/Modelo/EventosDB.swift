@@ -80,6 +80,22 @@ class EventosDB: NSObject {
             }
         }
     }
+    
+    // Actualiza el nombre del evento
+    func updateEventoName(idEvento: String, nombre: String) {
+        let descripcionSinComillasSimples = nombre.replacingOccurrences(of: "'", with: "''", options: .literal, range: nil)
+        if database.open(){
+            let updateSQL = "UPDATE EVENTOS SET DESCRIPCION = '\(descripcionSinComillasSimples)' WHERE ID = '\(idEvento)'"
+            let resultado = database.executeUpdate(updateSQL, withArgumentsIn: nil)
+            if !resultado {
+                print("Error updateEventoName: \(database.lastErrorMessage())")
+            } else {
+                print("Nombre del evento modificado")
+            }
+        }
+    }
+    
+    
     // Devuelve true si el evento se ha podido eliminar
     func eliminarEvento(_ idEvento:String, descripcion: String?)->Bool {
         if database.open(){
