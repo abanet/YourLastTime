@@ -9,9 +9,8 @@
 import UIKit
 
 class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var lblNombreEvento: UILabel!
     @IBOutlet weak var txtViewNombreEvento: UITextView!
     @IBOutlet weak var lblHace: UILabel!
     @IBOutlet weak var lblUltimaSemana: UILabel!
@@ -28,46 +27,46 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @IBOutlet weak var btnCerrar: SpringButton!
     @IBOutlet var btnShare: UIButton!
     
-  @IBOutlet weak var viewResume: UIView!
-  
-  
+    @IBOutlet weak var viewResume: UIView!
+    
+    
     var idEvento: String!
     var database: EventosDB!
     var ocurrencias: [Ocurrencia] = [Ocurrencia]()
     var ocurrenciaSeleccionada: Int? // la ocurrencia con la que se está trabajando
     var ocurrenciaModificada = false // ¿se ha modificado una ocurrencia?
+    var tituloEventoModificado = false
     var originalOffset = CGPoint(x: 0.0, y: 0.0)
     var isCustomizeDatePickerShow: Bool = false
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         
         tableView.separatorStyle = .none
-      
-      
+        
+        
         database = EventosDB()
         
-        lblNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
         txtViewNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
         txtViewNombreEvento.backgroundColor = YourLastTime.colorAccion2
         txtViewNombreEvento.isScrollEnabled = false
+        txtViewNombreEvento.isEditable = true
+        txtViewNombreEvento.delegate = self
         
-        //txtViewNombreEvento.contentInset = UIEdgeInsets(top: -7.0,left: 4.0,bottom: 0,right: 0.0)
         
-      
-      // Gesto para cerrar teclado
-      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-      self.view.addGestureRecognizer(tapGesture)
-      
+        // Gesto para cerrar teclado
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
+        
         // Animación del botón para cerrar
         _ = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(HistorialVC.agitar), userInfo: nil, repeats: true)
         
-     // Listening de la grabación de fecha y hora en la bbdd
+        // Listening de la grabación de fecha y hora en la bbdd
         NotificationCenter.default.addObserver(self, selector: #selector(onDateTimeChangedInDatabase(_:)), name: .didDateTimeChangedInDatabase, object: nil)
     }
     
@@ -77,10 +76,10 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
         
         // Calculamos los datos estadísticos
-      
+        
         // Última vez hace...
         lblHace.text = database.encontrarEvento(idEvento)!.cuantoTiempoHaceDesdeLaUltimaVez()
-      
+        
         // Ocurrencias en última semana, mes y año
         let (ocurrenciasSemana, ocurrenciasMes, ocurrenciasAnno) = database.contarOcurrenciasSemanaMesAnno(idEvento)
         lblUltimaSemana.text = NSLocalizedString("Last week: ", comment: "")
@@ -101,7 +100,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             lblMedia.text = "N/A"
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -111,8 +110,8 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     override var prefersStatusBarHidden : Bool {
         return true;
     }
-
-  // MARK: TableView
+    
+    // MARK: TableView
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -125,7 +124,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaHistorial") as! CeldaHistorialTableViewCell
-      // Al reutilizar las celdas hay que tener cuidado con el relleno de los adornos.
+        // Al reutilizar las celdas hay que tener cuidado con el relleno de los adornos.
         
         if let indice = ocurrenciaSeleccionada {
             if indice == indexPath.row {
@@ -136,14 +135,14 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
                 cell.adorno.setNeedsDisplay()
             }
         }
-      
-      if indexPath.row == ocurrencias.count - 1 {
-        cell.adorno.esUltimaCelda = true
-        cell.adorno.setNeedsDisplay()
-      } else if cell.adorno.esUltimaCelda {
-        cell.adorno.esUltimaCelda = false
-        cell.adorno.setNeedsDisplay()
-      }
+        
+        if indexPath.row == ocurrencias.count - 1 {
+            cell.adorno.esUltimaCelda = true
+            cell.adorno.setNeedsDisplay()
+        } else if cell.adorno.esUltimaCelda {
+            cell.adorno.esUltimaCelda = false
+            cell.adorno.setNeedsDisplay()
+        }
         let fecha = Fecha()
         
         cell.lblFecha.text = fecha.devolverFechaLocalizada(ocurrencias[indexPath.row].fecha)
@@ -153,44 +152,44 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         cell.textViewDescripcion.delegate = self
         cell.textViewDescripcion.tag = indexPath.row // identificamos los uitextview
         cell.lblFecha.tag = indexPath.row
-      
-      
+        
+        
         // tap de la celda
         let tapFecha = UITapGestureRecognizer(target: self, action: #selector(HistorialVC.tapLabel(_:)))
-      let tapHora = UITapGestureRecognizer(target: self, action: #selector(HistorialVC.tapLabel(_:)))
+        let tapHora = UITapGestureRecognizer(target: self, action: #selector(HistorialVC.tapLabel(_:)))
         cell.lblFecha.addGestureRecognizer(tapFecha)
         cell.lblHora.addGestureRecognizer(tapHora)
-      
+        
         // Calculo de la diferencia entre dos ocurrencias
         cell.lblHace.text = self.informarIntervalodeDiferencia(fila: indexPath.row, ocurrencia: ocurrencias[indexPath.row])
         return cell
     }
     
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    print(indexPath.row)
-  }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
     
-  func desplazarTableView(_ tableView: UITableView, offset: CGFloat) {
-    var contentOffset:CGPoint = tableView.contentOffset
-    originalOffset = contentOffset
-    contentOffset.y = offset
-    DispatchQueue.main.async {
-      UIView.animate(withDuration: 0.5, delay: 0.1, options: UIView.AnimationOptions.curveLinear, animations: {
-        self.tableView.contentOffset = contentOffset
-      }, completion: nil)
-      
+    func desplazarTableView(_ tableView: UITableView, offset: CGFloat) {
+        var contentOffset:CGPoint = tableView.contentOffset
+        originalOffset = contentOffset
+        contentOffset.y = offset
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.5, delay: 0.1, options: UIView.AnimationOptions.curveLinear, animations: {
+                self.tableView.contentOffset = contentOffset
+            }, completion: nil)
+            
+        }
     }
-  }
-  
-  func desplazarTableViewToOrigin(_ tableView: UITableView) {
-    DispatchQueue.main.async {
-      UIView.animate(withDuration: 0.5, delay: 0.1, options: UIView.AnimationOptions.curveLinear, animations: {
-        self.tableView.contentOffset = self.originalOffset
-      }, completion: nil)
-      
+    
+    func desplazarTableViewToOrigin(_ tableView: UITableView) {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.5, delay: 0.1, options: UIView.AnimationOptions.curveLinear, animations: {
+                self.tableView.contentOffset = self.originalOffset
+            }, completion: nil)
+            
+        }
     }
-  }
-  
+    
     @objc func agitar() {
         btnCerrar.animation = "swing"
         btnCerrar.force = 5.0
@@ -202,38 +201,38 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @IBAction func shareHistorial(_ sender: UIButton) {
         //btnShare.alpha = 0
         
-        let texto = "¡La última vez que \(lblNombreEvento.text!)!"
+        let texto = "¡La última vez que \(txtViewNombreEvento.text!)!"
         let imagenCaptura = screenShot()
         //let imagen = UIImageJPEGRepresentation(imagenCaptura, 1.0)!
         let imagen = imagenCaptura.jpegData(compressionQuality: 1.0)!
         let activityViewController = UIActivityViewController(activityItems: [imagen], applicationActivities: nil)
         activityViewController.excludedActivityTypes = [
-          UIActivity.ActivityType.postToWeibo,
+            UIActivity.ActivityType.postToWeibo,
             .assignToContact,
             .addToReadingList,
             .postToFlickr,
             .postToTencentWeibo]
         present(activityViewController, animated: true, completion: nil)
-            }
+    }
     
     
     
     // MARK: Capturar pantalla
     func screenShot() -> UIImage {
-      UIGraphicsBeginImageContextWithOptions(viewResume.bounds.size, viewResume.isOpaque, 0.0)
-      viewResume.drawHierarchy(in: viewResume.bounds, afterScreenUpdates: false)
-      let viewShot = UIGraphicsGetImageFromCurrentImageContext()
-      UIGraphicsEndImageContext()
-      
-//        UIGraphicsBeginImageContext(CGSize(width: self.viewResume.frame.size.width, height: self.viewResume.frame.size.height))
-//        UIGraphicsGetCurrentContext()!
-//        self.view?.drawHierarchy(in: self.viewResume.frame, afterScreenUpdates: false)
-//        let screenShot = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-      // return screenShot!
-      return viewShot!
+        UIGraphicsBeginImageContextWithOptions(viewResume.bounds.size, viewResume.isOpaque, 0.0)
+        viewResume.drawHierarchy(in: viewResume.bounds, afterScreenUpdates: false)
+        let viewShot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        //        UIGraphicsBeginImageContext(CGSize(width: self.viewResume.frame.size.width, height: self.viewResume.frame.size.height))
+        //        UIGraphicsGetCurrentContext()!
+        //        self.view?.drawHierarchy(in: self.viewResume.frame, afterScreenUpdates: false)
+        //        let screenShot = UIGraphicsGetImageFromCurrentImageContext()
+        //        UIGraphicsEndImageContext()
+        // return screenShot!
+        return viewShot!
     }
-
+    
     func informarIntervalodeDiferencia(fila: Int, ocurrencia: Ocurrencia)->String{
         if fila != ocurrencias.count - 1  { // todo menos la última fila
             // Restamos de la ocurrencia actual la ocurrencia anterior
@@ -247,89 +246,89 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         }
         return NSLocalizedString("First time!", comment:"")
     }
-  
-  @objc func dismissKeyboard(){
-    self.view.endEditing(true)
-  }
-
-  
-  //MARK: Etiqueta pulsada
-  @objc func tapLabel(_ sender:UITapGestureRecognizer) {
-    print("Tap en fecha")
-    if let dp = view.viewWithTag(CustomizeDatePickerConfiguration.tag.rawValue) as? CustomizeDatePicker {
-        dp.cancelPulsado()
-    }
-    guard isCustomizeDatePickerShow == false else {
-        return
-    }
-    isCustomizeDatePickerShow = true
-      let datePicker: CustomizeDatePicker = {
-      let keyboardSize = KeyboardService.keyboardSize()
-      return CustomizeDatePicker(frame: keyboardSize)
-    }()
-    datePicker.delegate = self
     
-    setTextViewsAsNoEditable()
-    removeDatePicker()
-    if let lbl = sender.view as? UILabel {
-      desmarcarTodasCeldas()
-      // Marcar celda como celda de edición
-      if let cellSelect = tableView.cellForRow(at: IndexPath(row:lbl.tag,section:0)) as? CeldaHistorialTableViewCell {
-        ocurrenciaSeleccionada = lbl.tag
-        cellSelect.adorno.rellenar = true
-        cellSelect.adorno.setNeedsDisplay()
-      }
-      let ocurrencia = ocurrencias[lbl.tag]
-      let fecha = Fecha()
-      let date = fecha.fechaCompletaStringToDate(ocurrencia.fecha+ocurrencia.hora)
-      // Crear datepicker pasando la fecha a modificar
-      let newFrame = CGRect(x:view.frame.origin.x,
-                            y: view.frame.origin.y - 200,
-                            width: view.frame.width,
-                            height: view.frame.height)
+    @objc func dismissKeyboard(){
+        self.view.endEditing(true)
+    }
     
-      datePicker.date = date
-      let minDate = getMinimumDateForDatePicker()
-      datePicker.minimunDate = minDate
-      view.addSubview(datePicker)
-//      UIView.animate(withDuration: 1.0, animations: {
-//        self.datePicker.frame = newFrame
-//      }, completion: nil)
-      
-      // Desplazar tabla si la etiqueta va a quedar oculta
-      let keyboardSize = KeyboardService.keyboardSize()
-      let aRect = lbl.frame
-      
-      let pointInTable:CGPoint = lbl.superview!.convert(lbl.frame.origin, to: tableView)
-      let puntoAltoTecladoY = tableView.frame.height - keyboardSize.height
-      print("if ((pointInTable.y (\(pointInTable.y)) + aRect.height/2 (\(aRect.height/2))) > puntoAltoTecladoY (\(puntoAltoTecladoY)))")
-      if ((pointInTable.y + aRect.height/2) > puntoAltoTecladoY) {
-        // Tiene q haber desplazamiento
-        print("contentOffset inicial: \(tableView.contentOffset.y)")
-        print("Tamaño teclado: \(keyboardSize.height)")
-        print("tableView.frame.height: \(tableView.frame.height)")
-        print("posición textView.superview: \(lbl.superview!.frame.height)")
-        print("pointInTable de la uitextView: \(pointInTable.y)")
-        let offset = pointInTable.y - puntoAltoTecladoY + lbl.superview!.frame.height
-        desplazarTableView(tableView, offset: offset)
-      }
+    
+    //MARK: Etiqueta pulsada
+    @objc func tapLabel(_ sender:UITapGestureRecognizer) {
+        print("Tap en fecha")
+        if let dp = view.viewWithTag(CustomizeDatePickerConfiguration.tag.rawValue) as? CustomizeDatePicker {
+            dp.cancelPulsado()
+        }
+        guard isCustomizeDatePickerShow == false else {
+            return
+        }
+        isCustomizeDatePickerShow = true
+        let datePicker: CustomizeDatePicker = {
+            let keyboardSize = KeyboardService.keyboardSize()
+            return CustomizeDatePicker(frame: keyboardSize)
+        }()
+        datePicker.delegate = self
+        
+        setTextViewsAsNoEditable()
+        removeDatePicker()
+        if let lbl = sender.view as? UILabel {
+            desmarcarTodasCeldas()
+            // Marcar celda como celda de edición
+            if let cellSelect = tableView.cellForRow(at: IndexPath(row:lbl.tag,section:0)) as? CeldaHistorialTableViewCell {
+                ocurrenciaSeleccionada = lbl.tag
+                cellSelect.adorno.rellenar = true
+                cellSelect.adorno.setNeedsDisplay()
+            }
+            let ocurrencia = ocurrencias[lbl.tag]
+            let fecha = Fecha()
+            let date = fecha.fechaCompletaStringToDate(ocurrencia.fecha+ocurrencia.hora)
+            // Crear datepicker pasando la fecha a modificar
+            let newFrame = CGRect(x:view.frame.origin.x,
+                                  y: view.frame.origin.y - 200,
+                                  width: view.frame.width,
+                                  height: view.frame.height)
+            
+            datePicker.date = date
+            let minDate = getMinimumDateForDatePicker()
+            datePicker.minimunDate = minDate
+            view.addSubview(datePicker)
+            //      UIView.animate(withDuration: 1.0, animations: {
+            //        self.datePicker.frame = newFrame
+            //      }, completion: nil)
+            
+            // Desplazar tabla si la etiqueta va a quedar oculta
+            let keyboardSize = KeyboardService.keyboardSize()
+            let aRect = lbl.frame
+            
+            let pointInTable:CGPoint = lbl.superview!.convert(lbl.frame.origin, to: tableView)
+            let puntoAltoTecladoY = tableView.frame.height - keyboardSize.height
+            print("if ((pointInTable.y (\(pointInTable.y)) + aRect.height/2 (\(aRect.height/2))) > puntoAltoTecladoY (\(puntoAltoTecladoY)))")
+            if ((pointInTable.y + aRect.height/2) > puntoAltoTecladoY) {
+                // Tiene q haber desplazamiento
+                print("contentOffset inicial: \(tableView.contentOffset.y)")
+                print("Tamaño teclado: \(keyboardSize.height)")
+                print("tableView.frame.height: \(tableView.frame.height)")
+                print("posición textView.superview: \(lbl.superview!.frame.height)")
+                print("pointInTable de la uitextView: \(pointInTable.y)")
+                let offset = pointInTable.y - puntoAltoTecladoY + lbl.superview!.frame.height
+                desplazarTableView(tableView, offset: offset)
+            }
+        }
     }
-  }
-  
-  func getMinimumDateForDatePicker() -> Date? {
-    guard ocurrenciaSeleccionada != nil else {
-      return nil
+    
+    func getMinimumDateForDatePicker() -> Date? {
+        guard ocurrenciaSeleccionada != nil else {
+            return nil
+        }
+        if ocurrenciaSeleccionada! < ocurrencias.count - 1 {
+            let minFecha = ocurrencias[ocurrenciaSeleccionada! + 1].fecha
+            let minHora  = ocurrencias[ocurrenciaSeleccionada! + 1].hora
+            let fecha = Fecha(fecha: minFecha, hora: minHora)
+            return fecha.fechaCompletaStringToDate()
+        } else {
+            return nil
+        }
     }
-    if ocurrenciaSeleccionada! < ocurrencias.count - 1 {
-      let minFecha = ocurrencias[ocurrenciaSeleccionada! + 1].fecha
-      let minHora  = ocurrencias[ocurrenciaSeleccionada! + 1].hora
-      let fecha = Fecha(fecha: minFecha, hora: minHora)
-      return fecha.fechaCompletaStringToDate()
-    } else {
-      return nil
-    }
-  }
-  
+    
     func updateLabelFechaHora(paraOcurrencia ocurrencia: Int, conFecha fecha: Fecha) {
         let indice = IndexPath(row: ocurrencia, section: 0)
         if let cellSelect = tableView.cellForRow(at: indice) as? CeldaHistorialTableViewCell {
@@ -346,103 +345,123 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         }
     }
     
-  func desmarcarTodasCeldas () {
-    _ = tableView.subviews.filter{$0 is CeldaHistorialTableViewCell}.map{
-      ($0 as? CeldaHistorialTableViewCell)?.adorno.rellenar = false
-      ($0 as? CeldaHistorialTableViewCell)?.adorno.setNeedsDisplay()
+    func desmarcarTodasCeldas () {
+        _ = tableView.subviews.filter{$0 is CeldaHistorialTableViewCell}.map{
+            ($0 as? CeldaHistorialTableViewCell)?.adorno.rellenar = false
+            ($0 as? CeldaHistorialTableViewCell)?.adorno.setNeedsDisplay()
+        }
+        //ocurrenciaSeleccionada = nil
     }
-    //ocurrenciaSeleccionada = nil
-  }
-  
-  func setTextViewsAsNoEditable() {
-    _ = tableView.subviews.filter{$0 is CeldaHistorialTableViewCell}.map{
-      if let txtView = ($0 as? CeldaHistorialTableViewCell)?.textViewDescripcion {
-        desmarcarTextView(txtView)
-        txtView.resignFirstResponder()
-      }
+    
+    func setTextViewsAsNoEditable() {
+        _ = tableView.subviews.filter{$0 is CeldaHistorialTableViewCell}.map{
+            if let txtView = ($0 as? CeldaHistorialTableViewCell)?.textViewDescripcion {
+                desmarcarTextView(txtView)
+                txtView.resignFirstResponder()
+            }
+        }
+        desmarcarTextView(self.txtViewNombreEvento)
+        txtViewNombreEvento.resignFirstResponder()
     }
-  }
-  
-  func removeDatePicker() {
-    _ = view.subviews.filter {$0 is CustomizeDatePicker}.map{
-      ($0 as? CustomizeDatePicker)?.removeFromSuperview()
+    
+    func removeDatePicker() {
+        _ = view.subviews.filter {$0 is CustomizeDatePicker}.map{
+            ($0 as? CustomizeDatePicker)?.removeFromSuperview()
+        }
     }
-  }
-  
+    
 }
+
 
 // MARK: UITextViewDelegate
 extension HistorialVC: UITextViewDelegate {
-  func textViewDidBeginEditing(_ textView: UITextView) {
-    guard isCustomizeDatePickerShow == false else { return } // que no esté el cambio de fecha activo
-    self.ocurrenciaModificada = false
-    removeDatePicker()
-    remarcarTextView(textView)
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        guard isCustomizeDatePickerShow == false else { return } // que no esté el cambio de fecha activo
+        
+        
+        removeDatePicker()
+        remarcarTextView(textView)
+        
+        if textView != txtViewNombreEvento { // en una celda del historial
+            self.ocurrenciaModificada = false
+            if let cellSelect = tableView.cellForRow(at: IndexPath(row:textView.tag,section:0)) as? CeldaHistorialTableViewCell {
+                desmarcarTodasCeldas()
+                cellSelect.adorno.rellenar = true
+                cellSelect.adorno.setNeedsDisplay()
+            }
+        } else {
+            self.tituloEventoModificado = false
+        }
+    }
     
-    if let cellSelect = tableView.cellForRow(at: IndexPath(row:textView.tag,section:0)) as? CeldaHistorialTableViewCell {
-      desmarcarTodasCeldas()
-      cellSelect.adorno.rellenar = true
-      cellSelect.adorno.setNeedsDisplay()
+    func textViewDidEndEditing(_ textView: UITextView) {
+        desmarcarTextView(textView)
+        
+        if textView != txtViewNombreEvento {
+            desplazarTableViewToOrigin(tableView)
+            
+            guard self.ocurrenciaModificada else {
+                return
+            }
+            let ocurrenciaModificada = ocurrencias[textView.tag]
+            // grabar la modificación de la descripción en la ocurrencia modificada
+            database.modificarOcurrencia(ocurrenciaModificada.idOcurrencia, ocurrenciaModificada.idEvento, descripcion: textView.text.removingAllExtraNewLines)
+            // refrescar la tabla para que coja el nuevo valor?
+        } else {
+            guard self.tituloEventoModificado else { return }
+            // Modificar el título del evento
+            database.updateEventoName(idEvento: self.idEvento, nombre: textView.text.removingAllExtraNewLines)
+        }
     }
-  }
-  
-  func textViewDidEndEditing(_ textView: UITextView) {
-    desmarcarTextView(textView)
-    desplazarTableViewToOrigin(tableView)
-//    if let cellSelect = tableView.cellForRow(at: IndexPath(row:textView.tag,section:0)) as? CeldaHistorialTableViewCell {
-//      cellSelect.adorno.rellenar = false
-//      cellSelect.adorno.setNeedsDisplay()
-//    }
-    guard self.ocurrenciaModificada else {
-      return
-    }
-    let ocurrenciaModificada = ocurrencias[textView.tag]
-    // grabar la modificación de la descripción en la ocurrencia modificada
-    database.modificarOcurrencia(ocurrenciaModificada.idOcurrencia, ocurrenciaModificada.idEvento, descripcion: textView.text.removingAllExtraNewLines)
-    // refrescar la tabla para que coja el nuevo valor?
-  }
-  
-  func textViewDidChange(_ textView: UITextView) {
-    self.ocurrenciaModificada = true
-  }
-  
-  // TODO: Hay que hacer que sólo se mueva si está en la zona cubierta por el teclado. Y que al salir de editar vuelva a la posición de origen
-  func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-    guard isCustomizeDatePickerShow == false else { return false}
-    let keyboardSize = KeyboardService.keyboardSize() // Tamaño del teclado
-    let aRect = textView.frame
     
-    let pointInTable:CGPoint = textView.superview!.convert(textView.frame.origin, to: tableView)
-    let puntoAltoTecladoY = tableView.frame.height - keyboardSize.height
-    print("if ((pointInTable.y (\(pointInTable.y)) + aRect.height/2 (\(aRect.height/2))) > puntoAltoTecladoY (\(puntoAltoTecladoY)))")
-    if ((pointInTable.y + aRect.height/2) > puntoAltoTecladoY) {
-      // Tiene q haber desplazamiento
-      
-      print("contentOffset inicial: \(tableView.contentOffset.y)")
-      print("Tamaño teclado: \(keyboardSize.height)")
-      print("tableView.frame.height: \(tableView.frame.height)")
-      print("posición textView.superview: \(textView.superview!.frame.height)")
-      print("pointInTable de la uitextView: \(pointInTable.y)")
-      let offset = pointInTable.y - puntoAltoTecladoY + textView.superview!.frame.height
-      desplazarTableView(tableView, offset: offset)
+    func textViewDidChange(_ textView: UITextView) {
+        if textView != txtViewNombreEvento {
+            self.ocurrenciaModificada = true
+        } else {
+            self.tituloEventoModificado = true
+        }
     }
-    return true;
-  }
-  
-  
-  func remarcarTextView (_ textView: UITextView) {
-    textView.layer.borderColor = YourLastTime.colorFondoCelda.cgColor
-    textView.layer.borderWidth = 1.0
-    textView.layer.cornerRadius = 5.0
-    textView.backgroundColor = YourLastTime.colorFondoCelda.colorWithAlpha(0.3)
-  }
-  
-  func desmarcarTextView (_ textView: UITextView) {
-    textView.layer.borderColor = UIColor.clear.cgColor
-    textView.layer.borderWidth = 0
-    textView.backgroundColor = UIColor.clear
-  }
-  
+    
+    // TODO: Hay que hacer que sólo se mueva si está en la zona cubierta por el teclado. Y que al salir de editar vuelva a la posición de origen
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        guard isCustomizeDatePickerShow == false else { return false}
+        
+        if textView != txtViewNombreEvento {
+            let keyboardSize = KeyboardService.keyboardSize() // Tamaño del teclado
+            let aRect = textView.frame
+            
+            let pointInTable:CGPoint = textView.superview!.convert(textView.frame.origin, to: tableView)
+            let puntoAltoTecladoY = tableView.frame.height - keyboardSize.height
+            print("if ((pointInTable.y (\(pointInTable.y)) + aRect.height/2 (\(aRect.height/2))) > puntoAltoTecladoY (\(puntoAltoTecladoY)))")
+            if ((pointInTable.y + aRect.height/2) > puntoAltoTecladoY) {
+                // Tiene q haber desplazamiento
+                
+                print("contentOffset inicial: \(tableView.contentOffset.y)")
+                print("Tamaño teclado: \(keyboardSize.height)")
+                print("tableView.frame.height: \(tableView.frame.height)")
+                print("posición textView.superview: \(textView.superview!.frame.height)")
+                print("pointInTable de la uitextView: \(pointInTable.y)")
+                let offset = pointInTable.y - puntoAltoTecladoY + textView.superview!.frame.height
+                desplazarTableView(tableView, offset: offset)
+            }
+        }
+        return true;
+    }
+    
+    
+    func remarcarTextView (_ textView: UITextView) {
+        textView.layer.borderColor = YourLastTime.colorFondoCelda.cgColor
+        textView.layer.borderWidth = 1.0
+        textView.layer.cornerRadius = 5.0
+        textView.backgroundColor = YourLastTime.colorFondoCelda.colorWithAlpha(0.3)
+    }
+    
+    func desmarcarTextView (_ textView: UITextView) {
+        textView.layer.borderColor = UIColor.clear.cgColor
+        textView.layer.borderWidth = 0
+        textView.backgroundColor = UIColor.clear
+    }
+    
     @objc func onDateTimeChangedInDatabase(_ notification: Notification) {
         // Última vez hace...
         // Si no se ejecutaba en el main daba problemas de database is locked
@@ -457,22 +476,22 @@ extension HistorialVC: UITextViewDelegate {
 // MARK: CustomizeDatePickerDelegate
 extension HistorialVC: CustomizeDatePickerDelegate {
     // Actualiza la base de datos. Si viene del botón cancel la fecha es nil
-  func setFechaValueToDatabase(_ fecha: Fecha?) {
-    guard ocurrenciaSeleccionada != nil else {
-      return
-    }
-    if let fecha = fecha {
-      let ocur = ocurrencias[ocurrenciaSeleccionada!]
-      database.modificarOcurrenciaFechaHora(ocur.idOcurrencia, ocur.idEvento, nuevaFecha: fecha)
-      updateLabelFechaHora(paraOcurrencia: ocurrenciaSeleccionada!, conFecha: fecha)
-        if ocurrenciaSeleccionada! == 0 {// es la primera, hay que cambiar la fecha del evento
-           database.updateEventoDate(idEvento: ocur.idEvento, fecha: fecha)
+    func setFechaValueToDatabase(_ fecha: Fecha?) {
+        guard ocurrenciaSeleccionada != nil else {
+            return
         }
+        if let fecha = fecha {
+            let ocur = ocurrencias[ocurrenciaSeleccionada!]
+            database.modificarOcurrenciaFechaHora(ocur.idOcurrencia, ocur.idEvento, nuevaFecha: fecha)
+            updateLabelFechaHora(paraOcurrencia: ocurrenciaSeleccionada!, conFecha: fecha)
+            if ocurrenciaSeleccionada! == 0 {// es la primera, hay que cambiar la fecha del evento
+                database.updateEventoDate(idEvento: ocur.idEvento, fecha: fecha)
+            }
+        }
+        desplazarTableViewToOrigin(tableView)
     }
-    desplazarTableViewToOrigin(tableView)
-  }
-  
- 
+    
+    
 }
 
 
