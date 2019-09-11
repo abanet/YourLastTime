@@ -91,6 +91,7 @@ class EventosDB: NSObject {
                 print("Error updateEventoName: \(database.lastErrorMessage())")
             } else {
                 print("Nombre del evento modificado")
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadEventsTable"), object: nil)
             }
         }
     }

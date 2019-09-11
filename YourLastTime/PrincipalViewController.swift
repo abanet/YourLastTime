@@ -66,6 +66,7 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
         NotificationCenter.default.addObserver(self, selector: #selector(onDidChangeBackground), name: .didChangeBackground , object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onReloadEventsTable), name: Notification.Name(rawValue: "reloadEventsTable"), object: nil)
         
+        
         // Configuración searchController
         self.buscador = ({
             let controller = UISearchController(searchResultsController: nil)
