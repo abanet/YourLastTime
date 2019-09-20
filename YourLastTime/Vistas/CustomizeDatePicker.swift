@@ -89,6 +89,24 @@ class CustomizeDatePicker: UIView {
   
   private func setupLayout() {
     // Autolayout para el datePicker
+    
+    // Safe area para los botones si iOS >= 11
+    if #available(iOS 11, *) {
+        let guide = safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            okButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+            cancelButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor)
+            ])
+        
+    } else {
+        let standardSpacing: CGFloat = -8
+        NSLayoutConstraint.activate([
+            okButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: standardSpacing),
+            cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: standardSpacing)
+            
+            ])
+    }
+    
     NSLayoutConstraint.activate([
       // okButton
       okButton.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -107,22 +125,7 @@ class CustomizeDatePicker: UIView {
       datePicker.trailingAnchor.constraint(equalTo: trailingAnchor),
       ])
     
-    // Safe area para los botones si iOS >= 11
-    if #available(iOS 11, *) {
-      let guide = safeAreaLayoutGuide
-      NSLayoutConstraint.activate([
-       okButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
-       cancelButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor)
-        ])
-      
-    } else {
-      let standardSpacing: CGFloat = -8
-      NSLayoutConstraint.activate([
-        okButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: standardSpacing),
-        cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: standardSpacing)
-        
-        ])
-    }
+    
   }
 
   

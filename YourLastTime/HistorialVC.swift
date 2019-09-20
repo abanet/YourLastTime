@@ -169,6 +169,40 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         print(indexPath.row)
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        var arrayAcciones = [UITableViewRowAction]()
+        
+        // alerta de borrado
+        let tituloAlerta = String.localizedStringWithFormat(NSLocalizedString("Delete Ocurrence", comment: ""), "Borrar ocurrencia seleccionada")
+        let alert = UIAlertController(title: tituloAlerta, message: NSLocalizedString("Msg Delete Ocurrencia", comment: ""), preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive, handler: { [unowned self] action in
+            
+                let idOcurrenciaABorrar = self.ocurrencias[indexPath.row].getId()
+                let idEventoPadre       = self.ocurrencias[indexPath.row].idEvento
+                self.ocurrencias.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+            
+                // Tenemos que eliminar la ocurrencia
+                if self.database.eliminarOcurrenciaId(idOcurrenciaABorrar, fromEvento: idEventoPadre) {
+                    print("Eliminada ocurrencia \(idOcurrenciaABorrar)  asociada a idEvento = \(idEventoPadre)")
+                } else {
+                    print("No se ha podido eliminar la ocurrencia asociada con idEvento = \(idEventoPadre)")
+                }
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil))
+        
+        // Acción de borrado
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: NSLocalizedString("Delete", comment: ""), handler:{action, indexpath in
+                self.present(alert, animated: true)
+            })
+        deleteRowAction.backgroundColor =  YourLastTime.colorAccion3
+        arrayAcciones.append(deleteRowAction)
+        return arrayAcciones
+    }
+    
     func desplazarTableView(_ tableView: UITableView, offset: CGFloat) {
         var contentOffset:CGPoint = tableView.contentOffset
         originalOffset = contentOffset
@@ -186,7 +220,6 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             UIView.animate(withDuration: 0.5, delay: 0.1, options: UIView.AnimationOptions.curveLinear, animations: {
                 self.tableView.contentOffset = self.originalOffset
             }, completion: nil)
-            
         }
     }
     

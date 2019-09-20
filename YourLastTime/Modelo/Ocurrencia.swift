@@ -35,6 +35,11 @@ class Ocurrencia: NSObject {
         self.descripcion = ""
     }
     
+    
+    func getId() -> String {
+        return self.idOcurrencia
+    }
+    
     // Momento de la ocurrencia en formato MM-dd-YYYYHH:mm
     // Utilizada para el cálculo de las diferencias entre ocurrencias
     func formatoMMddYYYYHHmm () -> String {

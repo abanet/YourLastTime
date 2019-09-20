@@ -225,7 +225,22 @@ class EventosDB: NSObject {
     }
   }
     
-    
+    // TODO: Ver si eliminar una consecuencia tiene efecto en las fechas de la última vez. Probar si es la primera incidencia, la última, si sólo hay una, ...
+    func eliminarOcurrenciaId(_ idOcurrencia: String, fromEvento idEvento: String) -> Bool {
+        if database.open() {
+            let deleteSQL = "DELETE FROM OCURRENCIAS WHERE ID = '\(idOcurrencia)'"
+            let resultado = database.executeUpdate(deleteSQL, withArgumentsIn: nil)
+            if !resultado {
+                print("Error: \(database.lastErrorMessage())")
+            } else {
+                // Decrementamos en uno el número de ocurrencias en la tabla eventos
+                let updateSQL = "UPDATE EVENTOS CONTADOR = CONTADOR - 1 WHERE ID = '\(idEvento)'"
+                _ = database.executeUpdate(updateSQL, withArgumentsIn: nil)
+                return true
+            }
+        }
+        return false
+    }
   
     func eliminarOcurrencias(_ idEvento:String)->Bool {
         if database.open() {
