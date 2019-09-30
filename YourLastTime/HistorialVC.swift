@@ -296,7 +296,11 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         }
         isCustomizeDatePickerShow = true
         let datePicker: CustomizeDatePicker = {
-            let keyboardSize = KeyboardService.keyboardSize()
+            var keyboardSize = KeyboardService.keyboardSize()
+          // apaño 30 sept 2019. A veces keyboardSize es .zero y creaba muchos problemas. Asignamos un tercio de la pantalla por defecto. 
+          if keyboardSize == .zero {
+            keyboardSize = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/3)
+          }
             return CustomizeDatePicker(frame: keyboardSize)
         }()
         datePicker.delegate = self
@@ -423,10 +427,17 @@ extension HistorialVC: UITextViewDelegate {
                 cellSelect.adorno.setNeedsDisplay()
             }
         } else {
+            desmarcarTodasCeldas()
             self.tituloEventoModificado = false
         }
     }
     
+  // Vamos a limitar el número de caracteres en título de evento
+  func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    return true
+  }
+  
+  
     func textViewDidEndEditing(_ textView: UITextView) {
         desmarcarTextView(textView)
         
