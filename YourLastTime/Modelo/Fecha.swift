@@ -23,6 +23,7 @@ class Fecha: NSObject, Comparable {
     let formateador = DateFormatter()
     // El formateador de fecha lo mantenemos siempre a MM-dd-yyy para guardarlo en el mismo formato en la bbdd
     formateador.dateFormat = "MM-dd-yyyy" //NSLocalizedString("MM-dd-yyyy", comment: "Formato de fecha")
+    formateador.timeZone = TimeZone(secondsFromGMT: 0)
     fecha = formateador.string(from: date)
     formateador.dateFormat = "HH:mm"
     hora = formateador.string(from: date)
@@ -61,14 +62,16 @@ class Fecha: NSObject, Comparable {
     
     // fecha completa: fecha con  hora incluida.
   // Deprecate en un futuro. Usar siguiente versión.
-    func fechaCompletaStringToDate(_ fechaCompleta: String) -> Date {
-        let formateador = DateFormatter()
-        formateador.timeZone = TimeZone(abbreviation: "GMT+0:00") //¡¡ si no se añade esto resta dos horas!!
-        formateador.locale = Locale.current
-        formateador.dateFormat = "MM-dd-yyyyHH:mm"
-        let fechaTemp = formateador.date(from: fechaCompleta)
-        return fechaTemp!
-    }
+  func fechaCompletaStringToDate(_ fechaCompleta: String) -> Date {
+    let formateador = DateFormatter()
+    
+    formateador.timeZone = TimeZone(secondsFromGMT: 0) //¡¡ si no se añade esto resta dos horas!!
+    print(formateador.timeZone!)
+    formateador.locale = Locale.current
+    formateador.dateFormat = "MM-dd-yyyyHH:mm"
+    let fechaTemp = formateador.date(from: fechaCompleta)
+    return fechaTemp!
+  }
   
   // versión mejorada de la anterior q trabaja con los datos de la instancia
   func fechaCompletaStringToDate() -> Date {
