@@ -206,6 +206,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     func desplazarTableView(_ tableView: UITableView, offset: CGFloat) {
         var contentOffset:CGPoint = tableView.contentOffset
         originalOffset = contentOffset
+        print("originalOffset: \(originalOffset)")
         contentOffset.y = offset
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.5, delay: 0.1, options: UIView.AnimationOptions.curveLinear, animations: {
@@ -217,8 +218,10 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     func desplazarTableViewToOrigin(_ tableView: UITableView) {
         DispatchQueue.main.async {
+          print("vamos a mover a un originalOffset de: \(self.originalOffset)")
             UIView.animate(withDuration: 0.5, delay: 0.1, options: UIView.AnimationOptions.curveLinear, animations: {
                 self.tableView.contentOffset = self.originalOffset
+                self.originalOffset = CGPoint(x: 0, y: 0)
             }, completion: nil)
         }
     }
@@ -337,15 +340,15 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             let aRect = lbl.frame
             
             let pointInTable:CGPoint = lbl.superview!.convert(lbl.frame.origin, to: tableView)
-            let puntoAltoTecladoY = tableView.frame.height - keyboardSize.height
+          let puntoAltoTecladoY = tableView.frame.height - datePicker.frame.height//keyboardSize.height
             print("if ((pointInTable.y (\(pointInTable.y)) + aRect.height/2 (\(aRect.height/2))) > puntoAltoTecladoY (\(puntoAltoTecladoY)))")
             if ((pointInTable.y + aRect.height/2) > puntoAltoTecladoY) {
                 // Tiene q haber desplazamiento
-                print("contentOffset inicial: \(tableView.contentOffset.y)")
-                print("Tamaño teclado: \(keyboardSize.height)")
-                print("tableView.frame.height: \(tableView.frame.height)")
-                print("posición textView.superview: \(lbl.superview!.frame.height)")
-                print("pointInTable de la uitextView: \(pointInTable.y)")
+//                print("contentOffset inicial: \(tableView.contentOffset.y)")
+//                print("Tamaño teclado: \(keyboardSize.height)")
+//                print("tableView.frame.height: \(tableView.frame.height)")
+//                print("posición textView.superview: \(lbl.superview!.frame.height)")
+//                print("pointInTable de la uitextView: \(pointInTable.y)")
                 let offset = pointInTable.y - puntoAltoTecladoY + lbl.superview!.frame.height
                 desplazarTableView(tableView, offset: offset)
             }
