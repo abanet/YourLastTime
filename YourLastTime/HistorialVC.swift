@@ -179,14 +179,30 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive, handler: { [unowned self] action in
             
+              // si se está intentando eliminar la primera ocurrencia hay que guardar la fecha de la segunda para reemplazar en eventos.
+              var fechaPenultimaOcurrencia: Fecha?
+              var esPrimeraOcurrencia: Bool = false
+              if self.ocurrencias.count > 1 && indexPath.row == 0 {
+                  esPrimeraOcurrencia = true
+                  fechaPenultimaOcurrencia = Fecha(fecha: self.ocurrencias[1].fecha, hora: self.ocurrencias[1].hora)
+              }
                 let idOcurrenciaABorrar = self.ocurrencias[indexPath.row].getId()
                 let idEventoPadre       = self.ocurrencias[indexPath.row].idEvento
                 self.ocurrencias.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
             
                 // Tenemos que eliminar la ocurrencia
+                
                 if self.database.eliminarOcurrenciaId(idOcurrenciaABorrar, fromEvento: idEventoPadre) {
+                  // si era la primera incidencia hay que poner como fecha de última vez del evento la fecha de la que ahora es primera incidencia.
+                  if esPrimeraOcurrencia, let fecha = fechaPenultimaOcurrencia {
+                    self.database.updateEventoDate(idEvento: idEventoPadre, fecha: fecha)
+                    self.lblHace.text = self.database.encontrarEvento(idEventoPadre)!.cuantoTiempoHaceDesdeLaUltimaVez()
+                  }
                     print("Eliminada ocurrencia \(idOcurrenciaABorrar)  asociada a idEvento = \(idEventoPadre)")
+                    DispatchQueue.main.async {
+                      self.tableView.reloadData()
+                    }
                 } else {
                     print("No se ha podido eliminar la ocurrencia asociada con idEvento = \(idEventoPadre)")
                 }
@@ -536,6 +552,7 @@ extension HistorialVC: CustomizeDatePickerDelegate {
             }
         }
         desplazarTableViewToOrigin(tableView)
+        tableView.reloadData()
     }
     
     

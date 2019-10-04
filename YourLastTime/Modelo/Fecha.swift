@@ -23,7 +23,8 @@ class Fecha: NSObject, Comparable {
     let formateador = DateFormatter()
     // El formateador de fecha lo mantenemos siempre a MM-dd-yyy para guardarlo en el mismo formato en la bbdd
     formateador.dateFormat = "MM-dd-yyyy" //NSLocalizedString("MM-dd-yyyy", comment: "Formato de fecha")
-    formateador.timeZone = TimeZone(secondsFromGMT: 0)
+    formateador.timeZone = TimeZone.current //TimeZone(secondsFromGMT: 0)
+    formateador.locale = Locale.current
     fecha = formateador.string(from: date)
     formateador.dateFormat = "HH:mm"
     hora = formateador.string(from: date)
@@ -32,6 +33,8 @@ class Fecha: NSObject, Comparable {
     override init(){
         let date = Date()
         let formateador = DateFormatter()
+        formateador.timeZone = TimeZone.current
+        formateador.locale = Locale.current
         // El formateador de fecha lo mantenemos siempre a MM-dd-yyy para guardarlo en el mismo formato en la bbdd
         formateador.dateFormat = "MM-dd-yyyy" //NSLocalizedString("MM-dd-yyyy", comment: "Formato de fecha")
         fecha = formateador.string(from: date)
@@ -42,6 +45,8 @@ class Fecha: NSObject, Comparable {
     
     func devolverFechaLocalizada(_ fecha: String)-> String?{
         let formateador = DateFormatter()
+        formateador.timeZone = TimeZone.current //TimeZone(secondsFromGMT: 0)
+        formateador.locale = Locale.current
         // se guardó en formato MM-dd-yyyy
         formateador.dateFormat = "MM-dd-yyyy"
         let date = formateador.date(from: fecha)
@@ -53,6 +58,8 @@ class Fecha: NSObject, Comparable {
     func fechaStringToDate(_ fecha: String)->Date{
         // IMPORTANTE: Se supone que el formato en que se pasa la fecha es el original en el que está grabada.
         let formateador = DateFormatter()
+        formateador.timeZone = TimeZone.current //TimeZone(secondsFromGMT: 0)
+        formateador.locale = Locale.current
         formateador.dateFormat = "MM-dd-yyyy"
         let fechaTemp = formateador.date(from: fecha)
         return fechaTemp!
@@ -64,8 +71,7 @@ class Fecha: NSObject, Comparable {
   // Deprecate en un futuro. Usar siguiente versión.
   func fechaCompletaStringToDate(_ fechaCompleta: String) -> Date {
     let formateador = DateFormatter()
-    
-    formateador.timeZone = TimeZone(secondsFromGMT: 0) //¡¡ si no se añade esto resta dos horas!!
+    formateador.timeZone = TimeZone.current //TimeZone(secondsFromGMT: 0) //¡¡ si no se añade esto resta dos horas!!
     print(formateador.timeZone!)
     formateador.locale = Locale.current
     formateador.dateFormat = "MM-dd-yyyyHH:mm"
@@ -76,7 +82,7 @@ class Fecha: NSObject, Comparable {
   // versión mejorada de la anterior q trabaja con los datos de la instancia
   func fechaCompletaStringToDate() -> Date {
     let formateador = DateFormatter()
-     formateador.timeZone = TimeZone(abbreviation: "GMT+0:00") //¡¡ si no se añade esto resta dos horas!!
+     formateador.timeZone = TimeZone.current //TimeZone(secondsFromGMT: 0) //¡¡ si no se añade esto resta dos horas!!
     formateador.locale = Locale.current
     formateador.dateFormat = "MM-dd-yyyyHH:mm"
     let fechaTemp = formateador.date(from: self.fecha+self.hora)
@@ -85,6 +91,8 @@ class Fecha: NSObject, Comparable {
     
     func estaEnUltimosXdias(_ fecha:String, dias: Int)->Bool{
         let formateador = DateFormatter()
+        formateador.timeZone = TimeZone.current //TimeZone(secondsFromGMT: 0)
+        formateador.locale = Locale.current
         formateador.dateFormat = "MM-dd-yyyy"
         let fechaNSDate = formateador.date(from: fecha)
         let intervaloXdias: TimeInterval = intervalo(dias)

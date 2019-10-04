@@ -41,7 +41,8 @@ class CustomizeDatePicker: UIView {
     let dp = UIDatePicker(frame: self.frame)
     dp.translatesAutoresizingMaskIntoConstraints = false
     dp.datePickerMode = .dateAndTime
-    dp.timeZone = TimeZone(secondsFromGMT: 0)
+    dp.timeZone = TimeZone.current //TimeZone(secondsFromGMT: 0)
+    dp.locale = Locale.current
     dp.maximumDate = Date() // máx en fecha y hora actual
     if let d = self.date {
       print("Fecha en creación datePicker: \(d)")
