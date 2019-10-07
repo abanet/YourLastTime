@@ -847,7 +847,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="YQ1-Tp-l9H" firstAttribute="centerX" secondItem="9L9-V1-ioZ" secondAttribute="centerX" constant="-19" id="3sr-23-Pfl"/>
-                            <constraint firstItem="AsE-mG-PCF" firstAttribute="top" secondItem="YQ1-Tp-l9H" secondAttribute="bottom" id="4Y6-iY-VIu"/>
+                            <constraint firstAttribute="bottom" secondItem="YQ1-Tp-l9H" secondAttribute="bottom" id="4Y6-iY-VIu"/>
                             <constraint firstItem="SYt-8g-AQi" firstAttribute="centerY" secondItem="9L9-V1-ioZ" secondAttribute="centerY" id="68V-N8-HaB"/>
                             <constraint firstItem="SYt-8g-AQi" firstAttribute="centerX" secondItem="9L9-V1-ioZ" secondAttribute="centerX" id="Bex-6d-Tx5"/>
                             <constraint firstItem="YQ1-Tp-l9H" firstAttribute="top" secondItem="rw4-T7-MpQ" secondAttribute="bottom" constant="14" id="HKs-AN-GYA"/>

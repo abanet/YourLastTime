@@ -42,6 +42,7 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setStatusBarBackgroundColor(color: YourLastTime.colorBackground)
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
@@ -345,7 +346,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             
             datePicker.date = date
             let minDate = getMinimumDateForDatePicker()
+            let maxDate = getMaximumDateForDatePicker()
             datePicker.minimunDate = minDate
+            datePicker.maximumDate = maxDate
             view.addSubview(datePicker)
             //      UIView.animate(withDuration: 1.0, animations: {
             //        self.datePicker.frame = newFrame
@@ -384,6 +387,22 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             return nil
         }
     }
+  
+  func getMaximumDateForDatePicker() -> Date? {
+    guard ocurrenciaSeleccionada != nil else {
+        return nil
+    }
+    
+    if ocurrenciaSeleccionada! > 0 {
+      //No es la primera ocurrencia, la fecha y hora máxima será la de la anterior ocurrencia
+      let maxFecha = ocurrencias[ocurrenciaSeleccionada! - 1].fecha
+      let maxHora  = ocurrencias[ocurrenciaSeleccionada! - 1].hora
+      let fecha = Fecha(fecha:maxFecha, hora: maxHora)
+      return fecha.fechaCompletaStringToDate()
+    } else {
+      return nil
+    }
+  }
     
     func updateLabelFechaHora(paraOcurrencia ocurrencia: Int, conFecha fecha: Fecha) {
         let indice = IndexPath(row: ocurrencia, section: 0)
@@ -425,6 +444,11 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             ($0 as? CustomizeDatePicker)?.removeFromSuperview()
         }
     }
+  
+  func setStatusBarBackgroundColor(color: UIColor) {
+      guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+      statusBar.backgroundColor = color
+  }
     
 }
 

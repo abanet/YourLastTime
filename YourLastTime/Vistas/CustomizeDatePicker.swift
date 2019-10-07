@@ -37,6 +37,14 @@ class CustomizeDatePicker: UIView {
     }
   }
   
+  var maximumDate: Date? {
+    didSet {
+      if let maximumDate = maximumDate {
+        datePicker.maximumDate = maximumDate
+      }
+    }
+  }
+  
   private lazy var datePicker: UIDatePicker = {
     let dp = UIDatePicker(frame: self.frame)
     dp.translatesAutoresizingMaskIntoConstraints = false
