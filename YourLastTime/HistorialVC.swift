@@ -42,7 +42,9 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Status del color de fondo
         setStatusBarBackgroundColor(color: YourLastTime.colorBackground)
+      
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
@@ -54,9 +56,11 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         database = EventosDB()
         
         txtViewNombreEvento.text = database.encontrarEvento(idEvento)!.descripcion
-        txtViewNombreEvento.backgroundColor = YourLastTime.colorAccion2
+      txtViewNombreEvento.textColor = YourLastTime.colorTituloEvento
+      txtViewNombreEvento.backgroundColor = YourLastTime.colorAccion2
         txtViewNombreEvento.isScrollEnabled = false
         txtViewNombreEvento.isEditable = true
+        txtViewNombreEvento.isSelectable = true
         txtViewNombreEvento.delegate = self
         
         
@@ -332,8 +336,10 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             // Marcar celda como celda de edición
             if let cellSelect = tableView.cellForRow(at: IndexPath(row:lbl.tag,section:0)) as? CeldaHistorialTableViewCell {
                 ocurrenciaSeleccionada = lbl.tag
+              DispatchQueue.main.async {
                 cellSelect.adorno.rellenar = true
                 cellSelect.adorno.setNeedsDisplay()
+              }  
             }
             let ocurrencia = ocurrencias[lbl.tag]
             let fecha = Fecha()
@@ -421,9 +427,11 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
     
     func desmarcarTodasCeldas () {
-        _ = tableView.subviews.filter{$0 is CeldaHistorialTableViewCell}.map{
-            ($0 as? CeldaHistorialTableViewCell)?.adorno.rellenar = false
-            ($0 as? CeldaHistorialTableViewCell)?.adorno.setNeedsDisplay()
+      DispatchQueue.main.async {
+        _ = self.tableView.subviews.filter{$0 is CeldaHistorialTableViewCell}.map{
+        ($0 as? CeldaHistorialTableViewCell)?.adorno.rellenar = false
+        ($0 as? CeldaHistorialTableViewCell)?.adorno.setNeedsDisplay()
+          }
         }
         //ocurrenciaSeleccionada = nil
     }
@@ -496,19 +504,25 @@ extension HistorialVC: UITextViewDelegate {
             // refrescar la tabla para que coja el nuevo valor?
         } else {
             guard self.tituloEventoModificado else { return }
+            let nuevoNombre = textView.text.removingAllExtraNewLines
+            guard nuevoNombre.count > 0 else {
+              return
+            }
             // Modificar el título del evento
-            database.updateEventoName(idEvento: self.idEvento, nombre: textView.text.removingAllExtraNewLines)
+            database.updateEventoName(idEvento: self.idEvento, nombre: nuevoNombre)
         }
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        if textView != txtViewNombreEvento {
-            self.ocurrenciaModificada = true
-        } else {
-            self.tituloEventoModificado = true
-        }
+  func textViewDidChange(_ textView: UITextView) {
+    if textView != txtViewNombreEvento {
+      self.ocurrenciaModificada = true
+    } else {
+      
+      
+        self.tituloEventoModificado = true
+      }
     }
-    
+ 
     // TODO: Hay que hacer que sólo se mueva si está en la zona cubierta por el teclado. Y que al salir de editar vuelva a la posición de origen
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         guard isCustomizeDatePickerShow == false else { return false}
