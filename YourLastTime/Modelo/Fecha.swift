@@ -72,7 +72,6 @@ class Fecha: NSObject, Comparable {
   func fechaCompletaStringToDate(_ fechaCompleta: String) -> Date {
     let formateador = DateFormatter()
     formateador.timeZone = TimeZone.current //TimeZone(secondsFromGMT: 0) //¡¡ si no se añade esto resta dos horas!!
-    print(formateador.timeZone!)
     formateador.locale = Locale.current
     formateador.dateFormat = "MM-dd-yyyyHH:mm"
     let fechaTemp = formateador.date(from: fechaCompleta)

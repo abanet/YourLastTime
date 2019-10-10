@@ -1,0 +1,78 @@
+"When was the last time I...?" = "¿Recuerdas tu última vez?";
+"MM-dd-yyyy" = "dd-MM-yyyy";
+"Cancel" = "Cancelar";
+"Ok" = "Ok";
+
+/* Pantalla principal */
+"It didn't happend yet!" = "¡Todavía no ha ocurrido!";
+
+/* Pantalla de nueva ocurrencia */
+"It happened again!" = "¡Ha vuelto a suceder!";
+"Add a new occurrence" = "Añade una nueva entrada";
+"Add an optional description" = "Incluye una descripción opcional";
+
+/* Pantalla de nuevo evento */
+"Create a" = "Crea un";
+"New Event" = "Nuevo Evento";
+"Name of the new event" = "Nombre del nuevo evento";
+"It just happened!" = "Acaba de ocurrir";
+"It didn't happen yet" = "Todavía no ha ocurrido";
+
+/* Acciones de celda */
+"Delete" = "Eliminar";
+"History" = "Historial";
+"Alarm" = "Alarma";
+
+/* Pantalla de historial */
+"Ago: " = "Hace: ";
+"Hace+tiempo" = "Hace: %@.";
+"year" = "año";
+"week" = "semana";
+"month" = "mes";
+"day" = "día";
+"years" = "años";
+"weeks" = "semanas";
+"months" = "meses";
+"days" = "días";
+"minutes" = "minutos";
+"minute" = "minuto";
+"times" = "veces";
+"time" = "vez";
+"Last week: " = "Última semana: ";
+"Last month: " = "Último mes: ";
+"Last year: " = "Último año: ";
+"¡Acaba de ocurrir!" = "¡Acaba de ocurrir!";
+"Average: " = "Media: ";
+"First time!" = "¡Primera vez!";
+
+/* Pantalla de creación de alarma */
+"The event doesn't happened!" = "Avisar si pasan más de %@ %@ desde la última vez que ocurrió.";
+"Set Alarm" = "Activar Alarma";
+"Delete Alarm" = "Borrar Alarma";
+"hours" = "horas"; // días y años ya se definió en pantalla de historial
+"hour" = "hora";
+
+/* Abreviaturas de periodos temporales */
+"abreviatura de año" = "a";
+"abreviatura de mes" = "m";
+"abreviatura de dia" = "d";
+"abreviatura de hora" = "h";
+
+/* Notificaciones */
+"Your Last Time Alarm!" = "¡Alarma de Última Vez!";
+"Description Alarm!" = "La última vez que el evento '%@' ocurrió fue el %@ a las %@";
+
+/* pickerImageViewController */
+"Select" = "Seleccionar";
+"Restore default" = "Fondo original";
+"Save" = "Guardar";
+
+/* Eliminar una ocurrencia */
+"Delete Event" = "¡Vas a eliminar %@!";
+"Msg Delete Event" = "El evento y su historial serán eliminados para siempre";
+
+
+/* Activity */
+"New Event" = "Nuevo Evento";
+"Add a new event to Last Time!" = "Incorpora un nuevo evento en Tu Última Vez!";
+"Create a new event!" = "Crea un nuevo evento!";

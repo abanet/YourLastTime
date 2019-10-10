@@ -1,0 +1,77 @@
+"When was the last time I...?" = "When was the last time I...?";
+"MM-dd-yyyy" = "MM-dd-yyyy";
+"Cancel" = "Cancel";
+"Ok" = "Ok";
+
+/* Pantalla principal */
+"It didn't happend yet!" = "It didn't happend yet!";
+
+/* Pantalla de nueva ocurrencia */
+"It happened again!" = "It happened again!";
+"Add a new occurrence" = "Add a new occurrence";
+"Add an optional description" = "Add an optional description";
+
+/* Pantalla de nuevo evento */
+"Create a" = "Create a";
+"New Event" = "New Event";
+"Name of the new event" = "Name of the new event";
+"It just happened!" = "It just happened!";
+"It didn't happen yet" = "It didn't happen yet";
+
+
+/* Acciones de celda */
+"Delete" = "Delete";
+"History" = "Log";
+"Alarm" = "Alarm";
+
+/* Pantalla de historial */
+"Ago: " = "Ago: ";
+"Hace+tiempo" = "%@ ago.";
+"year" = "year";
+"week" = "week";
+"month" = "month";
+"day" = "day";
+"years" = "years";
+"weeks" = "weeks";
+"months" = "months";
+"days" = "days";
+"minutes" = "minutes";
+"minute" = "minute";
+"times" = "times";
+"time" = "time";
+"Last week: " = "Last week: ";
+"Last month: " = "Last month: ";
+"Last year: " = "Last year: ";
+"¡Acaba de ocurrir!" = "Just right now!";
+"Average: " = "Average: ";
+"First time!" = "First time!";
+
+/* Pantalla de creación de alarma */
+"The event doesn't happened!" = "Set the alarm for %@ %@.";
+"Set Alarm" = "Set Alarm";
+"Delete Alarm" = "Delete Alarm";
+"hours" = "hours"; // días y años ya se definió en pantalla de historial
+
+/* Abreviaturas de periodos temporales */
+"abreviatura de año" = "y";
+"abreviatura de mes" = "m";
+"abreviatura de dia" = "d";
+"abreviatura de hora" = "h";
+
+/* Notificaciones */
+"Your Last Time Alarm!" = "Your Last Time Alarm!";
+"Description Alarm!" = "Last time the event '%@' happened was the %@ at %@";
+
+/* pickerImageViewController */
+"Select" = "Select";
+"Restore default" = "Restore default";
+"Save" = "Save";
+
+/* Eliminar una ocurrencia */
+"Delete Event" = "%@ will be remove!";
+"Msg Delete Event" = "The event and all his data will be remove forever.";
+
+/* Activity */
+"New Event" = "New Event";
+"Add a new event to Last Time!" = "Add a new event to Last Time!";
+"Create a new event!" = "Create a new event!";
