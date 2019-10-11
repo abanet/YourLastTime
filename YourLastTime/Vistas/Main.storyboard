@@ -39,7 +39,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="115" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="eRr-t3-lBA">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="252" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="115" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="eRr-t3-lBA">
                                 <rect key="frame" x="0.0" y="86" width="375" height="581"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -278,8 +278,11 @@
                                     <segue destination="dus-Hg-THX" kind="presentation" identifier="CrearNuevoEvento" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="ceI-wH-FWb"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When was the last time I ...?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fK1-6B-hhZ" customClass="SpringLabel" customModule="YourLastTime" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="748" text="When was the last time I ...?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fK1-6B-hhZ" customClass="SpringLabel" customModule="YourLastTime" customModuleProvider="target">
                                 <rect key="frame" x="85" y="8" width="205" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="TEL-mP-Fb7"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -878,7 +881,6 @@
                                 <exclude reference="rw4-T7-MpQ"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="4Y6-iY-VIu"/>
                                 <exclude reference="MzV-7m-iSt"/>
                                 <exclude reference="bY5-ae-JNg"/>
                                 <exclude reference="Hud-Lf-IZ3"/>
@@ -888,6 +890,7 @@
                                 <exclude reference="gMj-mp-7YW"/>
                                 <exclude reference="mRr-l3-nLe"/>
                                 <exclude reference="3sr-23-Pfl"/>
+                                <exclude reference="4Y6-iY-VIu"/>
                                 <exclude reference="HKs-AN-GYA"/>
                                 <exclude reference="Mit-3x-uzg"/>
                                 <exclude reference="OWr-Ja-FhF"/>
@@ -909,7 +912,6 @@
                                 <include reference="rw4-T7-MpQ"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="4Y6-iY-VIu"/>
                                 <include reference="MzV-7m-iSt"/>
                                 <exclude reference="bY5-ae-JNg"/>
                                 <include reference="Hud-Lf-IZ3"/>
@@ -919,6 +921,7 @@
                                 <include reference="gMj-mp-7YW"/>
                                 <include reference="mRr-l3-nLe"/>
                                 <exclude reference="3sr-23-Pfl"/>
+                                <include reference="4Y6-iY-VIu"/>
                                 <exclude reference="HKs-AN-GYA"/>
                                 <include reference="Mit-3x-uzg"/>
                                 <exclude reference="OWr-Ja-FhF"/>

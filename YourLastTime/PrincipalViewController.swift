@@ -500,6 +500,9 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             print("Screen edge swiped!")
             let chooseImageVC = CustomImagePickerViewController()
             chooseImageVC.modalTransitionStyle = .flipHorizontal
+          if #available(iOS 13.0, *) { // por defecto en iOS 13 se abren superponiéndose
+            chooseImageVC.modalPresentationStyle = .fullScreen
+          }
             self.present(chooseImageVC, animated: true, completion: nil)
         }
     }

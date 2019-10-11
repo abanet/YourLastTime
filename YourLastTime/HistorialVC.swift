@@ -43,7 +43,8 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         super.viewDidLoad()
         
         // Status del color de fondo
-        setStatusBarBackgroundColor(color: YourLastTime.colorBackground)
+        // Comentado el 10 - 10 - 2019: en iOS 13 no funciona y el truco para hacerlo descuadra otros elementos.
+        //setStatusBarBackgroundColor(color: YourLastTime.colorBackground)
       
         // Do any additional setup after loading the view.
         tableView.delegate = self
@@ -454,8 +455,26 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
   
   func setStatusBarBackgroundColor(color: UIColor) {
+    if #available(iOS 13.0, *) { // truco para colorear la barra de estatus en iOS 13
+//        let app = UIApplication.shared
+//        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+//
+//        let statusbarView = UIView()
+//        statusbarView.backgroundColor = color
+//        view.addSubview(statusbarView)
+//        statusbarView.translatesAutoresizingMaskIntoConstraints = false
+//        statusbarView.heightAnchor
+//            .constraint(equalToConstant: statusBarHeight).isActive = true
+//        statusbarView.widthAnchor
+//            .constraint(equalTo: view.widthAnchor, multiplier: 1.0).isActive = true
+//        statusbarView.topAnchor
+//            .constraint(equalTo: view.topAnchor).isActive = true
+//        statusbarView.centerXAnchor
+//            .constraint(equalTo: view.centerXAnchor).isActive = true
+    } else { // sólo se puede cambiar el statusBar en iOS anterior al 13.0!!
       guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
       statusBar.backgroundColor = color
+    }
   }
     
 }
