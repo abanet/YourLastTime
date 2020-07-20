@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PEH-Bx-G9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PEH-Bx-G9T">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -416,21 +415,12 @@
                         <outlet property="buscadorView" destination="bUY-eJ-rd5" id="8U7-8s-IOn"/>
                         <outlet property="constraintTopBuscadorView" destination="dbC-7c-QLd" id="aUR-iS-vTX"/>
                         <outlet property="lblTitulo" destination="fK1-6B-hhZ" id="eDa-EH-Apl"/>
-                        <outlet property="searchDisplayController" destination="wCR-cm-HVp" id="ZjK-TZ-OMh"/>
                         <outlet property="tableView" destination="eRr-t3-lBA" id="moP-oe-L9M"/>
                         <segue destination="YPI-J9-jCo" kind="presentation" identifier="verHistorial" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="l4S-Zd-YtX"/>
                         <segue destination="hAX-dI-FyC" kind="presentation" identifier="crearAlarma" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="5wy-Od-7gn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ARI-om-qFy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="wCR-cm-HVp">
-                    <connections>
-                        <outlet property="delegate" destination="PEH-Bx-G9T" id="pfg-xb-Awd"/>
-                        <outlet property="searchContentsController" destination="PEH-Bx-G9T" id="R6Y-ZQ-3Cy"/>
-                        <outlet property="searchResultsDataSource" destination="PEH-Bx-G9T" id="LA9-Y0-912"/>
-                        <outlet property="searchResultsDelegate" destination="PEH-Bx-G9T" id="xt7-Pz-np2"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="532" y="-106.59670164917542"/>
         </scene>
@@ -878,7 +868,6 @@
                                 <exclude reference="rw4-T7-MpQ"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="4Y6-iY-VIu"/>
                                 <exclude reference="MzV-7m-iSt"/>
                                 <exclude reference="bY5-ae-JNg"/>
                                 <exclude reference="Hud-Lf-IZ3"/>
@@ -888,6 +877,7 @@
                                 <exclude reference="gMj-mp-7YW"/>
                                 <exclude reference="mRr-l3-nLe"/>
                                 <exclude reference="3sr-23-Pfl"/>
+                                <exclude reference="4Y6-iY-VIu"/>
                                 <exclude reference="HKs-AN-GYA"/>
                                 <exclude reference="Mit-3x-uzg"/>
                                 <exclude reference="OWr-Ja-FhF"/>
@@ -909,7 +899,6 @@
                                 <include reference="rw4-T7-MpQ"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="4Y6-iY-VIu"/>
                                 <include reference="MzV-7m-iSt"/>
                                 <exclude reference="bY5-ae-JNg"/>
                                 <include reference="Hud-Lf-IZ3"/>
@@ -919,6 +908,7 @@
                                 <include reference="gMj-mp-7YW"/>
                                 <include reference="mRr-l3-nLe"/>
                                 <exclude reference="3sr-23-Pfl"/>
+                                <include reference="4Y6-iY-VIu"/>
                                 <exclude reference="HKs-AN-GYA"/>
                                 <include reference="Mit-3x-uzg"/>
                                 <exclude reference="OWr-Ja-FhF"/>
@@ -1481,6 +1471,9 @@
             <point key="canvasLocation" x="-226.40000000000001" y="-891.00449775112452"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="MYf-9X-IsC"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Search-50" width="50" height="50"/>
         <image name="btnEntrada" width="61" height="61"/>
@@ -1491,7 +1484,4 @@
         <image name="imgCalendar" width="20" height="20"/>
         <image name="imgGrafica" width="20" height="20"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="VBY-wT-W1f"/>
-    </inferredMetricsTieBreakers>
 </document>
