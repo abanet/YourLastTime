@@ -454,8 +454,10 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
   
   func setStatusBarBackgroundColor(color: UIColor) {
-      guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
-      statusBar.backgroundColor = color
+      //guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+      //statusBar.backgroundColor = color
+    // 20-07-2020: en iOS 13 no se puede actualizar statusBar
+    UIApplication.statusBarBackgroundColor = color
   }
     
 }
