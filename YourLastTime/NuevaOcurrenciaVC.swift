@@ -118,7 +118,7 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
 extension NuevaOcurrenciaVC: UITextViewDelegate {
   
   func textViewDidBeginEditing(_ textView: UITextView) {
-    if textView.textColor == UIColor.lightGray {
+    if textView.textColor == .systemGray {
       textView.text = nil
       textView.textColor = UIColor.black
       isDescription = true
