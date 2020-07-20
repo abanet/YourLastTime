@@ -22,7 +22,8 @@ class NuevaOcurrenciaVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var textViewDescripcionOcurrencia: UITextView! {
     didSet {
       textViewDescripcionOcurrencia.text = NSLocalizedString("Add an optional description", comment:"")
-      textViewDescripcionOcurrencia.textColor = UIColor.lightGray
+      //textViewDescripcionOcurrencia.textColor = UIColor.lightGray
+        textViewDescripcionOcurrencia.textColor = .systemGray
       textViewDescripcionOcurrencia.delegate = self
     }
   }
@@ -125,11 +126,21 @@ extension NuevaOcurrenciaVC: UITextViewDelegate {
   }
   
   func textViewDidEndEditing(_ textView: UITextView) {
-    if textView.text.isEmpty {
+   /* if textView.text.isEmpty {
       textView.text = NSLocalizedString("Add an optional description", comment:"")
       textView.textColor = UIColor.lightGray
         isDescription = false
-    }
+    }*/
+    
+    if textView.textColor == UIColor.systemGray {
+          textView.text = nil
+          if #available(iOS 13, *), self.traitCollection.userInterfaceStyle == .dark {
+            textView.textColor = UIColor.white
+          } else {
+            textView.textColor = UIColor.black
+          }
+          isDescription = true
+        }            
   }
  
     

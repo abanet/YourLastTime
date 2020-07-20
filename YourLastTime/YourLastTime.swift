@@ -26,7 +26,8 @@ open class YourLastTime : NSObject {
         static var colorAccion3: UIColor = YourLastTime.colorAccion.colorWithBrightness(0.8)
         static var colorBackground: UIColor = UIColor(red: 0.875, green: 0.945, blue: 0.843, alpha: 1.000)
       static var colorTituloEvento: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.000)
-      static var colorPlaceholderEvento: UIColor = UIColor(white: 0.5, alpha: 1.0 )
+      //static var colorPlaceholderEvento: UIColor = UIColor(white: 0.5, alpha: 1.0 )
+        static var colorPlaceholderEvento: UIColor = UIColor.systemGray//UIColor(white: 0.5, alpha: 1.0 )
     }
 
     //// Colors
