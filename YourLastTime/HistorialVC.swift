@@ -323,7 +323,8 @@ class HistorialVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             var keyboardSize = KeyboardService.keyboardSize()
           // apaño 30 sept 2019. A veces keyboardSize es .zero y creaba muchos problemas. Asignamos un tercio de la pantalla por defecto. 
           if keyboardSize == .zero {
-            keyboardSize = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/3)
+            //keyboardSize = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/3)
+            keyboardSize = CGRect(x: 0, y: UIScreen.main.bounds.height - UIScreen.main.bounds.height/3, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/3)
           }
             return CustomizeDatePicker(frame: keyboardSize)
         }()
