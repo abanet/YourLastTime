@@ -70,7 +70,8 @@
 /* Eliminar una ocurrencia */
 "Delete Event" = "¡Vas a eliminar %@!";
 "Msg Delete Event" = "El evento y su historial serán eliminados para siempre";
-
+"Delete Ocurrence" = "¡Eliminando Ocurrencia";
+"Msg Delete Ocurrencia" = "La ocurrencia está a punto de eliminarse";
 
 /* Activity */
 "New Event" = "Nuevo Evento";
