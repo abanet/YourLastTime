@@ -359,7 +359,9 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
         
-        if(segue.identifier == "CrearNuevoEvento") {
+        // Comentado 07-08-2020 pq falla con ios 13
+        /*
+          if(segue.identifier == "CrearNuevoEvento") {
             if #available(iOS 12.0, *) {
                 let vc = segue.destination as! NuevoEventoVC
                 let activity = Evento.newEventShortcut(thumbnail: UIImage(named: "logo375verdoso"))
@@ -368,8 +370,8 @@ class PrincipalViewController: UIViewController, UITableViewDelegate, UITableVie
             } else {
                 // Fallback on earlier versions
             }
-            
         }
+        */
         
     }
     

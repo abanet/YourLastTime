@@ -24,21 +24,21 @@ class Evento: NSObject {
     var periodo: PeriodoTemporal // hora, día, mes, año
     
     
-    @available(iOS 12.0, *)
-    public static func newEventShortcut(thumbnail: UIImage?) -> NSUserActivity {
-        let activity = NSUserActivity(activityType: kNewEventActivityType)
-        activity.persistentIdentifier =
-            NSUserActivityPersistentIdentifier(kNewEventActivityType)
-        activity.isEligibleForSearch = true
-        activity.isEligibleForPrediction = true
-        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
-        activity.title = NSLocalizedString("New Event", comment: "")
-        attributes.contentDescription = NSLocalizedString("Add a new event to Last Time!", comment: "")
-        attributes.thumbnailData = thumbnail?.jpegData(compressionQuality: 1.0)
-        activity.suggestedInvocationPhrase = NSLocalizedString("Create a new event!", comment: "")
-        activity.contentAttributeSet = attributes
-        return activity
-    }
+//    @available(iOS 12.0, *)
+//    public static func newEventShortcut(thumbnail: UIImage?) -> NSUserActivity {
+//        let activity = NSUserActivity(activityType: kNewEventActivityType)
+//        activity.persistentIdentifier =
+//            NSUserActivityPersistentIdentifier(kNewEventActivityType)
+//        activity.isEligibleForSearch = true
+//        activity.isEligibleForPrediction = true
+//        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
+//        activity.title = NSLocalizedString("New Event", comment: "")
+//        attributes.contentDescription = NSLocalizedString("Add a new event to Last Time!", comment: "")
+//        attributes.thumbnailData = thumbnail?.jpegData(compressionQuality: 1.0)
+//        activity.suggestedInvocationPhrase = NSLocalizedString("Create a new event!", comment: "")
+//        activity.contentAttributeSet = attributes
+//        return activity
+//    }
     
     init(id:String, descripcion:String, fecha:String, hora: String, contador:Int, cantidad: Int = 0, periodo: PeriodoTemporal = .dias, archivado: Bool = false) {
         self.id = id
